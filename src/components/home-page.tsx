@@ -1119,11 +1119,13 @@ Please confirm this order with the customer.
 
             {!showOrderForm && !orderSuccess && (
               <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns:
-                    "minmax(320px, 1fr) minmax(320px, 1fr)",
+                 className="product-details-layout"
+                 style={{
+                   display: "grid",
+                   gridTemplateColumns:
+                      "minmax(320px, 1fr) minmax(320px, 1fr)",
                 }}
+            
               >
                 {/* IMAGE */}
 
@@ -1482,24 +1484,26 @@ Please confirm this order with the customer.
                   background: "#fff",
                 }}
               >
-                <button
-                  type="button"
-                  onClick={() =>
-                    setShowOrderForm(false)
-                  }
-                  style={{
-                    border: "1px solid #ddd",
-                    background: "#fff",
-                    borderRadius: "12px",
-                    padding: "10px 15px",
-                    cursor: "pointer",
-                    marginBottom: "20px",
-                    fontWeight: 700,
-                  }}
-                >
-                  ← Back
-                </button>
-
+                
+         <button
+  type="button"
+  onClick={(e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowOrderForm(false);
+  }}
+  style={{
+    border: "1px solid #ddd",
+    background: "#fff",
+    borderRadius: "12px",
+    padding: "10px 15px",
+    cursor: "pointer",
+    marginBottom: "20px",
+    fontWeight: 700,
+  }}
+>
+  ← Back
+</button>
                 <div
                   style={{
                     padding: "24px",
