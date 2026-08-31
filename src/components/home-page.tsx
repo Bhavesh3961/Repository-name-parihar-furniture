@@ -20,8 +20,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { SiteHeader } from "./site-header";
 
-const whatsapp =
-  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "9191579886";
+const whatsapp = "919175379886";
 
 const waLink = (text: string) =>
   `https://wa.me/${whatsapp}?text=${encodeURIComponent(text)}`;
@@ -117,7 +116,6 @@ export function HomePage() {
 
   const [modal, setModal] = useState<string | null>(null);
 
-  // Product details / ordering
   const [selectedProduct, setSelectedProduct] =
     useState<any | null>(null);
 
@@ -173,60 +171,61 @@ export function HomePage() {
       setEstimate(data);
     }
   }
-async function placeOrder() {
-  if (!selectedProduct) return;
 
-  if (
-    !orderForm.customerName.trim() ||
-    !orderForm.phone.trim() ||
-    !orderForm.address.trim() ||
-    !orderForm.city.trim() ||
-    !orderForm.pincode.trim()
-  ) {
-    alert("Please fill all required fields.");
-    return;
-  }
+  async function placeOrder() {
+    if (!selectedProduct) return;
 
-  setOrderLoading(true);
-  setOrderSuccess(null);
-
-  try {
-    const response = await fetch("/api/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        productId: selectedProduct.id,
-        productName: selectedProduct.name,
-        price: Number(selectedProduct.price),
-        quantity: orderForm.quantity,
-        customerName: orderForm.customerName,
-        phone: orderForm.phone,
-        address: orderForm.address,
-        city: orderForm.city,
-        pincode: orderForm.pincode,
-      }),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(
-        data?.error || "Unable to place order."
-      );
+    if (
+      !orderForm.customerName.trim() ||
+      !orderForm.phone.trim() ||
+      !orderForm.address.trim() ||
+      !orderForm.city.trim() ||
+      !orderForm.pincode.trim()
+    ) {
+      alert("Please fill all required fields.");
+      return;
     }
 
-    const orderId =
-      data?.orderId ||
-      data?.id ||
-      `PF-${Date.now()}`;
+    setOrderLoading(true);
+    setOrderSuccess(null);
 
-    const total =
-      Number(selectedProduct.price) *
-      Number(orderForm.quantity);
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productId: selectedProduct.id,
+          productName: selectedProduct.name,
+          price: Number(selectedProduct.price),
+          quantity: orderForm.quantity,
+          customerName: orderForm.customerName,
+          phone: orderForm.phone,
+          address: orderForm.address,
+          city: orderForm.city,
+          pincode: orderForm.pincode,
+        }),
+      });
 
-    const whatsappMessage = `
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data?.error || "Unable to place order."
+        );
+      }
+
+      const orderId =
+        data?.orderId ||
+        data?.id ||
+        `PF-${Date.now()}`;
+
+      const total =
+        Number(selectedProduct.price) *
+        Number(orderForm.quantity);
+
+      const whatsappMessage = `
 🛒 *NEW ORDER - PARIHAR FURNITURE*
 
 📦 *PRODUCT DETAILS*
@@ -234,8 +233,8 @@ Product: ${selectedProduct.name}
 Category: ${selectedProduct.category}
 Quantity: ${orderForm.quantity}
 Price: ₹${Number(
-      selectedProduct.price
-    ).toLocaleString("en-IN")}
+        selectedProduct.price
+      ).toLocaleString("en-IN")}
 Total: ₹${total.toLocaleString("en-IN")}
 
 👤 *CUSTOMER DETAILS*
@@ -253,31 +252,28 @@ ${orderId}
 Please confirm this order with the customer.
 `.trim();
 
-    const OWNER_WHATSAPP_NUMBER = "919175379886";
+      const OWNER_WHATSAPP_NUMBER = "919175379886";
 
-    const whatsappUrl =
-      `https://wa.me/${OWNER_WHATSAPP_NUMBER}` +
-      `?text=${encodeURIComponent(whatsappMessage)}`;
+      const whatsappUrl =
+        `https://wa.me/${OWNER_WHATSAPP_NUMBER}` +
+        `?text=${encodeURIComponent(whatsappMessage)}`;
 
-    // Save success state
-    setOrderSuccess(orderId);
+      setOrderSuccess(orderId);
 
-    // Immediately open owner's WhatsApp
-    window.location.href = whatsappUrl;
+      window.location.href = whatsappUrl;
+    } catch (error) {
+      console.error("Order error:", error);
 
-  } catch (error) {
-    console.error("Order error:", error);
-
-    alert(
-      error instanceof Error
-        ? error.message
-        : "Something went wrong. Please try again."
-    );
-  } finally {
-    setOrderLoading(false);
+      alert(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again."
+      );
+    } finally {
+      setOrderLoading(false);
+    }
   }
-}
-  
+
   function closeProductModal() {
     setSelectedProduct(null);
     setShowOrderForm(false);
@@ -502,56 +498,62 @@ Please confirm this order with the customer.
             ))}
           </div>
 
-<div className="product-grid">
-        {filtered.map((product) => (
-    <article
-      className="product-card"
-      key={product.id}
-      onClick={() => {
-        setSelectedProduct(product);
-        setShowOrderForm(false);
-        setOrderSuccess(null);
-      }}
-      style={{ cursor: "pointer" }}
-    >
-      <div className="product-image">
-        <Image
-          src={product.imageUrl}
-          alt={product.name}
-          fill
-          sizes="(max-width: 700px) 100vw, 33vw"
-        />
+          <div className="product-grid">
+            {filtered.map((product) => (
+              <article
+                className="product-card"
+                key={product.id}
+                onClick={() => {
+                  setSelectedProduct(product);
+                  setShowOrderForm(false);
+                  setOrderSuccess(null);
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                <div className="product-image">
+                  <Image
+                    src={product.imageUrl}
+                    alt={product.name}
+                    fill
+                    sizes="(max-width: 700px) 100vw, 33vw"
+                  />
 
-        <span>{product.category}</span>
+                  <span>{product.category}</span>
 
-        <b>
-          ₹{Number(product.price).toLocaleString("en-IN")}
-        </b>
-      </div>
+                  <b>
+                    ₹
+                    {Number(
+                      product.price
+                    ).toLocaleString("en-IN")}
+                  </b>
+                </div>
 
-      <div className="product-body">
-        <h3>{product.name}</h3>
+                <div className="product-body">
+                  <h3>{product.name}</h3>
 
-        <p>{product.shortDescription}</p>
+                  <p>
+                    {product.shortDescription}
+                  </p>
 
-        <button
-          type="button"
-          className="btn btn-gold"
-          onClick={(e) => {
-            e.stopPropagation();
+                  <button
+                    type="button"
+                    className="btn btn-gold"
+                    onClick={(e) => {
+                      e.stopPropagation();
 
-            setSelectedProduct(product);
-            setShowOrderForm(false);
-            setOrderSuccess(null);
-          }}
-        >
-          View Full Details
-          <ArrowRight size={15} />
-        </button>
-      </div>
-    </article>
-  ))}
-</div>
+                      setSelectedProduct(product);
+                      setShowOrderForm(false);
+                      setOrderSuccess(null);
+                    }}
+                  >
+                    View Full Details
+                    <ArrowRight size={15} />
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+
           {filtered.length === 0 && (
             <div className="empty">
               No products in this category yet.
@@ -636,6 +638,7 @@ Please confirm this order with the customer.
                 alt="Living room backdrop"
                 fill
               />
+
               <span>
                 Living Room Backdrops
               </span>
@@ -647,6 +650,7 @@ Please confirm this order with the customer.
                 alt="Solid wood dining"
                 fill
               />
+
               <span>
                 Solid Wood Dining
               </span>
@@ -658,6 +662,7 @@ Please confirm this order with the customer.
                 alt="Master bedroom"
                 fill
               />
+
               <span>
                 Master Bedrooms
               </span>
@@ -669,6 +674,7 @@ Please confirm this order with the customer.
                 alt="Custom sectional"
                 fill
               />
+
               <span>
                 Custom Sectionals
               </span>
@@ -729,9 +735,11 @@ Please confirm this order with the customer.
             <div className="mini-grid">
               <article>
                 <Sparkles />
+
                 <h3>
                   Laser Jali & Om Carvings
                 </h3>
+
                 <p>
                   Intricate Om, Swastik, Kalash &
                   floral designs with warm LED
@@ -741,9 +749,11 @@ Please confirm this order with the customer.
 
               <article>
                 <WandSparkles />
+
                 <h3>
                   Machine Melamine Polish
                 </h3>
+
                 <p>
                   Smooth machine-grade polish
                   offering superior heat, incense &
@@ -808,9 +818,11 @@ Please confirm this order with the customer.
                   <option>
                     1 BHK Complete Package
                   </option>
+
                   <option>
                     2 BHK Complete Package
                   </option>
+
                   <option>
                     3 BHK Complete Package
                   </option>
@@ -1029,11 +1041,7 @@ Please confirm this order with the customer.
           <div className="contact-actions">
             <a
               className="btn btn-gold btn-large"
-              href={`tel:+${
-                process.env
-                  .NEXT_PUBLIC_PHONE_NUMBER ||
-                whatsapp
-              }`}
+              href="tel:+919175379886"
             >
               <Phone />
               Call Now
@@ -1055,668 +1063,744 @@ Please confirm this order with the customer.
       </main>
 
       {/* PRODUCT DETAILS + ORDER MODAL */}
-{selectedProduct && (
-  <div
-    className="modal"
-    onClick={closeProductModal}
-    style={{
-      padding: "16px",
-      background: "rgba(0,0,0,0.72)",
-      backdropFilter: "blur(8px)",
-    }}
-  >
-    <div
-      className="modal-card"
-      onClick={(e) => e.stopPropagation()}
-      style={{
-        position: "relative",
-        width: "min(1100px, 96vw)",
-        maxWidth: "1100px",
-        maxHeight: "92vh",
-        overflowY: "auto",
-        padding: 0,
-        borderRadius: "28px",
-        background: "#fff",
-        color: "#171717",
-        boxShadow: "0 30px 100px rgba(0,0,0,.35)",
-      }}
-    >
-      {/* CLOSE */}
-      <button
-        type="button"
-        onClick={closeProductModal}
-        aria-label="Close"
-        style={{
-          position: "absolute",
-          right: "18px",
-          top: "18px",
-          zIndex: 20,
-          width: "44px",
-          height: "44px",
-          borderRadius: "50%",
-          border: "1px solid #ddd",
-          background: "#fff",
-          color: "#111",
-          fontSize: "24px",
-          cursor: "pointer",
-        }}
-      >
-        <X size={22} />
-      </button>
 
-      {/* PRODUCT DETAILS */}
-      {!showOrderForm && !orderSuccess && (
+      {selectedProduct && (
         <div
+          className="modal"
+          onClick={closeProductModal}
           style={{
-            display: "grid",
-            gridTemplateColumns:
-              "minmax(320px, 1fr) minmax(320px, 1fr)",
+            padding: "16px",
+            background: "rgba(0,0,0,0.72)",
+            backdropFilter: "blur(8px)",
           }}
         >
-          {/* IMAGE */}
           <div
+            className="modal-card"
+            onClick={(e) => e.stopPropagation()}
             style={{
               position: "relative",
-              minHeight: "620px",
-              background: "#111",
-              overflow: "hidden",
-              borderRadius: "28px 0 0 28px",
+              width: "min(1100px, 96vw)",
+              maxWidth: "1100px",
+              maxHeight: "92vh",
+              overflowY: "auto",
+              padding: 0,
+              borderRadius: "28px",
+              background: "#fff",
+              color: "#171717",
+              boxShadow:
+                "0 30px 100px rgba(0,0,0,.35)",
             }}
           >
-            <Image
-              src={selectedProduct.imageUrl}
-              alt={selectedProduct.name}
-              fill
-              sizes="(max-width: 800px) 100vw, 50vw"
-              style={{ objectFit: "cover" }}
-            />
+            {/* CLOSE */}
 
-            <div
+            <button
+              type="button"
+              onClick={closeProductModal}
+              aria-label="Close"
               style={{
                 position: "absolute",
-                left: "20px",
-                bottom: "20px",
-                padding: "9px 14px",
-                borderRadius: "999px",
-                background: "rgba(0,0,0,.75)",
-                color: "#fff",
-                fontSize: "13px",
-                fontWeight: 700,
+                right: "18px",
+                top: "18px",
+                zIndex: 20,
+                width: "44px",
+                height: "44px",
+                borderRadius: "50%",
+                border: "1px solid #ddd",
+                background: "#fff",
+                color: "#111",
+                fontSize: "24px",
+                cursor: "pointer",
               }}
             >
-              {selectedProduct.category}
-            </div>
-          </div>
+              <X size={22} />
+            </button>
 
-          {/* DETAILS */}
-          <div
-            style={{
-              padding: "48px 42px 38px",
-              display: "flex",
-              flexDirection: "column",
-              gap: "16px",
-            }}
-          >
-            {/* CATEGORY */}
-            <div
-              style={{
-                width: "fit-content",
-                padding: "8px 14px",
-                borderRadius: "999px",
-                border: "1px solid #ead8a3",
-                background: "#fffaf0",
-                color: "#795b18",
-                fontSize: "12px",
-                fontWeight: 800,
-              }}
-            >
-              {selectedProduct.category}
-            </div>
+            {/* PRODUCT DETAILS */}
 
-            {/* NAME */}
-            <h2
-              style={{
-                margin: 0,
-                fontSize: "clamp(30px, 4vw, 46px)",
-                lineHeight: 1.08,
-                color: "#171717",
-              }}
-            >
-              {selectedProduct.name}
-            </h2>
-
-            {/* SHORT DESCRIPTION */}
-            <p
-              style={{
-                margin: 0,
-                fontSize: "17px",
-                lineHeight: 1.55,
-                color: "#555",
-              }}
-            >
-              {selectedProduct.shortDescription}
-            </p>
-
-            {/* DESCRIPTION BOX */}
-            <div
-              style={{
-                padding: "20px",
-                borderRadius: "18px",
-                border: "1px solid #e5dfd2",
-                background: "#faf8f3",
-              }}
-            >
-              <strong
-                style={{
-                  display: "block",
-                  marginBottom: "8px",
-                  fontSize: "11px",
-                  textTransform: "uppercase",
-                  letterSpacing: "1px",
-                  color: "#8a6a20",
-                }}
-              >
-                Description
-              </strong>
-
-              <p
-                style={{
-                  margin: 0,
-                  color: "#333",
-                  lineHeight: 1.65,
-                }}
-              >
-                {selectedProduct.description ||
-                  selectedProduct.shortDescription}
-              </p>
-            </div>
-
-            {/* DETAILS BOXES */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "10px",
-              }}
-            >
+            {!showOrderForm && !orderSuccess && (
               <div
                 style={{
-                  padding: "15px",
-                  border: "1px solid #e8e8e8",
-                  borderRadius: "14px",
-                  background: "#fff",
+                  display: "grid",
+                  gridTemplateColumns:
+                    "minmax(320px, 1fr) minmax(320px, 1fr)",
                 }}
               >
-                <small>Category</small>
-                <strong>
-                  {selectedProduct.category}
-                </strong>
-              </div>
+                {/* IMAGE */}
 
+                <div
+                  style={{
+                    position: "relative",
+                    minHeight: "620px",
+                    background: "#111",
+                    overflow: "hidden",
+                    borderRadius:
+                      "28px 0 0 28px",
+                  }}
+                >
+                  <Image
+                    src={selectedProduct.imageUrl}
+                    alt={selectedProduct.name}
+                    fill
+                    sizes="(max-width: 800px) 100vw, 50vw"
+                    style={{
+                      objectFit: "cover",
+                    }}
+                  />
+
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: "20px",
+                      bottom: "20px",
+                      padding: "9px 14px",
+                      borderRadius: "999px",
+                      background:
+                        "rgba(0,0,0,.75)",
+                      color: "#fff",
+                      fontSize: "13px",
+                      fontWeight: 700,
+                    }}
+                  >
+                    {selectedProduct.category}
+                  </div>
+                </div>
+
+                {/* DETAILS */}
+
+                <div
+                  style={{
+                    padding: "48px 42px 38px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "16px",
+                  }}
+                >
+                  {/* CATEGORY */}
+
+                  <div
+                    style={{
+                      width: "fit-content",
+                      padding: "8px 14px",
+                      borderRadius: "999px",
+                      border:
+                        "1px solid #ead8a3",
+                      background: "#fffaf0",
+                      color: "#795b18",
+                      fontSize: "12px",
+                      fontWeight: 800,
+                    }}
+                  >
+                    {selectedProduct.category}
+                  </div>
+
+                  {/* NAME */}
+
+                  <h2
+                    style={{
+                      margin: 0,
+                      fontSize:
+                        "clamp(30px, 4vw, 46px)",
+                      lineHeight: 1.08,
+                      color: "#171717",
+                    }}
+                  >
+                    {selectedProduct.name}
+                  </h2>
+
+                  {/* SHORT DESCRIPTION */}
+
+                  <p
+                    style={{
+                      margin: 0,
+                      fontSize: "17px",
+                      lineHeight: 1.55,
+                      color: "#555",
+                    }}
+                  >
+                    {selectedProduct.shortDescription}
+                  </p>
+
+                  {/* DESCRIPTION BOX */}
+
+                  <div
+                    style={{
+                      padding: "20px",
+                      borderRadius: "18px",
+                      border:
+                        "1px solid #e5dfd2",
+                      background: "#faf8f3",
+                    }}
+                  >
+                    <strong
+                      style={{
+                        display: "block",
+                        marginBottom: "8px",
+                        fontSize: "11px",
+                        textTransform:
+                          "uppercase",
+                        letterSpacing: "1px",
+                        color: "#8a6a20",
+                      }}
+                    >
+                      Description
+                    </strong>
+
+                    <p
+                      style={{
+                        margin: 0,
+                        color: "#333",
+                        lineHeight: 1.65,
+                      }}
+                    >
+                      {selectedProduct.description ||
+                        selectedProduct.shortDescription}
+                    </p>
+                  </div>
+
+                  {/* DETAILS BOXES */}
+
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns:
+                        "1fr 1fr",
+                      gap: "10px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        padding: "15px",
+                        border:
+                          "1px solid #e8e8e8",
+                        borderRadius: "14px",
+                        background: "#fff",
+                      }}
+                    >
+                      <small>Category</small>
+
+                      <strong
+                        style={{
+                          display: "block",
+                          marginTop: "5px",
+                        }}
+                      >
+                        {selectedProduct.category}
+                      </strong>
+                    </div>
+
+                    <div
+                      style={{
+                        padding: "15px",
+                        border:
+                          "1px solid #e8e8e8",
+                        borderRadius: "14px",
+                        background: "#fff",
+                      }}
+                    >
+                      <small>Material</small>
+
+                      <strong
+                        style={{
+                          display: "block",
+                          marginTop: "5px",
+                        }}
+                      >
+                        {selectedProduct.material ||
+                          "Available on request"}
+                      </strong>
+                    </div>
+
+                    <div
+                      style={{
+                        padding: "15px",
+                        border:
+                          "1px solid #e8e8e8",
+                        borderRadius: "14px",
+                        background: "#fff",
+                      }}
+                    >
+                      <small>Finish</small>
+
+                      <strong
+                        style={{
+                          display: "block",
+                          marginTop: "5px",
+                        }}
+                      >
+                        {selectedProduct.finish ||
+                          "Available on request"}
+                      </strong>
+                    </div>
+
+                    <div
+                      style={{
+                        padding: "15px",
+                        border:
+                          "1px solid #e8e8e8",
+                        borderRadius: "14px",
+                        background: "#fff",
+                      }}
+                    >
+                      <small>Style</small>
+
+                      <strong
+                        style={{
+                          display: "block",
+                          marginTop: "5px",
+                        }}
+                      >
+                        {selectedProduct.style ||
+                          "Available on request"}
+                      </strong>
+                    </div>
+                  </div>
+
+                  {/* PRICE BOX */}
+
+                  <div
+                    style={{
+                      padding: "18px 20px",
+                      borderRadius: "16px",
+                      background: "#fff8e5",
+                      border:
+                        "1px solid #d8b85a",
+                    }}
+                  >
+                    <small
+                      style={{
+                        display: "block",
+                        color: "#8a6a20",
+                        fontWeight: 800,
+                        fontSize: "11px",
+                      }}
+                    >
+                      PRICE
+                    </small>
+
+                    <strong
+                      style={{
+                        display: "block",
+                        marginTop: "5px",
+                        fontSize: "32px",
+                        color: "#171717",
+                      }}
+                    >
+                      ₹
+                      {Number(
+                        selectedProduct.price
+                      ).toLocaleString("en-IN")}
+                    </strong>
+                  </div>
+
+                  {/* BUTTONS */}
+
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns:
+                        "1fr 1fr",
+                      gap: "10px",
+                    }}
+                  >
+                    {/* ORDER */}
+
+                    <button
+                      type="button"
+                      className="btn btn-gold"
+                      onClick={() =>
+                        setShowOrderForm(true)
+                      }
+                      style={{
+                        minHeight: "55px",
+                        borderRadius: "14px",
+                        cursor: "pointer",
+                        fontWeight: 800,
+                      }}
+                    >
+                      🛒 Order Now
+                    </button>
+
+                    {/* CALL */}
+
+                    <a
+                      href="tel:+919175379886"
+                      style={{
+                        minHeight: "55px",
+                        borderRadius: "14px",
+                        border:
+                          "1px solid #c99b28",
+                        background: "#fff",
+                        color: "#171717",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "8px",
+                        fontWeight: 800,
+                        textDecoration: "none",
+                      }}
+                    >
+                      <Phone size={18} />
+                      Call Owner
+                    </a>
+
+                    {/* WHATSAPP */}
+
+                    <a
+                      href={waLink(
+                        `Hello Parihar Furniture! I am interested in ${selectedProduct.name}.`
+                      )}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{
+                        gridColumn: "1 / -1",
+                        minHeight: "55px",
+                        borderRadius: "14px",
+                        background: "#16a56a",
+                        color: "#fff",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "8px",
+                        fontWeight: 800,
+                        textDecoration: "none",
+                      }}
+                    >
+                      <MessageCircle size={19} />
+                      WhatsApp Owner
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ORDER FORM */}
+
+            {showOrderForm && !orderSuccess && (
               <div
                 style={{
-                  padding: "15px",
-                  border: "1px solid #e8e8e8",
-                  borderRadius: "14px",
+                  padding: "42px",
                   background: "#fff",
                 }}
               >
-                <small>Material</small>
-                <strong>
-                  {selectedProduct.material ||
-                    "Available on request"}
-                </strong>
-              </div>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setShowOrderForm(false)
+                  }
+                  style={{
+                    border: "1px solid #ddd",
+                    background: "#fff",
+                    borderRadius: "12px",
+                    padding: "10px 15px",
+                    cursor: "pointer",
+                    marginBottom: "20px",
+                    fontWeight: 700,
+                  }}
+                >
+                  ← Back
+                </button>
 
+                <div
+                  style={{
+                    padding: "24px",
+                    borderRadius: "20px",
+                    border:
+                      "1px solid #eadfca",
+                    background: "#faf8f3",
+                    marginBottom: "22px",
+                  }}
+                >
+                  <small
+                    style={{
+                      color: "#8a6a20",
+                      fontWeight: 800,
+                    }}
+                  >
+                    ORDER PRODUCT
+                  </small>
+
+                  <h2
+                    style={{
+                      margin: "8px 0",
+                    }}
+                  >
+                    {selectedProduct.name}
+                  </h2>
+
+                  <strong
+                    style={{
+                      fontSize: "28px",
+                    }}
+                  >
+                    ₹
+                    {Number(
+                      selectedProduct.price
+                    ).toLocaleString("en-IN")}
+                  </strong>
+                </div>
+
+                <div
+                  style={{
+                    display: "grid",
+                    gap: "15px",
+                  }}
+                >
+                  <label>
+                    Full Name *
+
+                    <input
+                      type="text"
+                      value={
+                        orderForm.customerName
+                      }
+                      onChange={(e) =>
+                        setOrderForm({
+                          ...orderForm,
+                          customerName:
+                            e.target.value,
+                        })
+                      }
+                      placeholder="Enter your full name"
+                    />
+                  </label>
+
+                  <label>
+                    Mobile Number *
+
+                    <input
+                      type="tel"
+                      value={orderForm.phone}
+                      onChange={(e) =>
+                        setOrderForm({
+                          ...orderForm,
+                          phone: e.target.value,
+                        })
+                      }
+                      placeholder="Enter mobile number"
+                    />
+                  </label>
+
+                  <label>
+                    Address *
+
+                    <textarea
+                      value={orderForm.address}
+                      onChange={(e) =>
+                        setOrderForm({
+                          ...orderForm,
+                          address:
+                            e.target.value,
+                        })
+                      }
+                      placeholder="House number, street, area"
+                      rows={3}
+                    />
+                  </label>
+
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns:
+                        "1fr 1fr",
+                      gap: "15px",
+                    }}
+                  >
+                    <label>
+                      City *
+
+                      <input
+                        type="text"
+                        value={orderForm.city}
+                        onChange={(e) =>
+                          setOrderForm({
+                            ...orderForm,
+                            city: e.target.value,
+                          })
+                        }
+                        placeholder="Pune"
+                      />
+                    </label>
+
+                    <label>
+                      Pincode *
+
+                      <input
+                        type="text"
+                        value={
+                          orderForm.pincode
+                        }
+                        onChange={(e) =>
+                          setOrderForm({
+                            ...orderForm,
+                            pincode:
+                              e.target.value,
+                          })
+                        }
+                        placeholder="411015"
+                      />
+                    </label>
+                  </div>
+
+                  <label>
+                    Quantity
+
+                    <input
+                      type="number"
+                      min="1"
+                      max="20"
+                      value={
+                        orderForm.quantity
+                      }
+                      onChange={(e) =>
+                        setOrderForm({
+                          ...orderForm,
+                          quantity: Math.max(
+                            1,
+                            Math.min(
+                              20,
+                              Number(
+                                e.target.value
+                              ) || 1
+                            )
+                          ),
+                        })
+                      }
+                    />
+                  </label>
+                </div>
+
+                {/* TOTAL */}
+
+                <div
+                  style={{
+                    marginTop: "22px",
+                    padding: "20px",
+                    borderRadius: "16px",
+                    border:
+                      "1px solid #e8e1d2",
+                    background: "#faf8f3",
+                    display: "flex",
+                    justifyContent:
+                      "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <strong>Total</strong>
+
+                  <strong
+                    style={{
+                      fontSize: "28px",
+                    }}
+                  >
+                    ₹
+                    {(
+                      Number(
+                        selectedProduct.price
+                      ) *
+                      orderForm.quantity
+                    ).toLocaleString(
+                      "en-IN"
+                    )}
+                  </strong>
+                </div>
+
+                {/* PLACE ORDER */}
+
+                <button
+                  type="button"
+                  className="btn btn-green btn-large"
+                  onClick={placeOrder}
+                  disabled={orderLoading}
+                  style={{
+                    width: "100%",
+                    marginTop: "20px",
+                    minHeight: "56px",
+                    borderRadius: "14px",
+                    cursor: orderLoading
+                      ? "wait"
+                      : "pointer",
+                    fontWeight: 800,
+                  }}
+                >
+                  {orderLoading
+                    ? "Placing Order..."
+                    : "✓ Place Order"}
+                </button>
+              </div>
+            )}
+
+            {/* SUCCESS */}
+
+            {orderSuccess && (
               <div
                 style={{
-                  padding: "15px",
-                  border: "1px solid #e8e8e8",
-                  borderRadius: "14px",
-                  background: "#fff",
+                  textAlign: "center",
+                  padding: "70px 30px",
                 }}
               >
-                <small>Finish</small>
-                <strong>
-                  {selectedProduct.finish ||
-                    "Available on request"}
-                </strong>
+                <CheckCircle2 size={64} />
+
+                <h2
+                  style={{
+                    marginTop: "18px",
+                  }}
+                >
+                  Order Placed Successfully! 🎉
+                </h2>
+
+                <p>
+                  Your order has been received by
+                  Parihar Furniture.
+                </p>
+
+                <div
+                  style={{
+                    display: "inline-block",
+                    marginTop: "15px",
+                    padding: "15px 20px",
+                    borderRadius: "14px",
+                    background: "#faf8f3",
+                    border:
+                      "1px solid #e8e1d2",
+                  }}
+                >
+                  <strong>Order ID</strong>
+
+                  <div
+                    style={{
+                      marginTop: "7px",
+                      fontFamily: "monospace",
+                      wordBreak: "break-all",
+                    }}
+                  >
+                    {orderSuccess}
+                  </div>
+                </div>
+
+                <p>
+                  The owner will contact you to
+                  confirm the order, price and
+                  delivery details.
+                </p>
+
+                <button
+                  type="button"
+                  className="btn btn-gold"
+                  onClick={closeProductModal}
+                  style={{
+                    marginTop: "20px",
+                    minHeight: "52px",
+                    borderRadius: "14px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Continue Shopping
+                </button>
               </div>
-
-              <div
-                style={{
-                  padding: "15px",
-                  border: "1px solid #e8e8e8",
-                  borderRadius: "14px",
-                  background: "#fff",
-                }}
-              >
-                <small>Style</small>
-                <strong>
-                  {selectedProduct.style ||
-                    "Available on request"}
-                </strong>
-              </div>
-            </div>
-
-            {/* PRICE BOX */}
-            <div
-              style={{
-                padding: "18px 20px",
-                borderRadius: "16px",
-                background: "#fff8e5",
-                border: "1px solid #d8b85a",
-              }}
-            >
-              <small
-                style={{
-                  display: "block",
-                  color: "#8a6a20",
-                  fontWeight: 800,
-                  fontSize: "11px",
-                }}
-              >
-                PRICE
-              </small>
-
-              <strong
-                style={{
-                  display: "block",
-                  marginTop: "5px",
-                  fontSize: "32px",
-                  color: "#171717",
-                }}
-              >
-                ₹
-                {Number(
-                  selectedProduct.price
-                ).toLocaleString("en-IN")}
-              </strong>
-            </div>
-
-            {/* BUTTONS */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "10px",
-              }}
-            >
-              {/* ORDER */}
-              <button
-                type="button"
-                className="btn btn-gold"
-                onClick={() =>
-                  setShowOrderForm(true)
-                }
-                style={{
-                  minHeight: "55px",
-                  borderRadius: "14px",
-                  cursor: "pointer",
-                  fontWeight: 800,
-                }}
-              >
-                🛒 Order Now
-              </button>
-
-              {/* CALL */}
-              <a
-                href={`tel:+${
-                  process.env
-                    .NEXT_PUBLIC_PHONE_NUMBER ||
-                  whatsapp
-                }`}
-                style={{
-                  minHeight: "55px",
-                  borderRadius: "14px",
-                  border: "1px solid #c99b28",
-                  background: "#fff",
-                  color: "#171717",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "8px",
-                  fontWeight: 800,
-                  textDecoration: "none",
-                }}
-              >
-                <Phone size={18} />
-                Call Owner
-              </a>
-
-              {/* WHATSAPP */}
-              <a
-                href={waLink(
-                  `Hello Parihar Furniture! I am interested in ${selectedProduct.name}.`
-                )}
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  gridColumn: "1 / -1",
-                  minHeight: "55px",
-                  borderRadius: "14px",
-                  background: "#16a56a",
-                  color: "#fff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "8px",
-                  fontWeight: 800,
-                  textDecoration: "none",
-                }}
-              >
-                <MessageCircle size={19} />
-                WhatsApp Owner
-              </a>
-            </div>
+            )}
           </div>
         </div>
       )}
-
-      {/* ORDER FORM */}
-      {showOrderForm && !orderSuccess && (
-        <div
-          style={{
-            padding: "42px",
-            background: "#fff",
-          }}
-        >
-          <button
-            type="button"
-            onClick={() =>
-              setShowOrderForm(false)
-            }
-            style={{
-              border: "1px solid #ddd",
-              background: "#fff",
-              borderRadius: "12px",
-              padding: "10px 15px",
-              cursor: "pointer",
-              marginBottom: "20px",
-              fontWeight: 700,
-            }}
-          >
-            ← Back
-          </button>
-
-          <div
-            style={{
-              padding: "24px",
-              borderRadius: "20px",
-              border: "1px solid #eadfca",
-              background: "#faf8f3",
-              marginBottom: "22px",
-            }}
-          >
-            <small
-              style={{
-                color: "#8a6a20",
-                fontWeight: 800,
-              }}
-            >
-              ORDER PRODUCT
-            </small>
-
-            <h2 style={{ margin: "8px 0" }}>
-              {selectedProduct.name}
-            </h2>
-
-            <strong style={{ fontSize: "28px" }}>
-              ₹
-              {Number(
-                selectedProduct.price
-              ).toLocaleString("en-IN")}
-            </strong>
-          </div>
-
-          <div
-            style={{
-              display: "grid",
-              gap: "15px",
-            }}
-          >
-            <label>
-              Full Name *
-              <input
-                type="text"
-                value={
-                  orderForm.customerName
-                }
-                onChange={(e) =>
-                  setOrderForm({
-                    ...orderForm,
-                    customerName:
-                      e.target.value,
-                  })
-                }
-                placeholder="Enter your full name"
-              />
-            </label>
-
-            <label>
-              Mobile Number *
-              <input
-                type="tel"
-                value={orderForm.phone}
-                onChange={(e) =>
-                  setOrderForm({
-                    ...orderForm,
-                    phone: e.target.value,
-                  })
-                }
-                placeholder="Enter mobile number"
-              />
-            </label>
-
-            <label>
-              Address *
-              <textarea
-                value={orderForm.address}
-                onChange={(e) =>
-                  setOrderForm({
-                    ...orderForm,
-                    address: e.target.value,
-                  })
-                }
-                placeholder="House number, street, area"
-                rows={3}
-              />
-            </label>
-
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns:
-                  "1fr 1fr",
-                gap: "15px",
-              }}
-            >
-              <label>
-                City *
-                <input
-                  type="text"
-                  value={orderForm.city}
-                  onChange={(e) =>
-                    setOrderForm({
-                      ...orderForm,
-                      city: e.target.value,
-                    })
-                  }
-                  placeholder="Pune"
-                />
-              </label>
-
-              <label>
-                Pincode *
-                <input
-                  type="text"
-                  value={
-                    orderForm.pincode
-                  }
-                  onChange={(e) =>
-                    setOrderForm({
-                      ...orderForm,
-                      pincode:
-                        e.target.value,
-                    })
-                  }
-                  placeholder="411015"
-                />
-              </label>
-            </div>
-
-            <label>
-              Quantity
-              <input
-                type="number"
-                min="1"
-                max="20"
-                value={
-                  orderForm.quantity
-                }
-                onChange={(e) =>
-                  setOrderForm({
-                    ...orderForm,
-                    quantity: Math.max(
-                      1,
-                      Math.min(
-                        20,
-                        Number(
-                          e.target.value
-                        ) || 1
-                      )
-                    ),
-                  })
-                }
-              />
-            </label>
-          </div>
-
-          {/* TOTAL */}
-          <div
-            style={{
-              marginTop: "22px",
-              padding: "20px",
-              borderRadius: "16px",
-              border: "1px solid #e8e1d2",
-              background: "#faf8f3",
-              display: "flex",
-              justifyContent:
-                "space-between",
-              alignItems: "center",
-            }}
-          >
-            <strong>Total</strong>
-
-            <strong
-              style={{ fontSize: "28px" }}
-            >
-              ₹
-              {(
-                Number(
-                  selectedProduct.price
-                ) *
-                orderForm.quantity
-              ).toLocaleString(
-                "en-IN"
-              )}
-            </strong>
-          </div>
-
-          {/* PLACE ORDER */}
-          <button
-            type="button"
-            className="btn btn-green btn-large"
-            onClick={placeOrder}
-            disabled={orderLoading}
-            style={{
-              width: "100%",
-              marginTop: "20px",
-              minHeight: "56px",
-              borderRadius: "14px",
-              cursor: orderLoading
-                ? "wait"
-                : "pointer",
-              fontWeight: 800,
-            }}
-          >
-            {orderLoading
-              ? "Placing Order..."
-              : "✓ Place Order"}
-          </button>
-        </div>
-      )}
-
-      {/* SUCCESS */}
-      {orderSuccess && (
-        <div
-          style={{
-            textAlign: "center",
-            padding: "70px 30px",
-          }}
-        >
-          <CheckCircle2 size={64} />
-
-          <h2
-            style={{
-              marginTop: "18px",
-            }}
-          >
-            Order Placed Successfully! 🎉
-          </h2>
-
-          <p>
-            Your order has been received by
-            Parihar Furniture.
-          </p>
-
-          <div
-            style={{
-              display: "inline-block",
-              marginTop: "15px",
-              padding: "15px 20px",
-              borderRadius: "14px",
-              background: "#faf8f3",
-              border: "1px solid #e8e1d2",
-            }}
-          >
-            <strong>Order ID</strong>
-
-            <div
-              style={{
-                marginTop: "7px",
-                fontFamily: "monospace",
-                wordBreak: "break-all",
-              }}
-            >
-              {orderSuccess}
-            </div>
-          </div>
-
-          <p>
-            The owner will contact you to
-            confirm the order, price and
-            delivery details.
-          </p>
-
-          <button
-            type="button"
-            className="btn btn-gold"
-            onClick={closeProductModal}
-            style={{
-              marginTop: "20px",
-              minHeight: "52px",
-              borderRadius: "14px",
-              cursor: "pointer",
-            }}
-          >
-            Continue Shopping
-          </button>
-        </div>
-      )}
-    </div>
-  </div>
-)}
 
       <a
         className="floating-whatsapp"
@@ -1777,4 +1861,4 @@ Please confirm this order with the customer.
       </footer>
     </div>
   );
-} 
+}

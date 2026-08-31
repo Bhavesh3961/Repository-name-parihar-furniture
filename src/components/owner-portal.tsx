@@ -126,8 +126,11 @@ export function OwnerPortal() {
       );
     } catch (error) {
       console.error(error);
+
       setLoginError(
-        "Login failed. Check your email and password."
+         error instanceof Error
+          ? error.message
+          : "Login failed."
       );
     }
   }
