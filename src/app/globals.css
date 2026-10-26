@@ -1345,11 +1345,11 @@ textarea {
   position: fixed;
   bottom: 16px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate3d(-50%, 0, 0);
   z-index: 890;
   background: rgba(22, 23, 30, 0.92);
-  backdrop-filter: blur(28px) saturate(200%);
-  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1.6px solid var(--gold-border);
   box-shadow: 
     inset 0 1.5px 1.5px 0 rgba(255, 238, 195, 0.35),
@@ -1364,16 +1364,17 @@ textarea {
   font-weight: 700;
   cursor: pointer;
   animation: bouncePill 3s infinite ease-in-out;
-  transition: all 0.25s var(--ease-apple);
+  transition: transform 0.2s var(--ease-apple), box-shadow 0.2s ease;
+  will-change: transform;
 }
 
 @keyframes bouncePill {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-4px); }
+  0%, 100% { transform: translate3d(-50%, 0, 0); }
+  50% { transform: translate3d(-50%, -4px, 0); }
 }
 
 .dock-trigger-bubble:active {
-  transform: translateX(-50%) scale(0.95);
+  transform: translate3d(-50%, 0, 0) scale(0.95);
 }
 
 .dock-trigger-badge {
@@ -1397,32 +1398,33 @@ textarea {
   left: 10px;
   right: 10px;
   z-index: 999;
-  background: rgba(24, 25, 33, 0.94);
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  background: rgba(24, 25, 33, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border: 1.6px solid var(--gold-border);
   box-shadow: 
     inset 0 1.5px 1.5px 0 rgba(255, 238, 195, 0.35),
     0 16px 45px rgba(0, 0, 0, 0.75);
   border-radius: 9999px;
-  padding: 5px 8px;
+  padding: 6px 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 4px;
   max-width: 480px;
   margin: 0 auto;
-  animation: slideDockUp 0.3s var(--ease-apple);
-  transition: all 0.3s var(--ease-apple);
+  animation: slideDockUp 0.28s var(--ease-apple);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
 @keyframes slideDockUp {
   from {
-    transform: translateY(120%);
+    transform: translate3d(0, 100%, 0);
     opacity: 0;
   }
   to {
-    transform: translateY(0%);
+    transform: translate3d(0, 0, 0);
     opacity: 1;
   }
 }

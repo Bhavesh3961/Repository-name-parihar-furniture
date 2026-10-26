@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import {
   Menu,
@@ -20,10 +21,10 @@ export function SiteHeader() {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const navLinks = [
-    { label: "Furniture Catalog", href: "#catalog", num: "01" },
-    { label: "Sacred Devghar", href: "#devghar", num: "02" },
-    { label: "Client Testimonials", href: "#reviews", num: "03" },
-    { label: "Workshop Location", href: "#location", num: "04" },
+    { label: "Furniture Catalog", href: "/catalog", num: "01" },
+    { label: "Sacred Devghar", href: "/devghar", num: "02" },
+    { label: "Client Testimonials", href: "/reviews", num: "03" },
+    { label: "Workshop Location", href: "/location", num: "04" },
   ];
 
   return (
@@ -69,7 +70,7 @@ export function SiteHeader() {
       <header className="liquid-navbar">
         <div className="navbar-inner">
           {/* Official Brand Logo */}
-          <a href="#hero" className="brand-anchor" aria-label="Parihar Furniture Home">
+          <Link href="/" className="brand-anchor" aria-label="Parihar Furniture Home">
             <div className="brand-emblem-wrap">
               <Image
                 src="/assets/logo.png"
@@ -83,14 +84,14 @@ export function SiteHeader() {
               <span className="brand-main-title">Parihar</span>
               <span className="brand-sub-title">Furniture & Interior · Vishrantwadi</span>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Navigation Links */}
           <nav className="desktop-nav-links">
             {navLinks.map((link) => (
-              <a key={link.href} href={link.href} className="desktop-link">
+              <Link key={link.href} href={link.href} className="desktop-link">
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -123,7 +124,7 @@ export function SiteHeader() {
       {drawerOpen && (
         <div className="liquid-drawer-overlay">
           <div className="drawer-header">
-            <div className="brand-anchor">
+            <Link href="/" className="brand-anchor" onClick={() => setDrawerOpen(false)}>
               <div className="brand-emblem-wrap">
                 <Image
                   src="/assets/logo.png"
@@ -136,7 +137,7 @@ export function SiteHeader() {
                 <span className="brand-main-title">Parihar</span>
                 <span className="brand-sub-title">Vishrantwadi, Pune</span>
               </div>
-            </div>
+            </Link>
 
             <button
               type="button"
@@ -150,7 +151,7 @@ export function SiteHeader() {
 
           <nav className="drawer-nav-list">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 className="drawer-link-item"
@@ -159,10 +160,10 @@ export function SiteHeader() {
                 <span>{link.num}</span>
                 {link.label}
                 <ChevronRight size={18} style={{ opacity: 0.4 }} />
-              </a>
+              </Link>
             ))}
 
-            <a
+            <Link
               href="/owner"
               className="drawer-link-item"
               onClick={() => setDrawerOpen(false)}
@@ -171,7 +172,7 @@ export function SiteHeader() {
               <span>05</span>
               Atelier Portal
               <ChevronRight size={16} />
-            </a>
+            </Link>
           </nav>
 
           <div className="drawer-footer-actions">

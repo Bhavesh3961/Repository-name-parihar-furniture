@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import {
   ArrowRight,
   CheckCircle2,
@@ -261,10 +262,10 @@ Please confirm wood polish finish and home delivery timeline in Pune.
             </p>
 
             <div className="hero-cta-grid">
-              <a href="#catalog" className="btn-gold-primary">
+              <Link href="/catalog" className="btn-gold-primary">
                 <span>Browse Furniture Catalog</span>
                 <ArrowRight size={18} />
-              </a>
+              </Link>
 
               <a
                 href={waLink("Hello Parihar Furniture! I would like to get a furniture quote and timber samples.")}
@@ -495,6 +496,15 @@ Please confirm wood polish finish and home delivery timeline in Pune.
                   <Phone size={17} />
                   <span>Call Us</span>
                 </a>
+
+                <Link
+                  href="/devghar"
+                  className="btn-glass-champagne"
+                  style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}
+                >
+                  <Sparkles size={16} />
+                  <span>Dedicated Devghar Sanctuary Page</span>
+                </Link>
               </div>
             </div>
           </div>
@@ -537,6 +547,18 @@ Please confirm wood polish finish and home delivery timeline in Pune.
               </article>
             ))}
           </div>
+
+          <div style={{ display: "flex", justifyContent: "center", marginTop: "32px" }}>
+            <Link
+              href="/reviews"
+              className="btn-gold-primary"
+              style={{ height: "48px", padding: "0 28px", textDecoration: "none" }}
+            >
+              <Star size={16} fill="var(--gold-light)" />
+              <span>Explore All Verified Reviews On Dedicated Webpage</span>
+              <ArrowRight size={16} />
+            </Link>
+          </div>
         </section>
 
         {/* =================================================================
@@ -574,8 +596,17 @@ Please confirm wood polish finish and home delivery timeline in Pune.
               <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
                 <a href={`tel:+${phoneNumber}`} className="btn-gold-primary">
                   <Phone size={17} />
-                  <span>Call Workshop Now</span>
+                  <span>Call Workshop: +91 9175379886</span>
                 </a>
+
+                <Link
+                  href="/location"
+                  className="btn-glass-champagne"
+                  style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}
+                >
+                  <MapPin size={17} />
+                  <span>Visit Atelier Webpage</span>
+                </Link>
 
                 <a
                   href="https://maps.google.com/?q=Parihar+Furniture+Vishrantwadi+Pune"
@@ -583,8 +614,7 @@ Please confirm wood polish finish and home delivery timeline in Pune.
                   rel="noreferrer"
                   className="btn-glass-champagne"
                 >
-                  <MapPin size={17} />
-                  <span>Directions on Google Maps</span>
+                  <span>Google Maps Directions</span>
                 </a>
               </div>
             </div>
@@ -837,14 +867,14 @@ Please confirm wood polish finish and home delivery timeline in Pune.
             <span>Call</span>
           </a>
 
-          <a
-            href="#reviews"
+          <Link
+            href="/reviews"
             className="dock-btn"
             onClick={() => setDockOpen(false)}
           >
             <Star size={16} fill="var(--gold-light)" color="var(--gold-light)" />
             <span>Reviews</span>
-          </a>
+          </Link>
 
           <a
             href={waLink("Hello Parihar Furniture! I would like to get a furniture quote.")}
@@ -857,14 +887,14 @@ Please confirm wood polish finish and home delivery timeline in Pune.
             <span>WhatsApp</span>
           </a>
 
-          <a
-            href="#location"
+          <Link
+            href="/location"
             className="dock-btn"
             onClick={() => setDockOpen(false)}
           >
             <MapPin size={16} />
             <span>Visit</span>
-          </a>
+          </Link>
 
           <button
             type="button"
@@ -885,11 +915,13 @@ Please confirm wood polish finish and home delivery timeline in Pune.
         <span style={{ color: "var(--gold-light)", fontWeight: "500" }}>
           ✍︎ Designing Spaces, Defining Lifestyles · 100% Solid Burma Teak & Sheesham
         </span>
-        <div style={{ display: "flex", justifyContent: "center", gap: "18px", marginTop: "6px" }}>
-          <a href="#hero">Top ↑</a>
-          <a href="#catalog">Catalog</a>
-          <a href="#devghar">Devghar</a>
-          <a href="/owner">Owner Login</a>
+        <div style={{ display: "flex", justifyContent: "center", gap: "18px", marginTop: "6px", flexWrap: "wrap" }}>
+          <Link href="/">Home</Link>
+          <Link href="/catalog">Catalog</Link>
+          <Link href="/devghar">Devghar</Link>
+          <Link href="/reviews">Reviews</Link>
+          <Link href="/location">Location</Link>
+          <Link href="/owner">Owner Login</Link>
         </div>
       </footer>
     </div>
