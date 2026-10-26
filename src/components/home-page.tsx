@@ -50,6 +50,56 @@ const storyHighlights = [
   { id: "Full Flat Packages", label: "Full Flat 2BHK", image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=400&q=80" },
 ];
 
+/* Hand-Drawn Wavy Underline SVG */
+function DoodleUnderline({ color = "#e2bf65" }: { color?: string }) {
+  return (
+    <svg
+      className="doodle-underline"
+      viewBox="0 0 240 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="none"
+    >
+      <path
+        d="M3 13C45 4 105 15 150 7C185 1 215 11 237 8"
+        stroke={color}
+        strokeWidth="3.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12 15C55 8 115 16 160 9C195 4 220 12 232 10"
+        stroke={color}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeOpacity="0.6"
+      />
+    </svg>
+  );
+}
+
+/* Hand-Drawn Arrow Doodle SVG */
+function DoodleArrow() {
+  return (
+    <svg
+      width="38"
+      height="28"
+      viewBox="0 0 38 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ display: "inline-block", verticalAlign: "middle", margin: "0 4px" }}
+    >
+      <path
+        d="M3 6C12 4 24 7 28 18M28 18L21 17M28 18L30 11"
+        stroke="#e2bf65"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function HomePage() {
   const [products, setProducts] = useState(seedProducts);
   const [activeCategory, setActiveCategory] = useState("All Collections");
@@ -129,8 +179,8 @@ export function HomePage() {
       const orderMessage = `
 🛒 *NEW ORDER INQUIRY - PARIHAR FURNITURE*
 
-📦 *FURNITURE ITEM*
-Piece: ${selectedProduct.name}
+📦 *FURNITURE PIECE*
+Item: ${selectedProduct.name}
 Ref Code: ${selectedProduct.code || "PF—PUNE"}
 Price: ₹${Number(selectedProduct.price).toLocaleString("en-IN")}
 Qty: ${orderForm.quantity}
@@ -169,7 +219,7 @@ Please confirm wood polish finish and home delivery timeline in Pune.
 
       <main>
         {/* =================================================================
-            01. APPLE CONTROL CENTER LIQUID GLASS HERO WITH KALAM HANDWRITING
+            01. ARCHITECTURAL HERO SECTION (BRAND LOGO CHAMPAGNE & KALAM)
             ================================================================= */}
         <section id="hero" className="liquid-hero">
           <div className="hero-media-cover">
@@ -186,7 +236,7 @@ Please confirm wood polish finish and home delivery timeline in Pune.
           <div className="hero-inner-content">
             {/* Hand-Drawn Hallmark Pill */}
             <div className="hand-drawn-badge" style={{ marginBottom: "18px" }}>
-              <div className="hallmark-thumb">
+              <div className="hallmark-thumb" style={{ width: "24px", height: "24px", borderRadius: "50%", overflow: "hidden", display: "grid", placeItems: "center" }}>
                 <Image
                   src="/assets/logo.png"
                   alt="Parihar Logo"
@@ -201,46 +251,48 @@ Please confirm wood polish finish and home delivery timeline in Pune.
               Solid Wood Furniture, <br />
               <em>Handcrafted in Our Workshop.</em>
             </h1>
+            <DoodleUnderline color="#e2bf65" />
 
             <p className="hero-sub-description">
               Hand-carved seasoned Burma teak & Sheesham sofas, sacred wooden Devghar temples,
               German hydraulic storage beds, and complete turnkey flat interiors made directly by
-              our carpenters with zero middleman markup.
+              our craftsmen with zero showroom markup.
             </p>
 
             <div className="hero-cta-grid">
-              <a href="#catalog" className="btn-control-white">
+              <a href="#catalog" className="btn-gold-primary">
                 <span>Browse Furniture Catalog</span>
-                <ArrowRight size={17} />
+                <ArrowRight size={18} />
               </a>
 
               <a
                 href={waLink("Hello Parihar Furniture! I would like to get a furniture quote and timber samples.")}
                 target="_blank"
                 rel="noreferrer"
-                className="btn-control-glass"
+                className="btn-glass-champagne"
               >
                 <MessageCircle size={18} />
                 <span>Direct WhatsApp Estimate</span>
               </a>
             </div>
 
+            {/* Hand-Drawn Guarantee Row */}
             <div className="hero-proof-row">
               <span className="hand-drawn-badge">
-                <Flame size={14} style={{ color: "var(--accent-cyan)" }} /> 100% Solid Seasoned Wood
+                <Flame size={15} style={{ color: "var(--gold-light)" }} /> 100% Solid Seasoned Wood
               </span>
               <span className="hand-drawn-badge">
-                <ShieldCheck size={14} style={{ color: "var(--accent-cyan)" }} /> 10-Year Craft Warranty
+                <ShieldCheck size={15} style={{ color: "var(--gold-light)" }} /> 10-Year Craft Warranty
               </span>
               <span className="hand-drawn-badge">
-                <Star size={14} style={{ color: "var(--accent-cyan)" }} fill="var(--accent-cyan)" /> 4.8★ Google Verified (50+ Reviews)
+                <Star size={15} style={{ color: "var(--gold-light)" }} fill="var(--gold-light)" /> 4.8★ Google Verified
               </span>
             </div>
           </div>
         </section>
 
         {/* =================================================================
-            02. INSTAGRAM-STYLE CONTROL CENTER STORY HIGHLIGHTS
+            02. INSTAGRAM-STYLE LIQUID GLASS STORY HIGHLIGHTS
             ================================================================= */}
         <section className="liquid-story-bar">
           <div className="story-track">
@@ -271,19 +323,30 @@ Please confirm wood polish finish and home delivery timeline in Pune.
         </section>
 
         {/* =================================================================
-            03. APPLE CONTROL CENTER CATALOG (HAND-DRAWN KALAM ACCENTS)
+            03. HAND-DRAWN SHOWCASE CATALOG (16 REAL FURNITURE PIECES)
             ================================================================= */}
         <section id="catalog" className="section-showcase">
           <div className="section-head-wrap">
             <span className="section-tag-gold">
               <Sparkles size={14} />
-              <span>✍︎ GENUINE FURNITURE SHOWCASE · ZERO AI IMAGES</span>
+              <span>✍︎ AUTHENTIC WORKSHOP SHOWCASE · ZERO AI IMAGES</span>
             </span>
             <h2 className="section-title">Explore Handcrafted Pieces</h2>
+            <DoodleUnderline color="#e2bf65" />
             <p className="section-subtitle">
-              Every piece is custom-sized and built with genuine seasoned timber inside our Vishrantwadi atelier.
-              Tap any item for real specifications, dimensions, and direct WhatsApp carpenter pricing.
+              Every item is custom-sized and built with genuine seasoned timber inside our Vishrantwadi atelier.
+              Tap any item for real specifications, dimensions, and direct carpenter pricing.
             </p>
+
+            {/* Hand-Drawn Craftsman Note */}
+            <div className="hand-drawn-callout" style={{ marginTop: "18px", maxWidth: "620px" }}>
+              <span style={{ color: "var(--gold-light)", fontWeight: "700" }}>
+                ✎ Craftsman's Note:
+              </span>{" "}
+              <span style={{ color: "var(--ink-secondary)" }}>
+                We don't sell flat-pack hollow boards. Every frame is hand-planed solid teak or heavy BWR core ply designed to last 25+ years.
+              </span>
+            </div>
           </div>
 
           {/* Useful Category Filter Bar */}
@@ -329,14 +392,15 @@ Please confirm wood polish finish and home delivery timeline in Pune.
 
                   <div className="liquid-card-price-row">
                     <div>
-                      <span className="liquid-price-label">Carpenter Price</span>
+                      <span className="liquid-price-label">Workshop Price</span>
                       <div className="liquid-price-amount">
                         ₹{Number(product.price).toLocaleString("en-IN")}
                       </div>
                     </div>
 
                     <span className="hand-drawn-note">
-                      ✓ Custom Sizing
+                      <DoodleArrow />
+                      <span>Custom Sizing</span>
                     </span>
                   </div>
 
@@ -360,7 +424,7 @@ Please confirm wood polish finish and home delivery timeline in Pune.
         </section>
 
         {/* =================================================================
-            04. SACRED DEVGHAR SPOTLIGHT (REAL AUTHENTIC PHOTO & SMOKED GLASS)
+            04. SACRED DEVGHAR SPOTLIGHT (REAL AUTHENTIC PHOTO & WARM COVE)
             ================================================================= */}
         <section id="devghar" className="section-devghar-halo">
           <div className="devghar-glow-card">
@@ -383,6 +447,7 @@ Please confirm wood polish finish and home delivery timeline in Pune.
                 Sacred Wooden Devghars
                 <span>सुंदर आणि पवित्र देवघर · Vastu-Aligned Sanctuaries</span>
               </h2>
+              <DoodleUnderline color="#e2bf65" />
 
               <p style={{ color: "var(--ink-secondary)", fontSize: "16px", lineHeight: "1.65" }}>
                 Hand-carved in seasoned solid Burma teak timber. Features a precision laser Om and
@@ -410,12 +475,12 @@ Please confirm wood polish finish and home delivery timeline in Pune.
                 </div>
               </div>
 
-              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginTop: "8px" }}>
+              <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginTop: "8px" }}>
                 <a
                   href={waLink("Hello Parihar Furniture! Please share photos, sizes and prices for Wooden Devghar Mandirs.")}
                   target="_blank"
                   rel="noreferrer"
-                  className="btn-control-white"
+                  className="btn-gold-primary"
                   style={{ flex: 1, minWidth: "220px", justifyContent: "center" }}
                 >
                   <MessageCircle size={18} />
@@ -424,7 +489,7 @@ Please confirm wood polish finish and home delivery timeline in Pune.
 
                 <a
                   href={`tel:+${phoneNumber}`}
-                  className="btn-control-glass"
+                  className="btn-glass-champagne"
                 >
                   <Phone size={17} />
                   <span>Call Us</span>
@@ -440,10 +505,11 @@ Please confirm wood polish finish and home delivery timeline in Pune.
         <section id="reviews" className="section-reviews">
           <div className="section-head-wrap">
             <span className="section-tag-gold">
-              <Star size={14} fill="var(--accent-cyan)" />
-              <span>4.8★ GOOGLE VERIFIED CLIENT STORIES</span>
+              <Star size={14} fill="var(--gold-light)" />
+              <span>4.8★ GOOGLE VERIFIED CLIENT EXPERIENCES</span>
             </span>
-            <h2 className="section-title">Pune Homeowner Experiences</h2>
+            <h2 className="section-title">Pune Homeowner Stories</h2>
+            <DoodleUnderline color="#e2bf65" />
             <p className="section-subtitle">
               Authentic feedback from verified homeowners who got their sofas, dining suites,
               and full residences executed by Parihar.
@@ -459,10 +525,10 @@ Please confirm wood polish finish and home delivery timeline in Pune.
                 <div className="review-client-footer">
                   <div className="client-avatar">{rev.name[0]}</div>
                   <div>
-                    <strong style={{ fontSize: "16px", color: "#ffffff", display: "block", fontFamily: "var(--font-kalam)" }}>
+                    <strong style={{ fontSize: "16.5px", color: "#ffffff", display: "block" }}>
                       {rev.name}
                     </strong>
-                    <small style={{ fontSize: "12px", color: "var(--ink-muted)", fontFamily: "var(--font-kalam)" }}>
+                    <small style={{ fontSize: "12.5px", color: "var(--gold-light)" }}>
                       {rev.role} · {rev.meta}
                     </small>
                   </div>
@@ -483,28 +549,29 @@ Please confirm wood polish finish and home delivery timeline in Pune.
                 <span>VISIT OUR WORKSHOP</span>
               </span>
               <h2 className="section-title">Feel the Timber Firsthand</h2>
+              <DoodleUnderline color="#e2bf65" />
               <p style={{ color: "var(--ink-secondary)", fontSize: "16px", lineHeight: "1.65", margin: "12px 0 20px" }}>
                 Visit our Vishrantwadi atelier to inspect machine melamine silk finishes, touch seasoned
                 Burma teak wood grains, and test sofa cushion densities in person.
               </p>
 
-              <div style={{ padding: "20px", borderRadius: "22px", background: "var(--canvas-card)", backdropFilter: "blur(28px)", border: "1px solid var(--glass-border)", display: "flex", flexDirection: "column", gap: "12px", marginBottom: "22px", boxShadow: "var(--glass-specular)" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "15px", fontFamily: "var(--font-kalam)" }}>
+              <div style={{ padding: "20px", borderRadius: "22px 10px 22px 10px / 10px 22px 10px 22px", background: "var(--canvas-card)", backdropFilter: "blur(28px)", border: "1.8px solid var(--gold-border)", display: "flex", flexDirection: "column", gap: "12px", marginBottom: "22px", boxShadow: "var(--glass-specular)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "15px" }}>
                   <span style={{ color: "var(--ink-muted)" }}>Address:</span>
                   <span style={{ color: "#ffffff", fontWeight: "700" }}>Vishrantwadi Corridor, Pune</span>
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "15px", fontFamily: "var(--font-kalam)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "15px" }}>
                   <span style={{ color: "var(--ink-muted)" }}>Timings:</span>
-                  <span style={{ color: "var(--accent-cyan)", fontWeight: "700" }}>Open Daily 8:00 AM – 10:00 PM</span>
+                  <span style={{ color: "var(--gold-light)", fontWeight: "700" }}>Open Daily 8:00 AM – 10:00 PM</span>
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "15px", fontFamily: "var(--font-kalam)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "15px" }}>
                   <span style={{ color: "var(--ink-muted)" }}>Phone:</span>
                   <span style={{ color: "#ffffff", fontWeight: "700" }}>+91 {phoneNumber.slice(-10)}</span>
                 </div>
               </div>
 
               <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-                <a href={`tel:+${phoneNumber}`} className="btn-control-white">
+                <a href={`tel:+${phoneNumber}`} className="btn-gold-primary">
                   <Phone size={17} />
                   <span>Call Workshop Now</span>
                 </a>
@@ -513,7 +580,7 @@ Please confirm wood polish finish and home delivery timeline in Pune.
                   href="https://maps.google.com/?q=Parihar+Furniture+Vishrantwadi+Pune"
                   target="_blank"
                   rel="noreferrer"
-                  className="btn-control-glass"
+                  className="btn-glass-champagne"
                 >
                   <MapPin size={17} />
                   <span>Directions on Google Maps</span>
@@ -521,7 +588,7 @@ Please confirm wood polish finish and home delivery timeline in Pune.
               </div>
             </div>
 
-            <div style={{ position: "relative", minHeight: "340px", borderRadius: "26px", overflow: "hidden", border: "1px solid var(--glass-border)", boxShadow: "var(--glass-specular)" }}>
+            <div style={{ position: "relative", minHeight: "340px", borderRadius: "26px 12px 26px 12px / 12px 26px 12px 26px", overflow: "hidden", border: "1.8px solid var(--gold-border)", boxShadow: "var(--glass-specular)" }}>
               <Image
                 src="https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&w=1000&q=80"
                 alt="Parihar Real Furniture Workshop"
@@ -529,11 +596,11 @@ Please confirm wood polish finish and home delivery timeline in Pune.
                 sizes="(max-width: 768px) 100vw, 50vw"
                 style={{ objectFit: "cover" }}
               />
-              <div style={{ position: "absolute", bottom: "16px", left: "16px", right: "16px", padding: "14px 18px", borderRadius: "18px", background: "rgba(24, 28, 42, 0.88)", backdropFilter: "blur(24px)", border: "1px solid rgba(255, 255, 255, 0.2)", boxShadow: "0 8px 24px rgba(0,0,0,0.4)" }}>
-                <strong style={{ display: "block", color: "#ffffff", fontSize: "17px", fontFamily: "var(--font-kalam)" }}>
+              <div style={{ position: "absolute", bottom: "16px", left: "16px", right: "16px", padding: "14px 18px", borderRadius: "18px", background: "rgba(22, 23, 29, 0.9)", backdropFilter: "blur(24px)", border: "1.5px solid var(--gold-border)", boxShadow: "0 8px 24px rgba(0,0,0,0.5)" }}>
+                <strong style={{ display: "block", color: "#ffffff", fontSize: "17.5px" }}>
                   Parihar Furniture & Interior
                 </strong>
-                <small style={{ color: "var(--accent-cyan)", fontFamily: "var(--font-kalam)", fontSize: "13px", fontWeight: "700" }}>
+                <small style={{ color: "var(--gold-light)", fontSize: "13.5px", fontWeight: "700" }}>
                   Open Today till 10:00 PM · Walk-ins Welcome
                 </small>
               </div>
@@ -543,7 +610,7 @@ Please confirm wood polish finish and home delivery timeline in Pune.
       </main>
 
       {/* =================================================================
-          07. APPLE CONTROL CENTER LIQUID GLASS BOTTOM SHEET (INSPECT & ORDER)
+          07. LIQUID GLASS BOTTOM SHEET (INSPECT & ORDER)
           ================================================================= */}
       {selectedProduct && (
         <div className="drawer-backdrop" onClick={closeDrawer}>
@@ -553,7 +620,7 @@ Please confirm wood polish finish and home delivery timeline in Pune.
             </div>
 
             <div className="drawer-top-bar">
-              <span className="hand-drawn-badge" style={{ fontSize: "12px" }}>
+              <span className="hand-drawn-badge" style={{ fontSize: "12.5px" }}>
                 {selectedProduct.code || "PF—ATELIER"}
               </span>
 
@@ -582,12 +649,12 @@ Please confirm wood polish finish and home delivery timeline in Pune.
 
                   <div>
                     <span className="section-tag-gold">{selectedProduct.category}</span>
-                    <h2 style={{ fontFamily: "var(--font-kalam)", fontSize: "28px", color: "#ffffff", lineHeight: "1.2" }}>
+                    <h2 style={{ fontSize: "29px", color: "#ffffff", lineHeight: "1.2" }}>
                       {selectedProduct.name}
                     </h2>
-                    <div style={{ fontFamily: "var(--font-kalam)", fontSize: "26px", color: "var(--accent-cyan)", fontWeight: "700", marginTop: "4px" }}>
+                    <div style={{ fontSize: "27px", color: "var(--gold-light)", fontWeight: "700", marginTop: "4px" }}>
                       ₹{Number(selectedProduct.price).toLocaleString("en-IN")}{" "}
-                      <span style={{ fontSize: "14px", color: "var(--ink-secondary)", fontWeight: "normal" }}>
+                      <span style={{ fontSize: "14.5px", color: "var(--ink-secondary)", fontWeight: "normal" }}>
                         (Direct Carpenter Price · 0% Markup)
                       </span>
                     </div>
@@ -627,64 +694,65 @@ Please confirm wood polish finish and home delivery timeline in Pune.
                   <button
                     type="button"
                     onClick={() => setShowOrderModal(false)}
-                    style={{ color: "var(--accent-cyan)", fontSize: "14px", fontFamily: "var(--font-kalam)", textAlign: "left", fontWeight: "700" }}
+                    style={{ color: "var(--gold-light)", fontSize: "14.5px", textAlign: "left", fontWeight: "700" }}
                   >
                     ← Back to Product Overview
                   </button>
 
-                  <div style={{ padding: "16px", borderRadius: "18px", background: "rgba(255,255,255,0.06)", border: "1px solid var(--glass-border)" }}>
-                    <small style={{ color: "var(--accent-cyan)", fontFamily: "var(--font-kalam)", fontSize: "13px", fontWeight: "700" }}>
+                  <div style={{ padding: "16px", borderRadius: "18px", background: "rgba(226,191,101,0.08)", border: "1.5px solid var(--gold-border)" }}>
+                    <small style={{ color: "var(--gold-light)", fontSize: "13px", fontWeight: "700" }}>
                       DIRECT WORKSHOP INQUIRY
                     </small>
-                    <strong style={{ display: "block", color: "#ffffff", fontSize: "20px", fontFamily: "var(--font-kalam)", marginTop: "2px" }}>
+                    <strong style={{ display: "block", color: "#ffffff", fontSize: "21px", marginTop: "2px" }}>
                       {selectedProduct.name}
                     </strong>
-                    <div style={{ color: "#ffffff", fontFamily: "var(--font-kalam)", fontSize: "22px", fontWeight: "700", marginTop: "2px" }}>
+                    <div style={{ color: "#ffffff", fontSize: "23px", fontWeight: "700", marginTop: "2px" }}>
                       ₹{(Number(selectedProduct.price) * orderForm.quantity).toLocaleString("en-IN")}
                     </div>
                   </div>
 
-                  <label style={{ fontSize: "13.5px", fontFamily: "var(--font-kalam)", color: "var(--ink-secondary)" }}>
+                  <label style={{ fontSize: "14px", color: "var(--ink-secondary)" }}>
                     Full Name *
                     <input
                       type="text"
                       placeholder="e.g. Bhavesh Bhati"
                       value={orderForm.customerName}
                       onChange={(e) => setOrderForm({ ...orderForm, customerName: e.target.value })}
-                      style={{ width: "100%", padding: "12px 14px", borderRadius: "14px", background: "rgba(18, 22, 34, 0.9)", border: "1px solid var(--glass-border)", color: "#ffffff", marginTop: "4px" }}
+                      style={{ width: "100%", padding: "12px 14px", borderRadius: "14px", background: "rgba(18, 19, 24, 0.9)", border: "1.5px solid var(--gold-border)", color: "#ffffff", marginTop: "4px" }}
                     />
                   </label>
 
-                  <label style={{ fontSize: "13.5px", fontFamily: "var(--font-kalam)", color: "var(--ink-secondary)" }}>
+                  <label style={{ fontSize: "14px", color: "var(--ink-secondary)" }}>
                     Mobile Number *
                     <input
                       type="tel"
                       placeholder="e.g. 9175379886"
                       value={orderForm.phone}
                       onChange={(e) => setOrderForm({ ...orderForm, phone: e.target.value })}
-                      style={{ width: "100%", padding: "12px 14px", borderRadius: "14px", background: "rgba(18, 22, 34, 0.9)", border: "1px solid var(--glass-border)", color: "#ffffff", marginTop: "4px" }}
+                      style={{ width: "100%", padding: "12px 14px", borderRadius: "14px", background: "rgba(18, 19, 24, 0.9)", border: "1.5px solid var(--gold-border)", color: "#ffffff", marginTop: "4px" }}
                     />
                   </label>
 
-                  <label style={{ fontSize: "13.5px", fontFamily: "var(--font-kalam)", color: "var(--ink-secondary)" }}>
+                  <label style={{ fontSize: "14px", color: "var(--ink-secondary)" }}>
                     Delivery Address in Pune *
                     <textarea
                       rows={2}
                       placeholder="Apartment name, Street, Area"
                       value={orderForm.address}
                       onChange={(e) => setOrderForm({ ...orderForm, address: e.target.value })}
-                      style={{ width: "100%", padding: "12px 14px", borderRadius: "14px", background: "rgba(18, 22, 34, 0.9)", border: "1px solid var(--glass-border)", color: "#ffffff", marginTop: "4px" }}
+                      style={{ width: "100%", padding: "12px 14px", borderRadius: "14px", background: "rgba(18, 19, 24, 0.9)", border: "1.5px solid var(--gold-border)", color: "#ffffff", marginTop: "4px" }}
                     />
                   </label>
 
                   <button
                     type="button"
-                    className="nav-wa-pill"
+                    className="dock-btn highlight-wa"
                     onClick={submitOrder}
                     disabled={orderLoading}
-                    style={{ height: "50px", justifyContent: "center", fontSize: "15px", marginTop: "6px" }}
+                    style={{ height: "50px", justifyContent: "center", fontSize: "16px", marginTop: "6px", flexDirection: "row", gap: "8px" }}
                   >
-                    {orderLoading ? "Connecting..." : "Confirm & Send to Workshop WhatsApp"}
+                    <MessageCircle size={18} />
+                    <span>{orderLoading ? "Connecting..." : "Confirm & Send to Workshop WhatsApp"}</span>
                   </button>
                 </div>
               )}
@@ -693,15 +761,15 @@ Please confirm wood polish finish and home delivery timeline in Pune.
               {orderSuccessId && (
                 <div style={{ textAlign: "center", padding: "30px 10px", display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
                   <CheckCircle2 size={48} style={{ color: "#25d366" }} />
-                  <h3 style={{ fontFamily: "var(--font-kalam)", fontSize: "28px", color: "#ffffff" }}>
+                  <h3 style={{ fontSize: "28px", color: "#ffffff" }}>
                     Inquiry Received!
                   </h3>
-                  <p style={{ color: "var(--ink-secondary)", fontSize: "15px", fontFamily: "var(--font-kalam)" }}>
+                  <p style={{ color: "var(--ink-secondary)", fontSize: "15px" }}>
                     Inquiry #{orderSuccessId} registered. Redirecting to WhatsApp to chat with the master carpenter...
                   </p>
                   <button
                     type="button"
-                    className="btn-control-white"
+                    className="btn-gold-primary"
                     onClick={closeDrawer}
                   >
                     Return to Catalog
@@ -719,8 +787,8 @@ Please confirm wood polish finish and home delivery timeline in Pune.
                   )}
                   target="_blank"
                   rel="noreferrer"
-                  className="nav-wa-pill"
-                  style={{ flex: 1, height: "48px", justifyContent: "center", fontSize: "14px" }}
+                  className="dock-btn highlight-wa"
+                  style={{ flex: 1, height: "48px", justifyContent: "center", fontSize: "15px", flexDirection: "row", gap: "8px" }}
                 >
                   <MessageCircle size={18} />
                   <span>WhatsApp Inquiry</span>
@@ -728,7 +796,7 @@ Please confirm wood polish finish and home delivery timeline in Pune.
 
                 <button
                   type="button"
-                  className="btn-control-white"
+                  className="btn-gold-primary"
                   onClick={() => setShowOrderModal(true)}
                   style={{ flex: 1, height: "48px", justifyContent: "center" }}
                 >
@@ -742,7 +810,7 @@ Please confirm wood polish finish and home delivery timeline in Pune.
       )}
 
       {/* =================================================================
-          08. APPLE FLOATING CONTROL CENTER DOCK (STICKY MOBILE BOTTOM)
+          08. FLOATING MOBILE BOTTOM DOCK (STICKY MOBILE CONVERSION)
           ================================================================= */}
       <div className="liquid-floating-dock">
         <a href={`tel:+${phoneNumber}`} className="dock-btn">
@@ -776,7 +844,7 @@ Please confirm wood polish finish and home delivery timeline in Pune.
         <span style={{ fontSize: "16px", color: "#ffffff", fontWeight: "700" }}>
           © {new Date().getFullYear()} Parihar Furniture & Interior · Vishrantwadi, Pune
         </span>
-        <span style={{ color: "var(--accent-cyan)", fontWeight: "500" }}>
+        <span style={{ color: "var(--gold-light)", fontWeight: "500" }}>
           ✍︎ Designing Spaces, Defining Lifestyles · 100% Solid Burma Teak & Sheesham
         </span>
         <div style={{ display: "flex", justifyContent: "center", gap: "18px", marginTop: "6px" }}>

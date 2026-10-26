@@ -8,7 +8,6 @@ import {
   MessageCircle,
   X,
   ChevronRight,
-  Sparkles,
 } from "lucide-react";
 
 const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919175379886";
@@ -39,7 +38,7 @@ export function SiteHeader() {
             ★ <b>100% SEASONED BURMA TEAK & SHEESHAM WOOD</b>
           </span>
           <span className="ticker-item">
-            ✦ <b>HONEST WORKSHOP PRICES · 0% MIDDLEMAN COMMISSIONS</b>
+            ✦ <b>HONEST CARPENTER PRICES · 0% MIDDLEMAN COMMISSIONS</b>
           </span>
           <span className="ticker-item">
             ★ <b>FREE PUNE HOME MEASUREMENT & ESTIMATE</b>
@@ -55,7 +54,7 @@ export function SiteHeader() {
             ★ <b>100% SEASONED BURMA TEAK & SHEESHAM WOOD</b>
           </span>
           <span className="ticker-item">
-            ✦ <b>HONEST WORKSHOP PRICES · 0% MIDDLEMAN COMMISSIONS</b>
+            ✦ <b>HONEST CARPENTER PRICES · 0% MIDDLEMAN COMMISSIONS</b>
           </span>
           <span className="ticker-item">
             ★ <b>FREE PUNE HOME MEASUREMENT & ESTIMATE</b>
@@ -66,7 +65,7 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {/* 02. Apple Control Center Smoked Liquid Glass Navbar (Sticky to Top) */}
+      {/* 02. Apple Liquid Glass Sticky Top Navbar (WhatsApp removed on Mobile) */}
       <header className="liquid-navbar">
         <div className="navbar-inner">
           {/* Official Brand Logo */}
@@ -95,7 +94,7 @@ export function SiteHeader() {
             ))}
           </nav>
 
-          {/* Clean Mobile Actions (2 clean Control Center buttons) */}
+          {/* Desktop & Mobile Actions (WhatsApp hidden on mobile since it's already in bottom dock) */}
           <div className="mobile-nav-actions">
             <a
               href={waLink("Hello Parihar Furniture! I would like to inquire about furniture.")}
@@ -105,7 +104,7 @@ export function SiteHeader() {
               aria-label="WhatsApp Parihar Furniture"
             >
               <MessageCircle size={15} />
-              <span>WhatsApp</span>
+              <span>WhatsApp Atelier</span>
             </a>
 
             <button
@@ -114,7 +113,7 @@ export function SiteHeader() {
               onClick={() => setDrawerOpen(!drawerOpen)}
               aria-label="Toggle Navigation Menu"
             >
-              {drawerOpen ? <X size={20} /> : <Menu size={20} />}
+              {drawerOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
@@ -180,17 +179,17 @@ export function SiteHeader() {
               href={waLink("Hello Parihar Furniture! Please share your complete furniture catalogue.")}
               target="_blank"
               rel="noreferrer"
-              className="nav-wa-pill"
+              className="dock-btn highlight-wa"
               onClick={() => setDrawerOpen(false)}
-              style={{ height: "48px", justifyContent: "center", fontSize: "14px" }}
+              style={{ height: "48px", justifyContent: "center", fontSize: "15px", flexDirection: "row", gap: "8px" }}
             >
-              <MessageCircle size={17} />
+              <MessageCircle size={18} />
               <span>Direct WhatsApp Catalog</span>
             </a>
 
             <a
               href={`tel:+${phoneNumber}`}
-              className="btn-control-white"
+              className="btn-gold-primary"
               onClick={() => setDrawerOpen(false)}
               style={{ width: "100%", justifyContent: "center" }}
             >
