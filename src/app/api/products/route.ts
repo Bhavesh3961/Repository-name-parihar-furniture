@@ -14,20 +14,27 @@ export async function GET() {
       .where("published", "==", true)
       .get();
 
-    const products = snap.docs
+    const firestoreProducts = snap.docs
       .map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }))
+      .filter((p: any) => p.name && p.imageUrl && p.material !== "vcdeb ni")
       .sort((a: any, b: any) => {
         const aTime = a.createdAt?.toMillis?.() ?? 0;
         const bTime = b.createdAt?.toMillis?.() ?? 0;
         return bTime - aTime;
       });
 
-    return NextResponse.json(products);
+    const firestoreIds = new Set(firestoreProducts.map((p: any) => p.id));
+    const merged = [
+      ...firestoreProducts,
+      ...seedProducts.filter((sp) => !firestoreIds.has(sp.id)),
+    ];
+
+    return NextResponse.json(merged);
   } catch (error) {
-    console.error("Failed to load Firestore products:", error);
+    console.error("Failed to load Firestore products, falling back to seed:", error);
     return NextResponse.json(seedProducts);
   }
 }

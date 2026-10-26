@@ -322,7 +322,7 @@ export function OwnerPortal() {
 
           <span>
             <strong>PARIHAR</strong>
-            <small>AI OWNER STUDIO</small>
+            <small>ATELIER CATALOG PORTAL</small>
           </span>
         </a>
 
@@ -398,7 +398,7 @@ export function OwnerPortal() {
                   width: "100%",
                 }}
               >
-                Login to Owner Studio
+                Sign in to Atelier Portal
               </button>
 
               {loginError && (

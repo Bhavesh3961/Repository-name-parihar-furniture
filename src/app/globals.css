@@ -1,94 +1,1331 @@
-:root{--black:#0e0d0c;--ink:#171514;--cream:#f8f3eb;--paper:#fffdf9;--gold:#d5a928;--gold2:#f4d982;--line:#e8d8b5;--green:#08a76e;--muted:#6f6b66}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{text-decoration:none;color:inherit}button,input,select{font:inherit}.topbar{height:30px;background:#10100f;color:#e8c75d;display:flex;align-items:center;justify-content:space-around;font-size:11px;letter-spacing:.05em;padding:0 24px}.header{position:sticky;top:0;z-index:50;height:84px;background:rgba(255,253,249,.96);backdrop-filter:blur(16px);display:flex;align-items:center;gap:22px;padding:10px max(28px,calc((100vw - 1780px)/2));border-bottom:1px solid #eee5d6}.brand{display:flex;align-items:center;gap:10px;min-width:320px}.brand-logo{width:50px;height:50px;border-radius:14px;object-fit:cover}.brand strong{font-family:Georgia,serif;font-size:26px;letter-spacing:.08em}.brand span{display:flex;flex-direction:column}.brand small{font-size:10px;color:#8b6b21;letter-spacing:.16em;font-weight:700}.rating{border:1px solid #ead59b;background:#fff9ea;border-radius:22px;padding:6px 10px;color:#8b6b21;font-size:12px;margin-left:4px}.rating small{display:block;letter-spacing:0;font-size:9px;text-align:center}.nav{display:flex;align-items:center;justify-content:center;gap:22px;flex:1}.nav a{font-weight:700;font-size:14px;line-height:1.2}.nav a:hover{color:#a47a11}.header-actions{display:flex;gap:10px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;border-radius:13px;padding:12px 18px;font-weight:800;transition:.2s;cursor:pointer}.btn:hover{transform:translateY(-1px);filter:brightness(1.04)}.btn-dark{background:#121110;color:#f6dc86;border-color:#b99126}.btn-green{background:#06a86f;color:white}.btn-gold{background:linear-gradient(135deg,#f7df91,#c89816);color:#15120b}.btn-outline{border-color:#9c7a25;background:rgba(255,255,255,.03);color:#fff}.btn-large{padding:15px 22px;font-size:15px}.menu-btn{display:none;background:none;border:0}.section-dark{position:relative;background:#121110;color:white}.hero{min-height:790px;overflow:hidden;background:radial-gradient(circle at 85% 35%,#4d2e10 0,#21170f 28%,#11100f 65%)}.hero:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 4px,transparent 4px 18px);opacity:.5}.hero-grid{position:relative;z-index:1;max-width:1780px;margin:auto;min-height:790px;display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:50px;padding:70px 8%}.hero-copy{max-width:900px}.eyebrow{display:inline-flex;align-items:center;gap:10px;color:#f1cf63;background:rgba(180,138,24,.13);border:1px solid #7d6220;border-radius:30px;padding:9px 17px;font-size:13px;font-weight:800;letter-spacing:.07em}.eyebrow i{display:inline-block;width:5px;height:5px;border-radius:50%;background:#d9ad31}.eyebrow.light{background:#fff9e9;border-color:#ecdcae;color:#7c5d1c}.hero h1,.section-heading h2,.dark-panel h2,.devghar-copy h2,.estimator-section h2,.reviews h2,.contact h2{font-family:Georgia,"Times New Roman",serif;letter-spacing:-.045em}.hero h1{font-size:clamp(54px,6vw,92px);line-height:.95;margin:28px 0}.hero h1 em,.dark-panel h2 em{font-style:normal;color:#d9ad2e}.hero-copy>p{font-size:20px;line-height:1.6;color:#d7d1c9;max-width:850px}.cta-row{display:flex;gap:16px;margin:34px 0}.hero-proof{border-top:1px solid #604d24;padding-top:22px;display:flex;justify-content:space-between;color:#d5cec3;font-size:14px;gap:20px}.hero-card{justify-self:end;width:min(540px,100%);background:#191817;border:1px solid #8a6a22;border-radius:30px;padding:28px;box-shadow:0 30px 100px #0008;text-align:center}.hero-card-frame{border:3px solid #80621d;border-radius:20px;padding:12px;background:#090909}.hero-card-frame img{width:100%;height:auto;display:block;border-radius:8px}.hero-card h3{font:700 32px Georgia,serif;letter-spacing:.12em;color:#efd37b;margin:22px 0 3px}.hero-card p{letter-spacing:.2em;font-size:11px;margin:0;color:#e9e1d5}.hero-card>small{display:block;color:#b9922d;font-style:italic;margin:12px}.card-meta{border-top:1px solid #51431f;margin-top:18px;padding-top:14px;display:flex;justify-content:space-between;color:#e7d8ae;font-size:12px}.standard-section{padding:110px 8%}.cream{background:var(--cream)}.section-heading{text-align:center;max-width:900px;margin:0 auto 55px}.section-heading h2{font-size:clamp(42px,4.5vw,66px);margin:20px 0 12px}.section-heading p{font-size:19px;line-height:1.55;color:#706b65}.feature-grid{max-width:1500px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:34px}.feature-card{background:white;border:1px solid #ead9b0;border-radius:22px;padding:38px 40px;box-shadow:0 18px 50px rgba(117,88,25,.07)}.feature-icon{width:68px;height:68px;border-radius:18px;background:#0e0d0c;color:#efc64d;display:grid;place-items:center;margin-bottom:30px;border:1px solid #c29a2d}.feature-card h3{font-size:23px;margin:0 0 14px}.feature-card p{font-size:17px;line-height:1.65;color:#6d6861;min-height:110px}.feature-card footer{border-top:1px solid #eee4d3;padding-top:20px;color:#9b751d;font-weight:800;display:flex;align-items:center;gap:8px}.collections{background:#fcfaf6}.chips{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-bottom:55px}.chip{padding:12px 20px;border-radius:14px;border:1px solid #d9d6d0;background:white;font-weight:700;cursor:pointer}.chip.active{background:#121110;color:#f3d675;border-color:#c69c2c;box-shadow:0 8px 22px #0002}.product-grid{max-width:1500px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:28px}.product-card{background:#fff;border:1px solid #eadfcb;border-radius:20px;overflow:hidden;box-shadow:0 15px 45px #6e572018}.product-image{height:330px;position:relative;background:#f2eadb}.product-image img{object-fit:cover}.product-image span,.product-image b{position:absolute;z-index:2;background:#151311;color:#f0cc5e;border:1px solid #a98326;border-radius:20px;padding:8px 12px;font-size:11px;left:16px;top:16px}.product-image b{left:auto;right:16px}.product-body{padding:24px}.product-body h3{font:700 23px Georgia,serif;margin:0 0 10px}.product-body p{color:#706b65;line-height:1.5;min-height:48px}.product-body a{display:inline-flex;align-items:center;gap:6px;color:#967018;font-weight:800}.empty{text-align:center;padding:40px;color:#777}.dark-panel{background:#11100f;color:#fff;padding:110px 8%;display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}.interior-copy h2{font-size:clamp(48px,5vw,72px);line-height:.98;margin:24px 0}.interior-copy blockquote{border:1px solid #7f631e;border-left:4px solid #d8ae2d;border-radius:18px;padding:26px;margin:30px 0;color:#d7d0c8;font-size:18px;line-height:1.5}.interior-copy blockquote strong{display:block;color:#e6bd43;font-size:12px;margin-top:15px}.interior-copy>p{color:#c8c0b5;line-height:1.7;font-size:17px}.interior-copy ul{display:grid;grid-template-columns:1fr 1fr;gap:15px;padding:0;list-style:none;color:#e4ddd2;margin:25px 0}.interior-copy li:before{content:"✓";color:#e2b83c;font-weight:900;margin-right:10px}.interior-gallery{display:grid;grid-template-columns:1fr 1fr;gap:20px}.interior-gallery>div{height:270px;position:relative;border-radius:22px;overflow:hidden;border:1px solid #6d5723}.interior-gallery>div:nth-child(1),.interior-gallery>div:nth-child(3){height:330px}.interior-gallery img{object-fit:cover}.interior-gallery span{position:absolute;bottom:16px;left:16px;background:#15120e;color:#f1d174;border:1px solid #9c7b2a;padding:9px 13px;border-radius:10px;font-weight:800;font-size:12px}.devghar{display:grid;grid-template-columns:1.1fr .9fr;gap:70px;align-items:center}.devghar-image{height:600px;border-radius:26px;overflow:hidden;position:relative;border:5px solid white;box-shadow:0 20px 50px #806d5122}.devghar-image:after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(transparent,#111b)}.devghar-image img{object-fit:cover;object-position:center}.devghar-image>div{position:absolute;z-index:2;bottom:30px;left:30px;color:white}.devghar-image b{background:#f0c83e;color:#15120d;padding:8px 12px;border-radius:9px}.devghar-image h3{font-size:27px;margin:20px 0 5px}.devghar-image p{max-width:520px}.devghar-copy h2{font-size:clamp(45px,4vw,64px);line-height:1;margin:20px 0}.devghar-copy>p{font-size:18px;line-height:1.65;color:#6c6760}.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:30px 0}.mini-grid article{background:white;border:1px solid #e8dcbf;border-radius:18px;padding:24px}.mini-grid svg{color:#c39724}.mini-grid h3{margin:15px 0 8px}.mini-grid p{color:#746f68;line-height:1.45}.estimator-section{background:#f0e6d6;padding:100px 8%}.estimator-card{max-width:1150px;margin:auto;background:white;border:1px solid #ead7ad;border-radius:28px;padding:48px;box-shadow:0 25px 70px #66533322}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}.form-grid label{font-weight:800;text-transform:uppercase;font-size:12px;letter-spacing:.04em}.form-grid select{display:block;width:100%;margin-top:12px;padding:15px;border:1px solid #d9d3cb;border-radius:14px;background:#faf7f2}.addons{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:30px 0}.addons label{border:1px solid #e1d9cc;border-radius:14px;padding:18px;font-weight:700}.addons input{width:18px;height:18px;vertical-align:middle;margin-right:10px}.estimate-result{background:#11100f;color:#fff;border:1px solid #8d6b1f;border-radius:22px;padding:30px;display:flex;justify-content:space-between;gap:30px;align-items:center}.estimate-result>div:first-child>span{color:#d9b342;font-size:12px;font-weight:900;letter-spacing:.1em}.estimate-result strong{display:block;font:700 38px Georgia,serif;margin:12px 0}.estimate-result small{color:#d2c8b7;line-height:1.6}.estimate-result>div:last-child{display:flex;flex-direction:column;gap:12px;min-width:260px}.fine-print{text-align:center;color:#8b857d;font-size:12px;margin-bottom:0}.reviews{background:white}.review-heading{display:flex;justify-content:space-between;align-items:end;max-width:1500px;margin:auto 0 50px}.review-heading h2{font-size:clamp(42px,4vw,64px);margin:20px 0 0}.score{display:flex;align-items:center;gap:10px}.score span{color:#d4aa29;font-size:27px;letter-spacing:3px}.score small{color:#6d6964}.review-grid{max-width:1500px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:28px}.review-grid article{border:1px solid #e9ddc7;border-radius:20px;padding:30px;background:#fff}.review-top{display:flex;align-items:center;gap:12px}.avatar{width:48px;height:48px;border-radius:50%;background:#f4e6bd;display:grid;place-items:center;font-weight:900;color:#8d6b1f}.review-top b{display:block}.review-top small{display:block;color:#aaa}.review-top>span{margin-left:auto;color:#d6ac2d;letter-spacing:2px}.review-grid p{font-style:italic;color:#4e4a45;line-height:1.6;min-height:110px}.review-grid footer{border-top:1px solid #eee5d8;padding-top:15px;color:#9a938b;font-size:13px}.contact{background:#11100f;color:white;padding:70px 8%;display:flex;justify-content:space-between;align-items:center;gap:30px}.contact h2{font-size:50px;margin:18px 0 8px}.contact p{color:#c8c0b4}.contact-actions{display:flex;gap:14px}.floating-whatsapp{position:fixed;z-index:60;right:28px;bottom:28px;width:60px;height:60px;border-radius:50%;background:#0ab879;color:white;display:grid;place-items:center;box-shadow:0 10px 30px #0003}.owner-float{position:fixed;z-index:60;left:28px;bottom:28px;background:#11100f;border:1px solid #a47d1d;color:#e8c55a;border-radius:18px;padding:11px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 12px 30px #0004}.owner-float>a{display:flex;flex-direction:column}.owner-float small{font-size:9px;letter-spacing:.08em}.owner-float b{color:white}.modal{position:fixed;inset:0;background:#0008;z-index:100;display:grid;place-items:center}.modal-card{background:white;padding:50px;border-radius:20px;position:relative}.modal-card>button{position:absolute;right:15px;top:15px;border:0;background:none}.footer{background:#0a0a09;color:#b9b0a4;padding:28px 8%;display:flex;justify-content:space-between;font-size:12px}.footer span:last-child{display:flex;gap:6px;align-items:center}
-/* owner portal */.owner-page{min-height:100vh;background:#0d0c0b;color:white;padding-bottom:70px}.owner-nav{height:82px;border-bottom:1px solid #3d3119;display:flex;align-items:center;justify-content:space-between;padding:0 6%}.owner-nav a{color:#e7c85e;font-weight:900}.owner-main{max-width:1250px;margin:70px auto;padding:0 24px}.owner-main h1{font:700 clamp(42px,5vw,70px) Georgia,serif;margin:20px 0}.owner-main>p{color:#bbb2a7;font-size:18px}.owner-login,.upload-card{max-width:700px;margin:40px auto;background:#171615;border:1px solid #6f551e;border-radius:24px;padding:38px;box-shadow:0 25px 70px #0006}.owner-login label,.upload-card label{display:block;color:#d7c39a;font-size:12px;font-weight:800;margin:20px 0 8px}.owner-login input,.upload-card input,.upload-card textarea,.upload-card select{width:100%;padding:14px 15px;border-radius:12px;border:1px solid #4e4639;background:#0f0e0d;color:white}.upload-zone{border:1px dashed #8d6d27;border-radius:18px;padding:30px;text-align:center;margin:20px 0;background:#121110}.upload-zone input{border:0;padding:10px}.ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}.preview{background:#111;border-radius:18px;overflow:hidden;border:1px solid #4c412b}.preview img{width:100%;aspect-ratio:1/1;object-fit:cover}.ai-meta{display:grid;gap:14px}.ai-meta h3{font:700 28px Georgia,serif;margin:0}.pill{display:inline-block;background:#2a2417;color:#e4c35c;padding:7px 10px;border-radius:99px;font-size:12px}.portal-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.danger{background:#2c1614;border-color:#78352d;color:#ffb7aa}.owner-products{margin-top:60px}.owner-product-row{display:grid;grid-template-columns:90px 1fr auto;gap:16px;align-items:center;background:#171615;border:1px solid #3f382d;border-radius:15px;padding:12px;margin:12px 0}.owner-product-row img{width:90px;height:90px;object-fit:cover;border-radius:10px}.status{color:#7ce0b5;font-size:12px;font-weight:800}
-@media(max-width:1200px){.brand{min-width:270px}.nav{gap:12px}.nav a{font-size:12px}.header-actions .btn{padding:9px 10px;font-size:11px}.hero-grid{grid-template-columns:1fr}.hero-card{justify-self:center;max-width:620px}.hero{min-height:auto}.hero-grid{padding-top:90px;padding-bottom:90px}.feature-grid,.product-grid,.review-grid{grid-template-columns:1fr 1fr}.dark-panel,.devghar{grid-template-columns:1fr}.devghar-image{height:500px}.contact{flex-direction:column;align-items:flex-start}.review-heading{align-items:flex-start;gap:20px;flex-direction:column}}
-@media(max-width:800px){.topbar{display:none}.header{height:72px;padding:8px 15px}.brand{min-width:0}.brand strong{font-size:21px}.brand-logo{width:44px;height:44px}.rating{display:none}.nav{position:absolute;left:0;right:0;top:72px;background:white;display:none;flex-direction:column;padding:20px;border-bottom:1px solid #ddd}.nav.open{display:flex}.header-actions{display:none}.menu-btn{display:block;margin-left:auto}.hero-grid{padding:65px 20px}.hero h1{font-size:52px}.hero-copy>p{font-size:16px}.cta-row{flex-direction:column}.hero-proof{display:grid;grid-template-columns:1fr 1fr}.hero-card{padding:14px}.standard-section,.dark-panel,.estimator-section{padding:75px 20px}.feature-grid,.product-grid,.review-grid,.form-grid,.addons,.mini-grid,.ai-grid{grid-template-columns:1fr}.feature-card{padding:28px}.feature-card p{min-height:auto}.product-image{height:300px}.interior-gallery{grid-template-columns:1fr}.interior-gallery>div,.interior-gallery>div:nth-child(1),.interior-gallery>div:nth-child(3){height:280px}.devghar-image{height:400px}.estimator-card{padding:22px}.estimate-result{flex-direction:column;align-items:stretch}.estimate-result strong{font-size:30px}.estimate-result>div:last-child{min-width:0}.contact{padding:60px 20px}.contact h2{font-size:40px}.contact-actions{width:100%;flex-direction:column}.footer{flex-direction:column;gap:10px;padding:25px 20px}.floating-whatsapp{right:18px;bottom:18px}.owner-float{left:18px;bottom:18px}.owner-product-row{grid-template-columns:70px 1fr}.owner-product-row img{width:70px;height:70px}.owner-product-row .btn{grid-column:1/-1}.owner-main{margin-top:40px}}
-/* =========================================================
-   PRODUCT DETAILS MODAL - MOBILE FIX
-   ========================================================= */
+/* ==========================================================================
+   PARIHAR FURNITURE & INTERIOR — APPLE LIQUID GLASS LIGHT DESIGN SYSTEM
+   Luminous Light Aesthetic · Frosted Liquid Glass · VisionOS Refractions
+   Optimized for Android & all mobile screens (320px – 480px+)
+   ========================================================================== */
 
-.product-details-layout {
+:root {
+  /* Apple-Style Light Color Scheme */
+  --canvas-bg: #f5f5f7;
+  --canvas-card: rgba(255, 255, 255, 0.72);
+  --canvas-card-hover: rgba(255, 255, 255, 0.92);
+  --canvas-surface: #ffffff;
+  --canvas-elevated: rgba(255, 255, 255, 0.88);
+
+  /* Liquid Glass Borders & Specular Reflections */
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --glass-border-subtle: rgba(0, 0, 0, 0.07);
+  --glass-specular: inset 0 1px 1px rgba(255, 255, 255, 1), 0 10px 30px rgba(0, 0, 0, 0.04);
+  --glass-specular-hover: inset 0 1px 2px rgba(255, 255, 255, 1), 0 18px 45px rgba(0, 0, 0, 0.08);
+  --glass-blur: blur(28px) saturate(200%);
+
+  /* Typography Colors (Apple High-Contrast Legibility) */
+  --ink-primary: #1d1d1f;
+  --ink-secondary: #4a4a4e;
+  --ink-muted: #86868b;
+  --ink-faint: #aba8a2;
+
+  /* Titanium Champagne Gold Accents */
+  --gold-primary: #9b7530;
+  --gold-light: #b68d40;
+  --gold-dark: #7a5a22;
+  --gold-bg: rgba(155, 117, 48, 0.09);
+  --gold-border: rgba(155, 117, 48, 0.25);
+
+  /* WhatsApp Conversion */
+  --wa-green: #25d366;
+  --wa-dark: #128c7e;
+  --wa-glow: rgba(37, 211, 102, 0.28);
+
+  /* Typography */
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Mobile Ergonomics */
+  --bottom-dock-height: 72px;
+  --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Base Reset & Mobile Viewport Rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--canvas-bg);
+  color: var(--ink-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   width: 100%;
-  grid-template-columns: minmax(320px, 1fr) minmax(320px, 1fr);
+  overflow-x: hidden;
 }
 
-/* TABLET + MOBILE */
+body {
+  background-color: var(--canvas-bg);
+  color: var(--ink-primary);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.55;
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+  /* Apple Luminous Liquid Mesh Ambient Gradient Background */
+  background-image: 
+    radial-gradient(circle at 12% 8%, rgba(240, 222, 195, 0.55) 0%, transparent 45%),
+    radial-gradient(circle at 88% 18%, rgba(215, 230, 248, 0.5) 0%, transparent 50%),
+    radial-gradient(circle at 50% 55%, rgba(248, 236, 218, 0.45) 0%, transparent 55%),
+    radial-gradient(circle at 85% 85%, rgba(220, 240, 232, 0.45) 0%, transparent 50%),
+    radial-gradient(circle at 15% 90%, rgba(245, 228, 210, 0.4) 0%, transparent 50%);
+  background-attachment: fixed;
+}
 
-@media (max-width: 800px) {
-  .product-details-layout {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    width: 100% !important;
-  }
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
-  .product-details-layout > div:first-child {
-    width: 100% !important;
-    min-height: 360px !important;
-    height: 360px !important;
-    border-radius: 28px 28px 0 0 !important;
-  }
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  outline: none;
+}
 
-  .product-details-layout > div:last-child {
-    width: 100% !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
-    padding: 30px 22px 28px !important;
-  }
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
 
-  .product-details-layout h2 {
-    font-size: 30px !important;
-    line-height: 1.12 !important;
-    overflow-wrap: anywhere !important;
-  }
+/* Strictly 16px to prevent iOS & Android unwanted zooming on focus */
+input,
+select,
+textarea {
+  font-family: var(--font-sans);
+  font-size: 16px !important;
+  color: var(--ink-primary);
+  outline: none;
+}
 
-  .product-details-layout p {
-    overflow-wrap: anywhere !important;
-  }
+/* Site Shell */
+.site-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+  padding-bottom: calc(var(--bottom-dock-height) + env(safe-area-inset-bottom, 20px) + 24px);
+}
 
-  .product-details-layout img {
-    max-width: 100% !important;
+@media (min-width: 1024px) {
+  .site-shell {
+    padding-bottom: 0;
   }
 }
 
-/* SMALL PHONES */
+/* ==========================================================================
+   01. ANIMATED LIQUID GLASS TICKER BAR
+   ========================================================================== */
+.liquid-ticker-bar {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border-subtle);
+  color: var(--gold-dark);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  z-index: 50;
+}
 
-@media (max-width: 480px) {
-  .product-details-layout > div:first-child {
-    min-height: 300px !important;
-    height: 300px !important;
-  }
+.ticker-track {
+  display: inline-flex;
+  gap: 36px;
+  animation: tickerScroll 24s linear infinite;
+  will-change: transform;
+}
 
-  .product-details-layout > div:last-child {
-    padding: 26px 18px 24px !important;
-    gap: 14px !important;
-  }
+@keyframes tickerScroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
 
-  .product-details-layout h2 {
-    font-size: 27px !important;
-  }
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
 
-  .product-details-layout > div:last-child > div {
-    max-width: 100% !important;
-  }
+.ticker-item b {
+  color: var(--ink-primary);
+  font-weight: 600;
+}
 
-  .product-details-layout button,
-  .product-details-layout a {
-    min-width: 0 !important;
+/* ==========================================================================
+   02. APPLE LIQUID GLASS NAVBAR (MINIMAL & TOUCH-OPTIMIZED)
+   ========================================================================== */
+.liquid-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  padding: 10px clamp(14px, 4vw, 36px);
+  transition: all 0.3s ease;
+}
+
+.navbar-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Brand Link with Official Circular Logo */
+.brand-anchor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-emblem-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1.5px solid var(--gold-light);
+  box-shadow: 0 4px 14px rgba(155, 117, 48, 0.15);
+  flex-shrink: 0;
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+}
+
+.brand-emblem-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brand-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-main-title {
+  font-family: var(--font-serif);
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-primary);
+  line-height: 1.05;
+}
+
+.brand-sub-title {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  font-weight: 600;
+}
+
+/* Desktop Links (Hidden on Phones) */
+.desktop-nav-links {
+  display: none;
+  align-items: center;
+  gap: 28px;
+}
+
+@media (min-width: 1024px) {
+  .desktop-nav-links {
+    display: flex;
   }
 }
 
-/* VERY SMALL PHONES */
+.desktop-link {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+  transition: color 0.2s ease;
+}
 
-@media (max-width: 380px) {
-  .product-details-layout > div:first-child {
-    min-height: 270px !important;
-    height: 270px !important;
-  }
+.desktop-link:hover {
+  color: var(--ink-primary);
+}
 
-  .product-details-layout > div:last-child {
-    padding: 22px 15px 20px !important;
-  }
+/* Mobile Actions */
+.mobile-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-  .product-details-layout h2 {
-    font-size: 25px !important;
+/* Liquid Glass WhatsApp Pill */
+.nav-wa-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 15px;
+  border-radius: 9999px;
+  background: rgba(37, 211, 102, 0.12);
+  border: 1px solid rgba(37, 211, 102, 0.35);
+  color: #128c7e;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 700;
+  box-shadow: 0 2px 10px rgba(37, 211, 102, 0.12);
+  transition: all 0.2s var(--ease-apple);
+}
+
+.nav-wa-pill:active {
+  transform: scale(0.95);
+}
+
+.nav-menu-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: var(--ink-primary);
+  display: grid;
+  place-items: center;
+  transition: all 0.2s ease;
+}
+
+.nav-menu-toggle:active {
+  transform: scale(0.94);
+  background: rgba(0, 0, 0, 0.08);
+}
+
+@media (min-width: 1024px) {
+  .nav-menu-toggle {
+    display: none;
   }
+}
+
+/* Fullscreen Liquid Glass Drawer */
+.liquid-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(245, 245, 247, 0.88);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  display: flex;
+  flex-direction: column;
+  padding: 20px clamp(16px, 5vw, 36px);
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--glass-border-subtle);
+}
+
+.drawer-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.drawer-link-item {
+  font-family: var(--font-serif);
+  font-size: clamp(26px, 6.5vw, 36px);
+  color: var(--ink-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.drawer-link-item span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--gold-dark);
+}
+
+.drawer-footer-actions {
+  padding-top: 20px;
+  border-top: 1px solid var(--glass-border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ==========================================================================
+   03. APPLE LIQUID GLASS HERO (LIGHT & CINEMATIC)
+   ========================================================================== */
+.liquid-hero {
+  position: relative;
+  min-height: calc(100svh - 110px);
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(28px, 6vw, 64px) clamp(16px, 4vw, 40px);
+  overflow: hidden;
+  background: #eae8e3;
+}
+
+.hero-media-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.hero-media-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  filter: contrast(1.04) brightness(0.95);
+}
+
+/* Light Scrim Vignette */
+.hero-gradient-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.1) 35%,
+    rgba(255, 255, 255, 0.85) 75%,
+    rgba(255, 255, 255, 0.98) 100%
+  );
+  pointer-events: none;
+}
+
+.hero-inner-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Liquid Glass Hallmark Card */
+.liquid-hallmark-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05), inset 0 1px 0 #fff;
+  margin-bottom: 16px;
+}
+
+.hallmark-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--gold-light);
+}
+
+.hallmark-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.liquid-hallmark-badge span {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  font-weight: 700;
+}
+
+.hero-main-heading {
+  font-family: var(--font-serif);
+  font-size: clamp(36px, 8.5vw, 78px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  color: var(--ink-primary);
+  margin-bottom: 14px;
+  max-width: 900px;
+}
+
+.hero-main-heading em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--gold-primary);
+}
+
+.hero-sub-description {
+  font-size: clamp(15px, 3.4vw, 17.5px);
+  color: var(--ink-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  max-width: 620px;
+}
+
+/* Liquid Glass CTAs */
+.hero-cta-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-bottom: 26px;
+}
+
+@media (min-width: 480px) {
+  .hero-cta-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-cta-grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+}
+
+/* Apple Liquid Gloss Button */
+.btn-liquid-gold {
+  height: 50px;
+  padding: 0 26px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #1d1d1f, #2c2c30);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+  transition: all 0.25s var(--ease-apple);
+}
+
+.btn-liquid-gold:active {
+  transform: scale(0.97);
+}
+
+/* Liquid Glass Pill Button */
+.btn-liquid-glass {
+  height: 50px;
+  padding: 0 24px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05), inset 0 1px 1px #fff;
+  color: var(--ink-primary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s var(--ease-apple);
+}
+
+.btn-liquid-glass:active {
+  transform: scale(0.97);
+}
+
+/* Quick Proof Badges */
+.hero-proof-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-top: 18px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+
+.hero-proof-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ==========================================================================
+   04. INSTAGRAM-STYLE LIQUID GLASS STORY HIGHLIGHTS
+   ========================================================================== */
+.liquid-story-bar {
+  padding: 20px clamp(14px, 4vw, 36px);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border-subtle);
+  overflow: hidden;
+}
+
+.story-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+
+.story-track::-webkit-scrollbar {
+  display: none;
+}
+
+.story-card-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.story-card-item:active {
+  transform: scale(0.93);
+}
+
+.story-circle-ring {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  padding: 2.5px;
+  background: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  display: grid;
+  place-items: center;
+  transition: all 0.25s ease;
+}
+
+.story-card-item.active .story-circle-ring {
+  background: linear-gradient(135deg, var(--gold-light), #7a5a22);
+  box-shadow: 0 4px 16px rgba(155, 117, 48, 0.3);
+}
+
+.story-circle-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f0f0f2;
+  position: relative;
+}
+
+.story-circle-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.story-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+  text-align: center;
+  max-width: 76px;
+  line-height: 1.2;
+}
+
+.story-card-item.active .story-label {
+  color: var(--gold-dark);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   05. APPLE LIQUID GLASS PRODUCT CARDS & SHOWCASE
+   ========================================================================== */
+.section-showcase {
+  padding: clamp(40px, 8vw, 84px) clamp(14px, 4vw, 36px);
+  position: relative;
+}
+
+.section-head-wrap {
+  max-width: 1400px;
+  margin: 0 auto 28px;
+}
+
+.section-tag-gold {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(30px, 6vw, 50px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--ink-primary);
+}
+
+.section-subtitle {
+  font-size: 15px;
+  color: var(--ink-secondary);
+  line-height: 1.6;
+  margin-top: 6px;
+  max-width: 640px;
+}
+
+/* Category Filter Pills (Liquid Glass) */
+.category-filter-bar {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 0 24px;
+  margin-bottom: 8px;
+  scrollbar-width: none;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.category-filter-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.category-pill {
+  flex-shrink: 0;
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03), inset 0 1px 0 #fff;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.25s var(--ease-apple);
+}
+
+.category-pill.active {
+  background: var(--ink-primary);
+  color: #ffffff;
+  border-color: var(--ink-primary);
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Cards Grid */
+.showcase-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .showcase-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .showcase-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1360px) {
+  .showcase-cards-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Apple Liquid Glass Product Card */
+.liquid-product-card {
+  background: var(--canvas-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-specular);
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.35s var(--ease-apple);
+  position: relative;
+  cursor: pointer;
+}
+
+.liquid-product-card:hover {
+  background: var(--canvas-card-hover);
+  box-shadow: var(--glass-specular-hover);
+  transform: translateY(-5px);
+}
+
+.liquid-product-card:active {
+  transform: scale(0.98);
+}
+
+.liquid-card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3.2;
+  overflow: hidden;
+  background: #eae8e3;
+}
+
+.liquid-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-apple);
+}
+
+.liquid-product-card:hover .liquid-card-media img {
+  transform: scale(1.04);
+}
+
+.card-code-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  color: var(--gold-dark);
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.card-discount-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: rgba(29, 29, 31, 0.85);
+  backdrop-filter: blur(10px);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.liquid-card-body {
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 10px;
+}
+
+.liquid-card-title {
+  font-family: var(--font-serif);
+  font-size: 21px;
+  font-weight: 500;
+  color: var(--ink-primary);
+  line-height: 1.25;
+}
+
+.liquid-card-desc {
+  font-size: 13.5px;
+  color: var(--ink-secondary);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
+.liquid-card-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.liquid-price-amount {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink-primary);
+}
+
+.liquid-price-label {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--ink-muted);
+  text-transform: uppercase;
+}
+
+.btn-card-inspect {
+  margin-top: 12px;
+  height: 44px;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  color: var(--ink-primary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s var(--ease-apple);
+}
+
+.liquid-product-card:hover .btn-card-inspect {
+  background: var(--ink-primary);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   06. SACRED DEVGHAR SPOTLIGHT (LIQUID GLASS + WARM HALO)
+   ========================================================================== */
+.section-devghar-halo {
+  padding: clamp(40px, 8vw, 84px) clamp(14px, 4vw, 36px);
+  position: relative;
+  overflow: hidden;
+}
+
+.devghar-glow-card {
+  max-width: 1400px;
+  margin: 0 auto;
+  border-radius: 28px;
+  background: var(--canvas-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-specular-hover);
+  padding: clamp(24px, 5vw, 52px);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .devghar-glow-card {
+    grid-template-columns: 0.95fr 1.05fr;
+  }
+}
+
+.devghar-halo-frame {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1.5px solid var(--gold-border);
+  aspect-ratio: 4 / 4.4;
+  box-shadow: 0 16px 40px rgba(155, 117, 48, 0.15);
+}
+
+.devghar-halo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.devghar-content-side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.devghar-content-side h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(30px, 6vw, 46px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--ink-primary);
+}
+
+.devghar-content-side h2 span {
+  display: block;
+  font-size: clamp(17px, 3.5vw, 22px);
+  color: var(--gold-primary);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.devghar-spec-chips {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.devghar-spec-item {
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.devghar-spec-item strong {
+  font-size: 13.5px;
+  color: var(--ink-primary);
+  display: block;
+  font-weight: 600;
+}
+
+.devghar-spec-item small {
+  font-size: 11.5px;
+  color: var(--ink-muted);
+}
+
+/* ==========================================================================
+   07. CLIENT REVIEWS (LIQUID GLASS TILES)
+   ========================================================================== */
+.section-reviews {
+  padding: clamp(40px, 8vw, 84px) clamp(14px, 4vw, 36px);
+}
+
+.reviews-scroll-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .reviews-scroll-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .reviews-scroll-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.review-item-card {
+  background: var(--canvas-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-specular);
+  border-radius: 20px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.review-stars-gold {
+  color: var(--gold-primary);
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+.review-body-text {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink-primary);
+  font-style: italic;
+  flex: 1;
+}
+
+.review-client-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.client-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--gold-bg);
+  border: 1px solid var(--gold-border);
+  color: var(--gold-dark);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* ==========================================================================
+   08. APPLE LIQUID GLASS BOTTOM SHEET (PRODUCT DETAIL & INQUIRY)
+   ========================================================================== */
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  animation: fadeIn 0.2s ease;
+}
+
+@media (min-width: 768px) {
+  .drawer-backdrop {
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+  }
+}
+
+.drawer-surface {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(36px) saturate(210%);
+  -webkit-backdrop-filter: blur(36px) saturate(210%);
+  border: 1px solid rgba(255, 255, 255, 1);
+  border-radius: 28px 28px 0 0;
+  width: 100%;
+  max-height: 88svh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 -16px 50px rgba(0, 0, 0, 0.12), inset 0 1px 1px #fff;
+  animation: slideUp 0.3s var(--ease-apple);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0%); }
+}
+
+@media (min-width: 768px) {
+  .drawer-surface {
+    border-radius: 24px;
+    max-width: 760px;
+    max-height: 85vh;
+  }
+}
+
+.drawer-drag-line {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0 4px;
+}
+
+.drag-pill {
+  width: 44px;
+  height: 5px;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.drawer-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 20px 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.drawer-content-scroll {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 18px 20px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.drawer-image-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #eae8e3;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.drawer-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.drawer-specs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.drawer-spec-pill {
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.drawer-spec-pill small {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+
+.drawer-spec-pill strong {
+  font-size: 13px;
+  color: var(--ink-primary);
+}
+
+.drawer-footer-sticky {
+  padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 8px));
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.95);
+  display: flex;
+  gap: 10px;
+}
+
+/* ==========================================================================
+   09. APPLE FLOATING LIQUID GLASS DOCK (STICKY BOTTOM FOR MOBILE)
+   ========================================================================== */
+.liquid-floating-dock {
+  position: fixed;
+  bottom: 14px;
+  left: 14px;
+  right: 14px;
+  z-index: 90;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(32px) saturate(210%);
+  -webkit-backdrop-filter: blur(32px) saturate(210%);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.1), inset 0 1px 0 #fff;
+  border-radius: 9999px;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 6px;
+}
+
+@media (min-width: 1024px) {
+  .liquid-floating-dock {
+    display: none;
+  }
+}
+
+.dock-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 6px 10px;
+  border-radius: 9999px;
+  color: var(--ink-secondary);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  flex: 1;
+  min-height: 46px;
+  transition: all 0.15s ease;
+}
+
+.dock-btn:active {
+  transform: scale(0.92);
+}
+
+.dock-btn.highlight-wa {
+  background: #25d366;
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+}
+
+/* Footer */
+.site-footer-light {
+  padding: 36px clamp(14px, 4vw, 36px);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--glass-border-subtle);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }

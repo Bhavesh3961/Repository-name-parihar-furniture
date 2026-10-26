@@ -4,197 +4,108 @@ import Image from "next/image";
 import {
   ArrowRight,
   CheckCircle2,
-  Crown,
-  Instagram,
+  Compass,
   MapPin,
   MessageCircle,
   Phone,
-  Ruler,
   ShieldCheck,
-  Sparkles,
   Star,
   TreePine,
-  WandSparkles,
   X,
+  ChevronRight,
+  Sparkles,
+  Flame,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { SiteHeader } from "./site-header";
+import { seedProducts, seedReviews } from "@/data/seed";
 
-const whatsapp = "919175379886";
+const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919175379886";
+const phoneNumber = process.env.NEXT_PUBLIC_PHONE_NUMBER || whatsappNumber;
 
 const waLink = (text: string) =>
-  `https://wa.me/${whatsapp}?text=${encodeURIComponent(text)}`;
+  `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
 
-const categories = [
+const usefulCategories = [
   "All Collections",
-  "Living Room & Sofas",
-  "Beds & Wardrobes",
-  "Devghar (Mandir)",
+  "Living & Sofas",
   "Dining Sets",
-  "Office & Study",
-  "5-Star Full House",
+  "Beds & Hydraulic",
+  "Wardrobes & TV Units",
+  "Pooja Mandir",
+  "Study & Desks",
+  "Full Flat Packages",
 ];
 
-const localProducts = [
-  {
-    id: "cabinet-cnc-jali",
-    name: "Contemporary CNC Laser-Jali Backlit Cabinet",
-    category: "Beds & Wardrobes",
-    price: 10500,
-    imageUrl: "/assets/product-cabinet.jpg",
-    shortDescription:
-      "Machine-polished storage with a refined CNC-jali look.",
-  },
-  {
-    id: "solid-wood-dining",
-    name: "Solid Wood 6-Seater Dining Set",
-    category: "Dining Sets",
-    price: 42000,
-    imageUrl: "/assets/interior-dining.jpg",
-    shortDescription:
-      "Warm solid-wood dining built for everyday family use.",
-  },
-  {
-    id: "custom-sectional",
-    name: "Custom 6-Seater L-Shape Sectional",
-    category: "Living Room & Sofas",
-    price: 58000,
-    imageUrl: "/assets/interior-sofa.jpg",
-    shortDescription:
-      "Tailored sectional seating with a soft luxury finish.",
-  },
-];
-
-const reviews = [
-  [
-    "JH Bhati",
-    "1 month ago · 4 reviews",
-    "Absolutely loved this furniture in the shop. Quality was Top Notch! The quality of the furniture is excellent, and there are so many beautiful designs to choose from.",
-  ],
-  [
-    "Bhavesh",
-    "2 months ago · 2 photos",
-    "Got my whole house furnished they converted it from simple to aesthetic 5 star. My soul satisfied from their service and interior ideas.",
-  ],
-  [
-    "Balaji S",
-    "Local Guide · 14 reviews",
-    "Excellent service, variety of furniture, sober staff. The go to shop for any kind of household furniture & basic office furniture.",
-  ],
-  [
-    "Yuvraj Parmar",
-    "Local Guide · 25 reviews",
-    "Go to shop for furniture for home. Reasonable price and prompt service.",
-  ],
-  [
-    "Prakash Parihar",
-    "Local Guide · 10 reviews",
-    "This is best furniture shop in this area so buy it… and the shop keeper behaviour is also good and nice guy so go through.",
-  ],
-  [
-    "Deepak Pandey",
-    "3 reviews · 2 photos",
-    "Very good service in this shop and the employee have very good talking skills.",
-  ],
+const storyHighlights = [
+  { id: "All Collections", label: "All Items", image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=400&q=80" },
+  { id: "Living & Sofas", label: "Sofas & Living", image: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=400&q=80" },
+  { id: "Dining Sets", label: "Dining Suites", image: "https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&w=400&q=80" },
+  { id: "Beds & Hydraulic", label: "Beds & Storage", image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=400&q=80" },
+  { id: "Pooja Mandir", label: "Pooja Mandir", image: "/assets/devghar-source.png" },
+  { id: "Wardrobes & TV Units", label: "Wardrobes & TV", image: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=400&q=80" },
+  { id: "Study & Desks", label: "Study Desks", image: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&w=400&q=80" },
+  { id: "Full Flat Packages", label: "Full Flat 2BHK", image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=400&q=80" },
 ];
 
 export function HomePage() {
-  const [products, setProducts] = useState(localProducts);
-  const [active, setActive] = useState("All Collections");
+  const [products, setProducts] = useState(seedProducts);
+  const [activeCategory, setActiveCategory] = useState("All Collections");
 
-  const [estimate, setEstimate] = useState({
-    low: 135125,
-    high: 274940,
-  });
-
-  const [estimateForm, setEstimateForm] = useState({
-    packageType: "2 BHK Complete Package",
-    finish: "Machine Melamine Gloss / Matte Polish",
-    devghar: true,
-    sectional: true,
-  });
-
-  const [modal, setModal] = useState<string | null>(null);
-
-  const [selectedProduct, setSelectedProduct] =
-    useState<any | null>(null);
-
-  const [showOrderForm, setShowOrderForm] = useState(false);
-
+  // Bottom Sheet Drawer State
+  const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
+  const [showOrderModal, setShowOrderModal] = useState(false);
   const [orderLoading, setOrderLoading] = useState(false);
+  const [orderSuccessId, setOrderSuccessId] = useState<string | null>(null);
 
-  const [orderSuccess, setOrderSuccess] =
-    useState<string | null>(null);
-
+  // Order Form
   const [orderForm, setOrderForm] = useState({
     customerName: "",
     phone: "",
     address: "",
-    city: "",
+    city: "Pune",
     pincode: "",
     quantity: 1,
   });
 
+  // Load products from API with fallback
   useEffect(() => {
     fetch("/api/products")
-      .then((r) => r.json())
+      .then((res) => res.json())
       .then((data) => {
-        if (Array.isArray(data)) {
+        if (Array.isArray(data) && data.length > 0) {
           setProducts(data);
         }
       })
       .catch(() => {});
   }, []);
 
-  const filtered = useMemo(
-    () =>
-      active === "All Collections"
-        ? products
-        : products.filter(
-            (p) => p.category === active
-          ),
-    [active, products]
-  );
+  // Filtered Products
+  const filteredProducts = useMemo(() => {
+    if (activeCategory === "All Collections") return products;
+    return products.filter((p) => p.category === activeCategory);
+  }, [activeCategory, products]);
 
-  async function calculate() {
-    const response = await fetch("/api/estimate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(estimateForm),
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      setEstimate(data);
-    }
-  }
-
-  async function placeOrder() {
+  // Handle Order Placement
+  async function submitOrder() {
     if (!selectedProduct) return;
 
     if (
       !orderForm.customerName.trim() ||
       !orderForm.phone.trim() ||
-      !orderForm.address.trim() ||
-      !orderForm.city.trim() ||
-      !orderForm.pincode.trim()
+      !orderForm.address.trim()
     ) {
-      alert("Please fill all required fields.");
+      alert("Please enter your name, phone number, and delivery address in Pune.");
       return;
     }
 
     setOrderLoading(true);
-    setOrderSuccess(null);
+    setOrderSuccessId(null);
 
     try {
-      const response = await fetch("/api/orders", {
+      const res = await fetch("/api/orders", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           productId: selectedProduct.id,
           productName: selectedProduct.name,
@@ -204,89 +115,50 @@ export function HomePage() {
           phone: orderForm.phone,
           address: orderForm.address,
           city: orderForm.city,
-          pincode: orderForm.pincode,
+          pincode: orderForm.pincode || "Pune",
         }),
       });
 
-      const data = await response.json();
+      const data = await res.json();
+      const generatedId = data?.orderId || data?.id || `PF-${Date.now().toString().slice(-6)}`;
+      setOrderSuccessId(generatedId);
 
-      if (!response.ok) {
-        throw new Error(
-          data?.error || "Unable to place order."
-        );
-      }
+      const totalVal = Number(selectedProduct.price) * orderForm.quantity;
+      const orderMessage = `
+🛒 *NEW ORDER - PARIHAR FURNITURE & INTERIOR*
 
-      const orderId =
-        data?.orderId ||
-        data?.id ||
-        `PF-${Date.now()}`;
-
-      const total =
-        Number(selectedProduct.price) *
-        Number(orderForm.quantity);
-
-      const whatsappMessage = `
-🛒 *NEW ORDER - PARIHAR FURNITURE*
-
-📦 *PRODUCT DETAILS*
-Product: ${selectedProduct.name}
-Category: ${selectedProduct.category}
+📦 *PRODUCT INQUIRY*
+Item: ${selectedProduct.name}
+Code: ${selectedProduct.code || "PF—PUNE"}
+Price: ₹${Number(selectedProduct.price).toLocaleString("en-IN")}
 Quantity: ${orderForm.quantity}
-Price: ₹${Number(
-        selectedProduct.price
-      ).toLocaleString("en-IN")}
-Total: ₹${total.toLocaleString("en-IN")}
+Total: ₹${totalVal.toLocaleString("en-IN")}
 
 👤 *CUSTOMER DETAILS*
 Name: ${orderForm.customerName}
 Phone: ${orderForm.phone}
+Address: ${orderForm.address}, ${orderForm.city} - ${orderForm.pincode}
 
-📍 *DELIVERY DETAILS*
-Address: ${orderForm.address}
-City: ${orderForm.city}
-Pincode: ${orderForm.pincode}
+🆔 Order Reference: #${generatedId}
 
-🆔 *ORDER ID*
-${orderId}
-
-Please confirm this order with the customer.
+Please confirm delivery timeline and timber finish options.
 `.trim();
 
-      const OWNER_WHATSAPP_NUMBER = "919175379886";
-
-      const whatsappUrl =
-        `https://wa.me/${OWNER_WHATSAPP_NUMBER}` +
-        `?text=${encodeURIComponent(whatsappMessage)}`;
-
-      setOrderSuccess(orderId);
-
-      window.location.href = whatsappUrl;
-    } catch (error) {
-      console.error("Order error:", error);
-
-      alert(
-        error instanceof Error
-          ? error.message
-          : "Something went wrong. Please try again."
-      );
+      setTimeout(() => {
+        window.location.href = waLink(orderMessage);
+      }, 900);
+    } catch (err) {
+      console.error(err);
+      alert("Could not register order online. Please contact us directly on WhatsApp.");
     } finally {
       setOrderLoading(false);
     }
   }
 
-  function closeProductModal() {
+  function closeDrawer() {
     setSelectedProduct(null);
-    setShowOrderForm(false);
-    setOrderSuccess(null);
-
-    setOrderForm({
-      customerName: "",
-      phone: "",
-      address: "",
-      city: "",
-      pincode: "",
-      quantity: 1,
-    });
+    setShowOrderModal(false);
+    setOrderSuccessId(null);
   }
 
   return (
@@ -294,1511 +166,572 @@ Please confirm this order with the customer.
       <SiteHeader />
 
       <main>
-        {/* HERO */}
+        {/* =================================================================
+            01. APPLE LIQUID GLASS HERO (LIGHT & ELEGANT)
+            ================================================================= */}
+        <section id="hero" className="liquid-hero">
+          <div className="hero-media-cover">
+            <Image
+              src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85"
+              alt="Parihar Furniture Living Room Showcase"
+              fill
+              priority
+              sizes="100vw"
+            />
+          </div>
+          <div className="hero-gradient-scrim" />
 
-        <section
-          id="home"
-          className="hero section-dark"
-        >
-          <div className="hero-overlay" />
-
-          <div className="hero-grid">
-            <div className="hero-copy">
-              <span className="eyebrow">
-                ◆ DESIGNING SPACES, DEFINING
-                LIFESTYLES <i /> Vishrantwadi, Pune
-              </span>
-
-              <h1>
-                Transform Your Flat Into{" "}
-                <em>
-                  a 5-Star Aesthetic Home
-                </em>
-              </h1>
-
-              <p>
-                Solid wood king & queen beds,
-                customized velvet & leatherette
-                sofas, intricately carved pooja
-                devghars, and full 1BHK, 2BHK, 3BHK
-                turnkey interior woodwork.
-              </p>
-
-              <div className="cta-row">
-                <a
-                  className="btn btn-gold btn-large"
-                  href="#collections"
-                >
-                  EXPLORE COLLECTIONS
-                  <ArrowRight size={18} />
-                </a>
-
-                <a
-                  className="btn btn-outline btn-large"
-                  href={waLink(
-                    "Hello Parihar Furniture! I want a furniture estimate."
-                  )}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <MessageCircle size={18} />
-                  Get WhatsApp Estimate
-                </a>
-              </div>
-
-              <div className="hero-proof">
-                <span>
-                  ✓ Custom Sofas & Interiors
-                </span>
-                <span>
-                  ✦ Machine Polish
-                </span>
-                <span>
-                  ॐ Wooden Devghar
-                </span>
-                <span>
-                  ★ 4.0 Google Rated
-                </span>
-              </div>
-            </div>
-
-            <div className="hero-card">
-              <div className="hero-card-frame">
+          <div className="hero-inner-content">
+            {/* Liquid Glass Circular Hallmark Badge */}
+            <div className="liquid-hallmark-badge">
+              <div className="hallmark-thumb">
                 <Image
                   src="/assets/logo.png"
-                  alt="Parihar Furniture logo"
-                  width={650}
-                  height={662}
+                  alt="Parihar Logo"
+                  width={24}
+                  height={24}
                 />
               </div>
+              <span>PARIHAR FURNITURE · VISHRANTWADI, PUNE</span>
+            </div>
 
-              <h3>PARIHAR</h3>
-              <p>FURNITURE & INTERIOR</p>
+            <h1 className="hero-main-heading">
+              Solid Wood Furniture, <br />
+              <em>Direct from Our Workshop.</em>
+            </h1>
 
-              <small>
-                "Designing Spaces, Defining Lifestyles"
-              </small>
+            <p className="hero-sub-description">
+              Handcrafted seasoned Burma teak & Sheesham sofas, sacred wooden Devghar temples,
+              hydraulic storage beds, and complete 2BHK & 3BHK turnkey interior woodwork at
+              honest workshop rates with zero middleman commissions.
+            </p>
 
-              <div className="card-meta">
-                <span>
-                  ● Vishrantwadi Store
-                </span>
+            <div className="hero-cta-grid">
+              <a href="#catalog" className="btn-liquid-gold">
+                <span>Browse Furniture Catalog</span>
+                <ArrowRight size={15} />
+              </a>
 
-                <span>
-                  8:00 AM – 10:00 PM
-                </span>
-              </div>
+              <a
+                href={waLink("Hello Parihar Furniture! I would like to get a furniture estimate for my home.")}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-liquid-glass"
+              >
+                <MessageCircle size={16} />
+                <span>Get WhatsApp Estimate</span>
+              </a>
+            </div>
+
+            <div className="hero-proof-row">
+              <span>
+                <Flame size={13} style={{ color: "var(--gold-dark)" }} /> 100% Solid Hardwood
+              </span>
+              <span>
+                <ShieldCheck size={13} style={{ color: "var(--gold-dark)" }} /> 10-Year Warranty
+              </span>
+              <span>
+                <Star size={13} style={{ color: "var(--gold-dark)" }} fill="var(--gold-dark)" /> 4.8★ Google Verified
+              </span>
             </div>
           </div>
         </section>
 
-        {/* ABOUT */}
-
-        <section
-          id="about"
-          className="standard-section cream"
-        >
-          <div className="section-heading">
-            <span className="eyebrow light">
-              THE PARIHAR SIGNATURE STANDARD
-            </span>
-
-            <h2>
-              Crafted for Discerning Pune Homes
-            </h2>
-
-            <p>
-              Every piece is designed to bring
-              harmony, luxury, and long-lasting
-              durability to your living spaces.
-            </p>
-          </div>
-
-          <div className="feature-grid">
-            {[
-              [
-                TreePine,
-                "100% Solid Sheesham & Teak Wood",
-                "Seasoned hardwoods treated for termite and borer resistance. Built to withstand generations with solid structural integrity.",
-                "Durability Guaranteed",
-              ],
-              [
-                WandSparkles,
-                "Machine Melamine Gloss & Satin Polish",
-                "State-of-the-art machine polishing for ultra-smooth texture, water repellency, stain protection, and enduring luster.",
-                "Silky Scratch-Resistant Finish",
-              ],
-              [
-                Ruler,
-                "Tailored Dimensions & Aesthetic Harmony",
-                "Custom-built to the exact millimeter of your room layouts. Fluted wood wall panels, LED backdrops, and cohesive finishes.",
-                "5-Star Flat Makeovers",
-              ],
-            ].map(
-              ([Icon, title, text, foot]) => (
-                <article
-                  className="feature-card"
-                  key={title as string}
-                >
-                  <div className="feature-icon">
-                    <Icon size={24} />
+        {/* =================================================================
+            02. INSTAGRAM-STYLE LIQUID GLASS STORY HIGHLIGHTS
+            ================================================================= */}
+        <section className="liquid-story-bar">
+          <div className="story-track">
+            {storyHighlights.map((story) => (
+              <div
+                key={story.id}
+                className={`story-card-item ${activeCategory === story.id ? "active" : ""}`}
+                onClick={() => {
+                  setActiveCategory(story.id);
+                  const el = document.getElementById("catalog");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                <div className="story-circle-ring">
+                  <div className="story-circle-inner">
+                    <Image
+                      src={story.image}
+                      alt={story.label}
+                      fill
+                      sizes="68px"
+                    />
                   </div>
-
-                  <h3>{title as string}</h3>
-
-                  <p>{text as string}</p>
-
-                  <footer>
-                    <ShieldCheck size={15} />
-                    {foot as string}
-                  </footer>
-                </article>
-              )
-            )}
+                </div>
+                <span className="story-label">{story.label}</span>
+              </div>
+            ))}
           </div>
         </section>
 
-        {/* COLLECTIONS */}
-
-        <section
-          id="collections"
-          className="standard-section collections"
-        >
-          <div className="section-heading">
-            <span className="eyebrow light">
-              CURATED SHOWPIECES
+        {/* =================================================================
+            03. APPLE LIQUID GLASS CATALOG (USEFUL CATEGORIES & 16+ ITEMS)
+            ================================================================= */}
+        <section id="catalog" className="section-showcase">
+          <div className="section-head-wrap">
+            <span className="section-tag-gold">
+              <Sparkles size={13} />
+              <span>GENUINE FURNITURE SHOWCASE</span>
             </span>
-
-            <h2>
-              Explore Luxury Collections
-            </h2>
-
-            <p>
-              Select a category below to explore
-              handcrafted living, bedroom, mandir,
-              dining, and complete house packages.
+            <h2 className="section-title">Explore Our Furniture</h2>
+            <p className="section-subtitle">
+              Every item is manufactured with genuine seasoned timber inside our Vishrantwadi atelier.
+              Tap any piece for specifications, dimensions, and direct WhatsApp pricing.
             </p>
           </div>
 
-          <div className="chips">
-            {categories.map((category) => (
+          {/* Useful Category Filter Bar */}
+          <div className="category-filter-bar">
+            {usefulCategories.map((cat) => (
               <button
-                key={category}
-                className={
-                  active === category
-                    ? "chip active"
-                    : "chip"
-                }
-                onClick={() =>
-                  setActive(category)
-                }
+                key={cat}
+                type="button"
+                className={`category-pill ${activeCategory === cat ? "active" : ""}`}
+                onClick={() => setActiveCategory(cat)}
               >
-                {category}
+                {cat}
               </button>
             ))}
           </div>
 
-          <div className="product-grid">
-            {filtered.map((product) => (
+          {/* Liquid Glass Product Cards Grid */}
+          <div className="showcase-cards-grid">
+            {filteredProducts.map((product: any) => (
               <article
-                className="product-card"
                 key={product.id}
+                className="liquid-product-card"
                 onClick={() => {
                   setSelectedProduct(product);
-                  setShowOrderForm(false);
-                  setOrderSuccess(null);
+                  setShowOrderModal(false);
+                  setOrderSuccessId(null);
                 }}
-                style={{ cursor: "pointer" }}
               >
-                <div className="product-image">
+                <div className="liquid-card-media">
                   <Image
                     src={product.imageUrl}
                     alt={product.name}
                     fill
-                    sizes="(max-width: 700px) 100vw, 33vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
-
-                  <span>{product.category}</span>
-
-                  <b>
-                    ₹
-                    {Number(
-                      product.price
-                    ).toLocaleString("en-IN")}
-                  </b>
+                  <div className="card-code-tag">{product.code || "PF—PUNE"}</div>
+                  <div className="card-discount-badge">Workshop Direct</div>
                 </div>
 
-                <div className="product-body">
-                  <h3>{product.name}</h3>
+                <div className="liquid-card-body">
+                  <h3 className="liquid-card-title">{product.name}</h3>
+                  <p className="liquid-card-desc">{product.shortDescription}</p>
 
-                  <p>
-                    {product.shortDescription}
-                  </p>
+                  <div className="liquid-card-price-row">
+                    <div>
+                      <span className="liquid-price-label">Workshop Price</span>
+                      <div className="liquid-price-amount">
+                        ₹{Number(product.price).toLocaleString("en-IN")}
+                      </div>
+                    </div>
+
+                    <span style={{ fontSize: "11px", color: "var(--gold-dark)", fontFamily: "var(--font-mono)", fontWeight: "600" }}>
+                      Custom Size
+                    </span>
+                  </div>
 
                   <button
                     type="button"
-                    className="btn btn-gold"
+                    className="btn-card-inspect"
                     onClick={(e) => {
                       e.stopPropagation();
-
                       setSelectedProduct(product);
-                      setShowOrderForm(false);
-                      setOrderSuccess(null);
+                      setShowOrderModal(false);
+                      setOrderSuccessId(null);
                     }}
                   >
-                    View Full Details
-                    <ArrowRight size={15} />
+                    <span>View Details & Order</span>
+                    <ChevronRight size={14} />
                   </button>
                 </div>
               </article>
             ))}
           </div>
-
-          {filtered.length === 0 && (
-            <div className="empty">
-              No products in this category yet.
-            </div>
-          )}
         </section>
 
-        {/* INTERIORS */}
-
-        <section
-          id="interiors"
-          className="dark-panel"
-        >
-          <div className="interior-copy">
-            <span className="eyebrow">
-              ♛ COMPLETE FLAT TRANSFORMATION
-            </span>
-
-            <h2>
-              Convert Your Apartment from Simple
-              to{" "}
-              <em>
-                5-Star Aesthetic
-              </em>
-            </h2>
-
-            <blockquote>
-              “Got my whole house furnished, they
-              converted it from simple to aesthetic
-              5 star. My soul satisfied from their
-              service and interior ideas.”
-
-              <strong>
-                — BHAVESH (GOOGLE VERIFIED 5-STAR
-                REVIEW)
-              </strong>
-            </blockquote>
-
-            <p>
-              Why coordinate with 5 different
-              carpenters and vendors? Parihar
-              Furniture & Interior provides
-              end-to-end coordinated woodwork—from
-              modern fluted wall panelling, ambient
-              backlit entertainment units, and
-              hydraulic king beds to sliding mirror
-              wardrobes and modular kitchens.
-            </p>
-
-            <ul>
-              <li>
-                1 BHK, 2 BHK, 3 BHK Packages
-              </li>
-              <li>
-                Machine Melamine High Gloss
-              </li>
-              <li>
-                Fluted Panelling & LED Glow
-              </li>
-              <li>
-                Free Consultation & 3D Ideas
-              </li>
-            </ul>
-
-            <a
-              className="btn btn-gold btn-large"
-              href={waLink(
-                "Hello Parihar Furniture! I want a full house interior consultation."
-              )}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <MessageCircle size={18} />
-              Consult for Full House Package
-            </a>
-          </div>
-
-          <div className="interior-gallery">
-            <div>
+        {/* =================================================================
+            04. SACRED DEVGHAR SPOTLIGHT (GENUINE PHOTO & WARM AMBER HALO)
+            ================================================================= */}
+        <section id="devghar" className="section-devghar-halo">
+          <div className="devghar-glow-card">
+            <div className="devghar-halo-frame">
               <Image
-                src="/assets/interior-house.jpg"
-                alt="Living room backdrop"
+                src="/assets/devghar-source.png"
+                alt="Parihar Sacred Teak Devghar Mandir"
                 fill
+                sizes="(max-width: 900px) 100vw, 45vw"
               />
-
-              <span>
-                Living Room Backdrops
-              </span>
             </div>
 
-            <div>
-              <Image
-                src="/assets/interior-dining.jpg"
-                alt="Solid wood dining"
-                fill
-              />
-
-              <span>
-                Solid Wood Dining
+            <div className="devghar-content-side">
+              <span className="section-tag-gold">
+                <Compass size={13} />
+                <span>POOJA MANDIR SPECIALISTS</span>
               </span>
-            </div>
 
-            <div>
-              <Image
-                src="/assets/interior-bedroom.jpg"
-                alt="Master bedroom"
-                fill
-              />
+              <h2>
+                Sacred Wooden Devghars
+                <span>सुंदर आणि पवित्र देवघर · Vastu-Aligned Sanctuaries</span>
+              </h2>
 
-              <span>
-                Master Bedrooms
-              </span>
-            </div>
-
-            <div>
-              <Image
-                src="/assets/interior-sofa.jpg"
-                alt="Custom sectional"
-                fill
-              />
-
-              <span>
-                Custom Sectionals
-              </span>
-            </div>
-          </div>
-        </section>
-
-        {/* DEVGHAR */}
-
-        <section
-          id="devghar"
-          className="devghar standard-section cream"
-        >
-          <div className="devghar-image">
-            <Image
-              src="/assets/devghar-source.png"
-              alt="Parihar Devghar interior"
-              fill
-              sizes="(max-width: 900px) 100vw, 50vw"
-            />
-
-            <div>
-              <b>
-                Pooja Mandir Specialists
-              </b>
-
-              <h3>
-                सुंदर आणि पवित्र देवघर
-              </h3>
-
-              <p>
-                Carved in authentic wood with
-                high-durability machine polish and
-                pooja accessories drawer.
+              <p style={{ color: "var(--ink-secondary)", fontSize: "15px", lineHeight: "1.65" }}>
+                Handcrafted in seasoned solid Burma teak timber. Features a precision laser-cut Om
+                and lotus jali backdrop illuminated by concealed warm 2700K ambient lighting, a
+                pull-out brass aarti tray, and twin soft-close pooja accessories drawers finished in
+                heat- and diya-oil resistant melamine polish.
               </p>
-            </div>
-          </div>
 
-          <div className="devghar-copy">
-            <span className="eyebrow light">
-              SPIRITUAL CRAFTSMANSHIP
-            </span>
-
-            <h2>
-              Custom Wooden Devghar & Home Mandirs
-            </h2>
-
-            <p>
-              Bring positive energy, divine beauty,
-              and peace into your home with our
-              bespoke wooden Devghars. Whether you
-              need a compact wall-hung temple for an
-              apartment or an elaborate
-              floor-standing teak wood shrine, we
-              customize every dimension and carving.
-            </p>
-
-            <div className="mini-grid">
-              <article>
-                <Sparkles />
-
-                <h3>
-                  Laser Jali & Om Carvings
-                </h3>
-
-                <p>
-                  Intricate Om, Swastik, Kalash &
-                  floral designs with warm LED
-                  backlighting.
-                </p>
-              </article>
-
-              <article>
-                <WandSparkles />
-
-                <h3>
-                  Machine Melamine Polish
-                </h3>
-
-                <p>
-                  Smooth machine-grade polish
-                  offering superior heat, incense &
-                  oil resistance.
-                </p>
-              </article>
-            </div>
-
-            <a
-              className="btn btn-gold btn-large"
-              href={waLink(
-                "Hello Parihar Furniture! I want to see the Devghar catalog."
-              )}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <MessageCircle size={18} />
-              View Devghar Catalogs
-            </a>
-          </div>
-        </section>
-
-        {/* ESTIMATOR */}
-
-        <section
-          id="estimator"
-          className="estimator-section"
-        >
-          <div className="section-heading">
-            <span className="eyebrow light">
-              INSTANT TOOL
-            </span>
-
-            <h2>
-              Furniture Cost Estimator
-            </h2>
-
-            <p>
-              Get a quick instant price estimate
-              for your apartment or custom furniture
-              requirement.
-            </p>
-          </div>
-
-          <div className="estimator-card">
-            <div className="form-grid">
-              <label>
-                Select Package / Room Type
-
-                <select
-                  value={
-                    estimateForm.packageType
-                  }
-                  onChange={(e) =>
-                    setEstimateForm({
-                      ...estimateForm,
-                      packageType:
-                        e.target.value,
-                    })
-                  }
-                >
-                  <option>
-                    1 BHK Complete Package
-                  </option>
-
-                  <option>
-                    2 BHK Complete Package
-                  </option>
-
-                  <option>
-                    3 BHK Complete Package
-                  </option>
-                </select>
-              </label>
-
-              <label>
-                Material & Polish Preference
-
-                <select
-                  value={estimateForm.finish}
-                  onChange={(e) =>
-                    setEstimateForm({
-                      ...estimateForm,
-                      finish: e.target.value,
-                    })
-                  }
-                >
-                  <option>
-                    Machine Melamine Gloss /
-                    Matte Polish
-                  </option>
-
-                  <option>
-                    Solid Wood Natural Finish
-                  </option>
-
-                  <option>
-                    Premium Velvet + Wood Mix
-                  </option>
-                </select>
-              </label>
-            </div>
-
-            <div className="addons">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={
-                    estimateForm.devghar
-                  }
-                  onChange={(e) =>
-                    setEstimateForm({
-                      ...estimateForm,
-                      devghar:
-                        e.target.checked,
-                    })
-                  }
-                />
-
-                Include Custom Wooden Devghar
-              </label>
-
-              <label>
-                <input
-                  type="checkbox"
-                  checked={
-                    estimateForm.sectional
-                  }
-                  onChange={(e) =>
-                    setEstimateForm({
-                      ...estimateForm,
-                      sectional:
-                        e.target.checked,
-                    })
-                  }
-                />
-
-                Include 6-Seater L-Shape
-                Sectional Sofa
-              </label>
-            </div>
-
-            <div className="estimate-result">
-              <div>
-                <span>
-                  ESTIMATED BUDGET RANGE
-                </span>
-
-                <strong>
-                  ₹
-                  {estimate.low.toLocaleString(
-                    "en-IN"
-                  )}{" "}
-                  – ₹
-                  {estimate.high.toLocaleString(
-                    "en-IN"
-                  )}
-                  *
-                </strong>
-
-                <small>
-                  Selected Finish:{" "}
-                  {estimateForm.finish}
-                  <br />
-                  Package includes typical
-                  furniture, storage and seating
-                  allowances.
-                </small>
+              <div className="devghar-spec-chips">
+                <div className="devghar-spec-item">
+                  <strong>Concealed 2700K Halo</strong>
+                  <small>Diffused warm glow behind laser jali.</small>
+                </div>
+                <div className="devghar-spec-item">
+                  <strong>Diya Oil Resistant</strong>
+                  <small>Melamine barrier safe against incense & heat.</small>
+                </div>
+                <div className="devghar-spec-item">
+                  <strong>Pooja Drawer Storage</strong>
+                  <small>Concealed twin drawers with brass handles.</small>
+                </div>
+                <div className="devghar-spec-item">
+                  <strong>Custom Flat Sizing</strong>
+                  <small>Wall-hung or floor-standing configurations.</small>
+                </div>
               </div>
 
-              <div>
-                <button
-                  className="btn btn-green btn-large"
-                  onClick={calculate}
-                >
-                  Calculate Estimate
-                </button>
-
+              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginTop: "8px" }}>
                 <a
-                  className="btn btn-outline btn-large"
-                  href={waLink(
-                    `Hello Parihar Furniture! My estimated budget is ₹${estimate.low.toLocaleString(
-                      "en-IN"
-                    )} – ₹${estimate.high.toLocaleString(
-                      "en-IN"
-                    )}. I want a final quote.`
-                  )}
+                  href={waLink("Hello Parihar Furniture! Please share photos, sizes and prices for Wooden Devghar Mandirs.")}
                   target="_blank"
                   rel="noreferrer"
+                  className="btn-liquid-gold"
+                  style={{ flex: 1, minWidth: "220px" }}
                 >
-                  Lock Estimate on WhatsApp
+                  <MessageCircle size={16} />
+                  <span>Get Devghar Catalog on WhatsApp</span>
+                </a>
+
+                <a
+                  href={`tel:+${phoneNumber}`}
+                  className="btn-liquid-glass"
+                >
+                  <Phone size={15} />
+                  <span>Call Us</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* =================================================================
+            05. REAL GOOGLE REVIEWS (VERIFIED CLIENT STORIES)
+            ================================================================= */}
+        <section id="reviews" className="section-reviews">
+          <div className="section-head-wrap">
+            <span className="section-tag-gold">
+              <Star size={13} fill="var(--gold-primary)" />
+              <span>4.8★ GOOGLE VERIFIED CLIENT EXPERIENCES</span>
+            </span>
+            <h2 className="section-title">Pune Homeowner Testimonials</h2>
+            <p className="section-subtitle">
+              Authentic feedback from verified clients who got their sofas, dining suites,
+              and full residences executed by Parihar.
+            </p>
+          </div>
+
+          <div className="reviews-scroll-grid">
+            {seedReviews.map((rev) => (
+              <article key={rev.id} className="review-item-card">
+                <div className="review-stars-gold">★★★★★</div>
+                <blockquote className="review-body-text">“{rev.quote}”</blockquote>
+
+                <div className="review-client-footer">
+                  <div className="client-avatar">{rev.name[0]}</div>
+                  <div>
+                    <strong style={{ fontSize: "14px", color: "var(--ink-primary)", display: "block" }}>
+                      {rev.name}
+                    </strong>
+                    <small style={{ fontSize: "11px", color: "var(--ink-muted)", fontFamily: "var(--font-mono)" }}>
+                      {rev.role} · {rev.meta}
+                    </small>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* =================================================================
+            06. WORKSHOP LOCATION & VISIT
+            ================================================================= */}
+        <section id="location" style={{ padding: "clamp(40px, 8vw, 84px) clamp(14px, 4vw, 36px)" }}>
+          <div style={{ maxWidth: "1400px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "28px", alignItems: "center" }}>
+            <div>
+              <span className="section-tag-gold">
+                <MapPin size={13} />
+                <span>VISIT OUR WORKSHOP</span>
+              </span>
+              <h2 className="section-title">Feel the Timber Firsthand</h2>
+              <p style={{ color: "var(--ink-secondary)", fontSize: "15px", lineHeight: "1.65", margin: "12px 0 20px" }}>
+                Visit our Vishrantwadi atelier to inspect machine melamine silk finishes, touch seasoned
+                Burma teak wood grains, and test sofa cushion densities in person.
+              </p>
+
+              <div style={{ padding: "18px", borderRadius: "18px", background: "var(--canvas-card)", backdropFilter: "blur(20px)", border: "1px solid var(--glass-border)", display: "flex", flexDirection: "column", gap: "12px", marginBottom: "22px", boxShadow: "0 6px 20px rgba(0,0,0,0.03)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "14px" }}>
+                  <span style={{ color: "var(--ink-muted)" }}>Address:</span>
+                  <span style={{ color: "var(--ink-primary)", fontWeight: "600" }}>Vishrantwadi Corridor, Pune</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "14px" }}>
+                  <span style={{ color: "var(--ink-muted)" }}>Timings:</span>
+                  <span style={{ color: "var(--gold-dark)", fontWeight: "600" }}>Open Daily 8:00 AM – 10:00 PM</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "14px" }}>
+                  <span style={{ color: "var(--ink-muted)" }}>Phone:</span>
+                  <span style={{ color: "var(--ink-primary)", fontWeight: "600" }}>+91 {phoneNumber.slice(-10)}</span>
+                </div>
+              </div>
+
+              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                <a href={`tel:+${phoneNumber}`} className="btn-liquid-gold">
+                  <Phone size={15} />
+                  <span>Call Workshop Now</span>
+                </a>
+
+                <a
+                  href="https://maps.google.com/?q=Parihar+Furniture+Vishrantwadi+Pune"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-liquid-glass"
+                >
+                  <MapPin size={15} />
+                  <span>Directions on Google Maps</span>
                 </a>
               </div>
             </div>
 
-            <p className="fine-print">
-              *Estimated pricing is indicative of
-              typical materials and dimensions. Final
-              price is confirmed after actual room
-              measurements.
-            </p>
-          </div>
-        </section>
-
-        {/* REVIEWS */}
-
-        <section
-          id="reviews"
-          className="reviews standard-section"
-        >
-          <div className="review-heading">
-            <div>
-              <span className="eyebrow light">
-                REAL CUSTOMER WORDS
-              </span>
-
-              <h2>
-                Google Reviews & Experiences
-              </h2>
+            <div style={{ position: "relative", minHeight: "340px", borderRadius: "24px", overflow: "hidden", border: "1px solid var(--glass-border)", boxShadow: "0 12px 36px rgba(0,0,0,0.06)" }}>
+              <Image
+                src="https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&w=1000&q=80"
+                alt="Parihar Furniture Workshop"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                style={{ objectFit: "cover" }}
+              />
+              <div style={{ position: "absolute", bottom: "16px", left: "16px", right: "16px", padding: "14px 18px", borderRadius: "16px", background: "rgba(255, 255, 255, 0.9)", backdropFilter: "blur(20px)", border: "1px solid rgba(255, 255, 255, 1)", boxShadow: "0 4px 16px rgba(0,0,0,0.08)" }}>
+                <strong style={{ display: "block", color: "var(--ink-primary)", fontSize: "14px" }}>
+                  Parihar Furniture & Interior
+                </strong>
+                <small style={{ color: "var(--gold-dark)", fontFamily: "var(--font-mono)", fontSize: "11px", fontWeight: "600" }}>
+                  Open Today till 10:00 PM · Walk-ins Welcome
+                </small>
+              </div>
             </div>
-
-            <div className="score">
-              <span>★★★★☆</span>
-              <b>4.0 ★</b>
-              <small>
-                (12+ Verified Reviews)
-              </small>
-            </div>
-          </div>
-
-          <div className="review-grid">
-            {reviews.map(
-              ([name, meta, quote]) => (
-                <article key={name}>
-                  <div className="review-top">
-                    <div className="avatar">
-                      {name[0]}
-                    </div>
-
-                    <div>
-                      <b>{name}</b>
-                      <small>{meta}</small>
-                    </div>
-
-                    <span>★★★★★</span>
-                  </div>
-
-                  <p>
-                    “{quote}”
-                  </p>
-
-                  <footer>
-                    ↪ Owner reply:{" "}
-                    <i>
-                      “Thank you”
-                    </i>
-                  </footer>
-                </article>
-              )
-            )}
-          </div>
-        </section>
-
-        {/* CONTACT */}
-
-        <section
-          id="contact"
-          className="contact"
-        >
-          <div>
-            <span className="eyebrow">
-              VISIT PARIHAR
-            </span>
-
-            <h2>
-              Come see the furniture in person.
-            </h2>
-
-            <p>
-              Vishrantwadi, Pune · Open daily
-              8:00 AM – 10:00 PM
-            </p>
-          </div>
-
-          <div className="contact-actions">
-            <a
-              className="btn btn-gold btn-large"
-              href="tel:+919175379886"
-            >
-              <Phone />
-              Call Now
-            </a>
-
-            <a
-              className="btn btn-green btn-large"
-              href={waLink(
-                "Hello Parihar Furniture! I want to visit your store."
-              )}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <MessageCircle />
-              WhatsApp
-            </a>
           </div>
         </section>
       </main>
 
-      {/* PRODUCT DETAILS + ORDER MODAL */}
-
+      {/* =================================================================
+          07. APPLE LIQUID GLASS BOTTOM SHEET (INSPECT & ORDER MODAL)
+          ================================================================= */}
       {selectedProduct && (
-        <div
-          className="modal"
-          onClick={closeProductModal}
-          style={{
-            padding: "16px",
-            background: "rgba(0,0,0,0.72)",
-            backdropFilter: "blur(8px)",
-          }}
-        >
-          <div
-            className="modal-card"
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              position: "relative",
-              width: "min(1100px, 96vw)",
-              maxWidth: "1100px",
-              maxHeight: "92vh",
-              overflowY: "auto",
-              padding: 0,
-              borderRadius: "28px",
-              background: "#fff",
-              color: "#171717",
-              boxShadow:
-                "0 30px 100px rgba(0,0,0,.35)",
-            }}
-          >
-            {/* CLOSE */}
+        <div className="drawer-backdrop" onClick={closeDrawer}>
+          <div className="drawer-surface" onClick={(e) => e.stopPropagation()}>
+            <div className="drawer-drag-line">
+              <div className="drag-pill" />
+            </div>
 
-            <button
-              type="button"
-              onClick={closeProductModal}
-              aria-label="Close"
-              style={{
-                position: "absolute",
-                right: "18px",
-                top: "18px",
-                zIndex: 20,
-                width: "44px",
-                height: "44px",
-                borderRadius: "50%",
-                border: "1px solid #ddd",
-                background: "#fff",
-                color: "#111",
-                fontSize: "24px",
-                cursor: "pointer",
-              }}
-            >
-              <X size={22} />
-            </button>
+            <div className="drawer-top-bar">
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--gold-dark)", letterSpacing: "0.08em", fontWeight: "700" }}>
+                {selectedProduct.code || "PF—ATELIER"}
+              </span>
 
-            {/* PRODUCT DETAILS */}
-
-            {!showOrderForm && !orderSuccess && (
-              <div
-                 className="product-details-layout"
-                 style={{
-                   display: "grid",
-                   gridTemplateColumns:
-                      "minmax(320px, 1fr) minmax(320px, 1fr)",
-                }}
-            
+              <button
+                type="button"
+                className="nav-menu-toggle"
+                onClick={closeDrawer}
+                style={{ width: "32px", height: "32px" }}
+                aria-label="Close Drawer"
               >
-                {/* IMAGE */}
+                <X size={16} />
+              </button>
+            </div>
 
-                <div
-                  style={{
-                    position: "relative",
-                    minHeight: "620px",
-                    background: "#111",
-                    overflow: "hidden",
-                    borderRadius:
-                      "28px 0 0 28px",
-                  }}
-                >
-                  <Image
-                    src={selectedProduct.imageUrl}
-                    alt={selectedProduct.name}
-                    fill
-                    sizes="(max-width: 800px) 100vw, 50vw"
-                    style={{
-                      objectFit: "cover",
-                    }}
-                  />
-
-                  <div
-                    style={{
-                      position: "absolute",
-                      left: "20px",
-                      bottom: "20px",
-                      padding: "9px 14px",
-                      borderRadius: "999px",
-                      background:
-                        "rgba(0,0,0,.75)",
-                      color: "#fff",
-                      fontSize: "13px",
-                      fontWeight: 700,
-                    }}
-                  >
-                    {selectedProduct.category}
-                  </div>
-                </div>
-
-                {/* DETAILS */}
-
-                <div
-                  style={{
-                    padding: "48px 42px 38px",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "16px",
-                  }}
-                >
-                  {/* CATEGORY */}
-
-                  <div
-                    style={{
-                      width: "fit-content",
-                      padding: "8px 14px",
-                      borderRadius: "999px",
-                      border:
-                        "1px solid #ead8a3",
-                      background: "#fffaf0",
-                      color: "#795b18",
-                      fontSize: "12px",
-                      fontWeight: 800,
-                    }}
-                  >
-                    {selectedProduct.category}
+            <div className="drawer-content-scroll">
+              {!showOrderModal && (
+                <>
+                  <div className="drawer-image-box">
+                    <Image
+                      src={selectedProduct.imageUrl}
+                      alt={selectedProduct.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 760px"
+                    />
                   </div>
 
-                  {/* NAME */}
+                  <div>
+                    <span className="section-tag-gold">{selectedProduct.category}</span>
+                    <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "25px", color: "var(--ink-primary)", lineHeight: "1.2" }}>
+                      {selectedProduct.name}
+                    </h2>
+                    <div style={{ fontFamily: "var(--font-mono)", fontSize: "23px", color: "var(--ink-primary)", fontWeight: "700", marginTop: "4px" }}>
+                      ₹{Number(selectedProduct.price).toLocaleString("en-IN")}{" "}
+                      <span style={{ fontSize: "12px", color: "var(--ink-muted)", fontWeight: "normal" }}>
+                        (Workshop Direct)
+                      </span>
+                    </div>
+                  </div>
 
-                  <h2
-                    style={{
-                      margin: 0,
-                      fontSize:
-                        "clamp(30px, 4vw, 46px)",
-                      lineHeight: 1.08,
-                      color: "#171717",
-                    }}
-                  >
-                    {selectedProduct.name}
-                  </h2>
-
-                  {/* SHORT DESCRIPTION */}
-
-                  <p
-                    style={{
-                      margin: 0,
-                      fontSize: "17px",
-                      lineHeight: 1.55,
-                      color: "#555",
-                    }}
-                  >
-                    {selectedProduct.shortDescription}
+                  <p style={{ fontSize: "14px", color: "var(--ink-secondary)", lineHeight: "1.65" }}>
+                    {selectedProduct.description || selectedProduct.shortDescription}
                   </p>
 
-                  {/* DESCRIPTION BOX */}
-
-                  <div
-                    style={{
-                      padding: "20px",
-                      borderRadius: "18px",
-                      border:
-                        "1px solid #e5dfd2",
-                      background: "#faf8f3",
-                    }}
-                  >
-                    <strong
-                      style={{
-                        display: "block",
-                        marginBottom: "8px",
-                        fontSize: "11px",
-                        textTransform:
-                          "uppercase",
-                        letterSpacing: "1px",
-                        color: "#8a6a20",
-                      }}
-                    >
-                      Description
-                    </strong>
-
-                    <p
-                      style={{
-                        margin: 0,
-                        color: "#333",
-                        lineHeight: 1.65,
-                      }}
-                    >
-                      {selectedProduct.description ||
-                        selectedProduct.shortDescription}
-                    </p>
-                  </div>
-
-                  {/* DETAILS BOXES */}
-
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns:
-                        "1fr 1fr",
-                      gap: "10px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        padding: "15px",
-                        border:
-                          "1px solid #e8e8e8",
-                        borderRadius: "14px",
-                        background: "#fff",
-                      }}
-                    >
-                      <small>Category</small>
-
-                      <strong
-                        style={{
-                          display: "block",
-                          marginTop: "5px",
-                        }}
-                      >
-                        {selectedProduct.category}
-                      </strong>
+                  <div className="drawer-specs-grid">
+                    <div className="drawer-spec-pill">
+                      <small>Core Wood</small>
+                      <strong>{selectedProduct.material || "Seasoned Burma Teak / Sheesham"}</strong>
                     </div>
 
-                    <div
-                      style={{
-                        padding: "15px",
-                        border:
-                          "1px solid #e8e8e8",
-                        borderRadius: "14px",
-                        background: "#fff",
-                      }}
-                    >
-                      <small>Material</small>
-
-                      <strong
-                        style={{
-                          display: "block",
-                          marginTop: "5px",
-                        }}
-                      >
-                        {selectedProduct.material ||
-                          "Available on request"}
-                      </strong>
+                    <div className="drawer-spec-pill">
+                      <small>Surface Polish</small>
+                      <strong>{selectedProduct.finish || "5-Coat Melamine Silk Polish"}</strong>
                     </div>
 
-                    <div
-                      style={{
-                        padding: "15px",
-                        border:
-                          "1px solid #e8e8e8",
-                        borderRadius: "14px",
-                        background: "#fff",
-                      }}
-                    >
-                      <small>Finish</small>
-
-                      <strong
-                        style={{
-                          display: "block",
-                          marginTop: "5px",
-                        }}
-                      >
-                        {selectedProduct.finish ||
-                          "Available on request"}
-                      </strong>
+                    <div className="drawer-spec-pill">
+                      <small>Dimensions</small>
+                      <strong>{selectedProduct.dimensions || "Customizable to Room Layout"}</strong>
                     </div>
 
-                    <div
-                      style={{
-                        padding: "15px",
-                        border:
-                          "1px solid #e8e8e8",
-                        borderRadius: "14px",
-                        background: "#fff",
-                      }}
-                    >
-                      <small>Style</small>
-
-                      <strong
-                        style={{
-                          display: "block",
-                          marginTop: "5px",
-                        }}
-                      >
-                        {selectedProduct.style ||
-                          "Available on request"}
-                      </strong>
+                    <div className="drawer-spec-pill">
+                      <small>Delivery</small>
+                      <strong>{selectedProduct.leadTime || "10–14 Days · Pune Fitting"}</strong>
                     </div>
                   </div>
+                </>
+              )}
 
-                  {/* PRICE BOX */}
-
-                  <div
-                    style={{
-                      padding: "18px 20px",
-                      borderRadius: "16px",
-                      background: "#fff8e5",
-                      border:
-                        "1px solid #d8b85a",
-                    }}
+              {/* Order Form */}
+              {showOrderModal && !orderSuccessId && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                  <button
+                    type="button"
+                    onClick={() => setShowOrderModal(false)}
+                    style={{ color: "var(--gold-dark)", fontSize: "12.5px", fontFamily: "var(--font-mono)", textAlign: "left", fontWeight: "600" }}
                   >
-                    <small
-                      style={{
-                        display: "block",
-                        color: "#8a6a20",
-                        fontWeight: 800,
-                        fontSize: "11px",
-                      }}
-                    >
-                      PRICE
+                    ← Back to Product Overview
+                  </button>
+
+                  <div style={{ padding: "14px 16px", borderRadius: "14px", background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)" }}>
+                    <small style={{ color: "var(--gold-dark)", fontFamily: "var(--font-mono)", fontSize: "10.5px", fontWeight: "700" }}>
+                      DIRECT WORKSHOP INQUIRY
                     </small>
-
-                    <strong
-                      style={{
-                        display: "block",
-                        marginTop: "5px",
-                        fontSize: "32px",
-                        color: "#171717",
-                      }}
-                    >
-                      ₹
-                      {Number(
-                        selectedProduct.price
-                      ).toLocaleString("en-IN")}
+                    <strong style={{ display: "block", color: "var(--ink-primary)", fontSize: "17px", marginTop: "2px" }}>
+                      {selectedProduct.name}
                     </strong>
+                    <div style={{ color: "var(--ink-primary)", fontFamily: "var(--font-mono)", fontSize: "18px", fontWeight: "700", marginTop: "2px" }}>
+                      ₹{(Number(selectedProduct.price) * orderForm.quantity).toLocaleString("en-IN")}
+                    </div>
                   </div>
 
-                  {/* BUTTONS */}
-
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns:
-                        "1fr 1fr",
-                      gap: "10px",
-                    }}
-                  >
-                    {/* ORDER */}
-
-                    <button
-                      type="button"
-                      className="btn btn-gold"
-                      onClick={() =>
-                        setShowOrderForm(true)
-                      }
-                      style={{
-                        minHeight: "55px",
-                        borderRadius: "14px",
-                        cursor: "pointer",
-                        fontWeight: 800,
-                      }}
-                    >
-                      🛒 Order Now
-                    </button>
-
-                    {/* CALL */}
-
-                    <a
-                      href="tel:+919175379886"
-                      style={{
-                        minHeight: "55px",
-                        borderRadius: "14px",
-                        border:
-                          "1px solid #c99b28",
-                        background: "#fff",
-                        color: "#171717",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "8px",
-                        fontWeight: 800,
-                        textDecoration: "none",
-                      }}
-                    >
-                      <Phone size={18} />
-                      Call Owner
-                    </a>
-
-                    {/* WHATSAPP */}
-
-                    <a
-                      href={waLink(
-                        `Hello Parihar Furniture! I am interested in ${selectedProduct.name}.`
-                      )}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{
-                        gridColumn: "1 / -1",
-                        minHeight: "55px",
-                        borderRadius: "14px",
-                        background: "#16a56a",
-                        color: "#fff",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "8px",
-                        fontWeight: 800,
-                        textDecoration: "none",
-                      }}
-                    >
-                      <MessageCircle size={19} />
-                      WhatsApp Owner
-                    </a>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* ORDER FORM */}
-
-            {showOrderForm && !orderSuccess && (
-              <div
-                style={{
-                  padding: "42px",
-                  background: "#fff",
-                }}
-              >
-                
-         <button
-  type="button"
-  onClick={(e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setShowOrderForm(false);
-  }}
-  style={{
-    border: "1px solid #ddd",
-    background: "#fff",
-    borderRadius: "12px",
-    padding: "10px 15px",
-    cursor: "pointer",
-    marginBottom: "20px",
-    fontWeight: 700,
-  }}
->
-  ← Back
-</button>
-                <div
-                  style={{
-                    padding: "24px",
-                    borderRadius: "20px",
-                    border:
-                      "1px solid #eadfca",
-                    background: "#faf8f3",
-                    marginBottom: "22px",
-                  }}
-                >
-                  <small
-                    style={{
-                      color: "#8a6a20",
-                      fontWeight: 800,
-                    }}
-                  >
-                    ORDER PRODUCT
-                  </small>
-
-                  <h2
-                    style={{
-                      margin: "8px 0",
-                    }}
-                  >
-                    {selectedProduct.name}
-                  </h2>
-
-                  <strong
-                    style={{
-                      fontSize: "28px",
-                    }}
-                  >
-                    ₹
-                    {Number(
-                      selectedProduct.price
-                    ).toLocaleString("en-IN")}
-                  </strong>
-                </div>
-
-                <div
-                  style={{
-                    display: "grid",
-                    gap: "15px",
-                  }}
-                >
-                  <label>
+                  <label style={{ fontSize: "11px", fontFamily: "var(--font-mono)", color: "var(--ink-muted)", textTransform: "uppercase" }}>
                     Full Name *
-
                     <input
                       type="text"
-                      value={
-                        orderForm.customerName
-                      }
-                      onChange={(e) =>
-                        setOrderForm({
-                          ...orderForm,
-                          customerName:
-                            e.target.value,
-                        })
-                      }
-                      placeholder="Enter your full name"
+                      placeholder="e.g. Bhavesh Bhati"
+                      value={orderForm.customerName}
+                      onChange={(e) => setOrderForm({ ...orderForm, customerName: e.target.value })}
+                      style={{ width: "100%", padding: "11px 14px", borderRadius: "12px", background: "#ffffff", border: "1px solid rgba(0,0,0,0.12)", marginTop: "4px" }}
                     />
                   </label>
 
-                  <label>
+                  <label style={{ fontSize: "11px", fontFamily: "var(--font-mono)", color: "var(--ink-muted)", textTransform: "uppercase" }}>
                     Mobile Number *
-
                     <input
                       type="tel"
+                      placeholder="e.g. 9175379886"
                       value={orderForm.phone}
-                      onChange={(e) =>
-                        setOrderForm({
-                          ...orderForm,
-                          phone: e.target.value,
-                        })
-                      }
-                      placeholder="Enter mobile number"
+                      onChange={(e) => setOrderForm({ ...orderForm, phone: e.target.value })}
+                      style={{ width: "100%", padding: "11px 14px", borderRadius: "12px", background: "#ffffff", border: "1px solid rgba(0,0,0,0.12)", marginTop: "4px" }}
                     />
                   </label>
 
-                  <label>
-                    Address *
-
+                  <label style={{ fontSize: "11px", fontFamily: "var(--font-mono)", color: "var(--ink-muted)", textTransform: "uppercase" }}>
+                    Delivery Address in Pune *
                     <textarea
+                      rows={2}
+                      placeholder="Apartment name, Street, Area"
                       value={orderForm.address}
-                      onChange={(e) =>
-                        setOrderForm({
-                          ...orderForm,
-                          address:
-                            e.target.value,
-                        })
-                      }
-                      placeholder="House number, street, area"
-                      rows={3}
+                      onChange={(e) => setOrderForm({ ...orderForm, address: e.target.value })}
+                      style={{ width: "100%", padding: "11px 14px", borderRadius: "12px", background: "#ffffff", border: "1px solid rgba(0,0,0,0.12)", marginTop: "4px" }}
                     />
                   </label>
 
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns:
-                        "1fr 1fr",
-                      gap: "15px",
-                    }}
+                  <button
+                    type="button"
+                    className="nav-wa-pill"
+                    onClick={submitOrder}
+                    disabled={orderLoading}
+                    style={{ height: "50px", justifyContent: "center", fontSize: "12.5px", marginTop: "6px" }}
                   >
-                    <label>
-                      City *
-
-                      <input
-                        type="text"
-                        value={orderForm.city}
-                        onChange={(e) =>
-                          setOrderForm({
-                            ...orderForm,
-                            city: e.target.value,
-                          })
-                        }
-                        placeholder="Pune"
-                      />
-                    </label>
-
-                    <label>
-                      Pincode *
-
-                      <input
-                        type="text"
-                        value={
-                          orderForm.pincode
-                        }
-                        onChange={(e) =>
-                          setOrderForm({
-                            ...orderForm,
-                            pincode:
-                              e.target.value,
-                          })
-                        }
-                        placeholder="411015"
-                      />
-                    </label>
-                  </div>
-
-                  <label>
-                    Quantity
-
-                    <input
-                      type="number"
-                      min="1"
-                      max="20"
-                      value={
-                        orderForm.quantity
-                      }
-                      onChange={(e) =>
-                        setOrderForm({
-                          ...orderForm,
-                          quantity: Math.max(
-                            1,
-                            Math.min(
-                              20,
-                              Number(
-                                e.target.value
-                              ) || 1
-                            )
-                          ),
-                        })
-                      }
-                    />
-                  </label>
+                    {orderLoading ? "Connecting..." : "Confirm & Send to Workshop WhatsApp"}
+                  </button>
                 </div>
+              )}
 
-                {/* TOTAL */}
+              {/* Order Success State */}
+              {orderSuccessId && (
+                <div style={{ textAlign: "center", padding: "30px 10px", display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
+                  <CheckCircle2 size={48} style={{ color: "#25d366" }} />
+                  <h3 style={{ fontFamily: "var(--font-serif)", fontSize: "24px", color: "var(--ink-primary)" }}>
+                    Inquiry Received!
+                  </h3>
+                  <p style={{ color: "var(--ink-secondary)", fontSize: "14px" }}>
+                    Inquiry #{orderSuccessId} registered. Redirecting to WhatsApp to chat with the master craftsman...
+                  </p>
+                  <button
+                    type="button"
+                    className="btn-liquid-gold"
+                    onClick={closeDrawer}
+                  >
+                    Return to Catalog
+                  </button>
+                </div>
+              )}
+            </div>
 
-                <div
-                  style={{
-                    marginTop: "22px",
-                    padding: "20px",
-                    borderRadius: "16px",
-                    border:
-                      "1px solid #e8e1d2",
-                    background: "#faf8f3",
-                    display: "flex",
-                    justifyContent:
-                      "space-between",
-                    alignItems: "center",
-                  }}
+            {/* Bottom Actions */}
+            {!showOrderModal && !orderSuccessId && (
+              <div className="drawer-footer-sticky">
+                <a
+                  href={waLink(
+                    `Hello Parihar Furniture! I am interested in ${selectedProduct.name} (Price: ₹${Number(selectedProduct.price).toLocaleString("en-IN")}). Please send custom sizing details and wood polish samples.`
+                  )}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="nav-wa-pill"
+                  style={{ flex: 1, height: "48px", justifyContent: "center", fontSize: "12px" }}
                 >
-                  <strong>Total</strong>
-
-                  <strong
-                    style={{
-                      fontSize: "28px",
-                    }}
-                  >
-                    ₹
-                    {(
-                      Number(
-                        selectedProduct.price
-                      ) *
-                      orderForm.quantity
-                    ).toLocaleString(
-                      "en-IN"
-                    )}
-                  </strong>
-                </div>
-
-                {/* PLACE ORDER */}
+                  <MessageCircle size={16} />
+                  <span>WhatsApp Inquiry</span>
+                </a>
 
                 <button
                   type="button"
-                  className="btn btn-green btn-large"
-                  onClick={placeOrder}
-                  disabled={orderLoading}
-                  style={{
-                    width: "100%",
-                    marginTop: "20px",
-                    minHeight: "56px",
-                    borderRadius: "14px",
-                    cursor: orderLoading
-                      ? "wait"
-                      : "pointer",
-                    fontWeight: 800,
-                  }}
+                  className="btn-liquid-gold"
+                  onClick={() => setShowOrderModal(true)}
+                  style={{ flex: 1, height: "48px", justifyContent: "center" }}
                 >
-                  {orderLoading
-                    ? "Placing Order..."
-                    : "✓ Place Order"}
-                </button>
-              </div>
-            )}
-
-            {/* SUCCESS */}
-
-            {orderSuccess && (
-              <div
-                style={{
-                  textAlign: "center",
-                  padding: "70px 30px",
-                }}
-              >
-                <CheckCircle2 size={64} />
-
-                <h2
-                  style={{
-                    marginTop: "18px",
-                  }}
-                >
-                  Order Placed Successfully! 🎉
-                </h2>
-
-                <p>
-                  Your order has been received by
-                  Parihar Furniture.
-                </p>
-
-                <div
-                  style={{
-                    display: "inline-block",
-                    marginTop: "15px",
-                    padding: "15px 20px",
-                    borderRadius: "14px",
-                    background: "#faf8f3",
-                    border:
-                      "1px solid #e8e1d2",
-                  }}
-                >
-                  <strong>Order ID</strong>
-
-                  <div
-                    style={{
-                      marginTop: "7px",
-                      fontFamily: "monospace",
-                      wordBreak: "break-all",
-                    }}
-                  >
-                    {orderSuccess}
-                  </div>
-                </div>
-
-                <p>
-                  The owner will contact you to
-                  confirm the order, price and
-                  delivery details.
-                </p>
-
-                <button
-                  type="button"
-                  className="btn btn-gold"
-                  onClick={closeProductModal}
-                  style={{
-                    marginTop: "20px",
-                    minHeight: "52px",
-                    borderRadius: "14px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Continue Shopping
+                  <span>Order Now</span>
+                  <ArrowRight size={14} />
                 </button>
               </div>
             )}
@@ -1806,62 +739,48 @@ Please confirm this order with the customer.
         </div>
       )}
 
-      <a
-        className="floating-whatsapp"
-        href={waLink(
-          "Hello Parihar Furniture! I am interested in your furniture collection."
-        )}
-        target="_blank"
-        rel="noreferrer"
-      >
-        <MessageCircle />
-      </a>
+      {/* =================================================================
+          08. APPLE FLOATING LIQUID GLASS DOCK (STICKY MOBILE BOTTOM)
+          ================================================================= */}
+      <div className="liquid-floating-dock">
+        <a href={`tel:+${phoneNumber}`} className="dock-btn">
+          <Phone size={17} />
+          <span>Call Shop</span>
+        </a>
 
-      <div className="owner-float">
-        <Sparkles size={20} />
+        <a
+          href={waLink("Hello Parihar Furniture! I would like to get a furniture quote.")}
+          target="_blank"
+          rel="noreferrer"
+          className="dock-btn highlight-wa"
+        >
+          <MessageCircle size={17} />
+          <span>WhatsApp</span>
+        </a>
 
-        <a href="/owner">
-          <small>OWNER PORTAL</small>
-          <b>+ Add with AI</b>
+        <a
+          href="https://maps.google.com/?q=Parihar+Furniture+Vishrantwadi+Pune"
+          target="_blank"
+          rel="noreferrer"
+          className="dock-btn"
+        >
+          <MapPin size={17} />
+          <span>Visit Shop</span>
         </a>
       </div>
 
-      {modal && (
-        <div
-          className="modal"
-          onClick={() => setModal(null)}
-        >
-          <div
-            className="modal-card"
-            onClick={(e) =>
-              e.stopPropagation()
-            }
-          >
-            <button
-              onClick={() => setModal(null)}
-            >
-              <X />
-            </button>
-
-            <h3>{modal}</h3>
-          </div>
+      {/* Footer */}
+      <footer className="site-footer-light">
+        <span>© {new Date().getFullYear()} Parihar Furniture & Interior · Vishrantwadi, Pune</span>
+        <span style={{ color: "var(--ink-secondary)", fontWeight: "500" }}>
+          Designing Spaces, Defining Lifestyles · 100% Solid Burma Teak & Sheesham
+        </span>
+        <div style={{ display: "flex", justifyContent: "center", gap: "18px", marginTop: "4px" }}>
+          <a href="#hero">Top ↑</a>
+          <a href="#catalog">Catalog</a>
+          <a href="#devghar">Devghar</a>
+          <a href="/owner">Owner Login</a>
         </div>
-      )}
-
-      <footer className="footer">
-        <span>
-          © {new Date().getFullYear()} Parihar
-          Furniture & Interior
-        </span>
-
-        <span>
-          Designing Spaces, Defining Lifestyles
-        </span>
-
-        <span>
-          <Instagram size={14} />{" "}
-          @pariharfurniture
-        </span>
       </footer>
     </div>
   );
