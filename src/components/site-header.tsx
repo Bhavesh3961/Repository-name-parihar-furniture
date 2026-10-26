@@ -162,17 +162,6 @@ export function SiteHeader() {
                 <ChevronRight size={18} style={{ opacity: 0.4 }} />
               </Link>
             ))}
-
-            <Link
-              href="/owner"
-              className="drawer-link-item"
-              onClick={() => setDrawerOpen(false)}
-              style={{ fontSize: "18px", marginTop: "12px", opacity: 0.7 }}
-            >
-              <span>05</span>
-              Atelier Portal
-              <ChevronRight size={16} />
-            </Link>
           </nav>
 
           <div className="drawer-footer-actions">

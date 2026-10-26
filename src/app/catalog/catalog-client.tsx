@@ -99,31 +99,11 @@ export function CatalogClient() {
     }
 
     setOrderLoading(true);
-    setOrderSuccessId(null);
+    const generatedId = `PF-${Date.now().toString().slice(-6)}`;
+    setOrderSuccessId(generatedId);
 
-    try {
-      const res = await fetch("/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          productId: selectedProduct.id,
-          productName: selectedProduct.name,
-          price: Number(selectedProduct.price),
-          quantity: orderForm.quantity,
-          customerName: orderForm.customerName,
-          phone: orderForm.phone,
-          address: orderForm.address,
-          city: orderForm.city,
-          pincode: orderForm.pincode || "Pune",
-        }),
-      });
-
-      const data = await res.json();
-      const generatedId = data?.orderId || `PF-${Date.now().toString().slice(-6)}`;
-      setOrderSuccessId(generatedId);
-
-      const totalVal = Number(selectedProduct.price) * orderForm.quantity;
-      const orderMessage = `
+    const totalVal = Number(selectedProduct.price) * orderForm.quantity;
+    const orderMessage = `
 🛒 *NEW ORDER INQUIRY - PARIHAR FURNITURE*
 
 📦 *PIECE*: ${selectedProduct.name}
@@ -139,15 +119,10 @@ Order Ref: #${generatedId}
 Please confirm delivery schedule in Pune.
 `.trim();
 
-      setTimeout(() => {
-        window.location.href = waLink(orderMessage);
-      }, 800);
-    } catch {
-      alert("Could not register order online. Contacting workshop directly...");
-      window.location.href = waLink(`Hello! I want to order ${selectedProduct.name}`);
-    } finally {
+    setTimeout(() => {
       setOrderLoading(false);
-    }
+      window.location.href = waLink(orderMessage);
+    }, 600);
   }
 
   return (

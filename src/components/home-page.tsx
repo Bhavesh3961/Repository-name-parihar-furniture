@@ -122,26 +122,14 @@ export function HomePage() {
     quantity: 1,
   });
 
-  // Load products from API with fallback
-  useEffect(() => {
-    fetch("/api/products")
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          setProducts(data);
-        }
-      })
-      .catch(() => {});
-  }, []);
-
   // Filtered Products
   const filteredProducts = useMemo(() => {
     if (activeCategory === "All Collections") return products;
     return products.filter((p) => p.category === activeCategory);
   }, [activeCategory, products]);
 
-  // Handle Order Placement
-  async function submitOrder() {
+  // Handle Order Placement (Instant Local + Direct WhatsApp)
+  function submitOrder() {
     if (!selectedProduct) return;
 
     if (
@@ -154,31 +142,11 @@ export function HomePage() {
     }
 
     setOrderLoading(true);
-    setOrderSuccessId(null);
+    const generatedId = `PF-${Date.now().toString().slice(-6)}`;
+    setOrderSuccessId(generatedId);
 
-    try {
-      const res = await fetch("/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          productId: selectedProduct.id,
-          productName: selectedProduct.name,
-          price: Number(selectedProduct.price),
-          quantity: orderForm.quantity,
-          customerName: orderForm.customerName,
-          phone: orderForm.phone,
-          address: orderForm.address,
-          city: orderForm.city,
-          pincode: orderForm.pincode || "Pune",
-        }),
-      });
-
-      const data = await res.json();
-      const generatedId = data?.orderId || data?.id || `PF-${Date.now().toString().slice(-6)}`;
-      setOrderSuccessId(generatedId);
-
-      const totalVal = Number(selectedProduct.price) * orderForm.quantity;
-      const orderMessage = `
+    const totalVal = Number(selectedProduct.price) * orderForm.quantity;
+    const orderMessage = `
 🛒 *NEW ORDER INQUIRY - PARIHAR FURNITURE*
 
 📦 *FURNITURE PIECE*
@@ -198,15 +166,10 @@ Address: ${orderForm.address}, ${orderForm.city} - ${orderForm.pincode}
 Please confirm wood polish finish and home delivery timeline in Pune.
 `.trim();
 
-      setTimeout(() => {
-        window.location.href = waLink(orderMessage);
-      }, 900);
-    } catch (err) {
-      console.error(err);
-      alert("Could not register order online. Please contact us directly on WhatsApp.");
-    } finally {
+    setTimeout(() => {
       setOrderLoading(false);
-    }
+      window.location.href = waLink(orderMessage);
+    }, 600);
   }
 
   function closeDrawer() {
@@ -921,7 +884,6 @@ Please confirm wood polish finish and home delivery timeline in Pune.
           <Link href="/devghar">Devghar</Link>
           <Link href="/reviews">Reviews</Link>
           <Link href="/location">Location</Link>
-          <Link href="/owner">Owner Login</Link>
         </div>
       </footer>
     </div>
