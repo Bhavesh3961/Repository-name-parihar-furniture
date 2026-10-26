@@ -1,18 +1,33 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/firebase-admin";
-import { requireOwner } from "@/lib/auth";
+import { deleteProduct, getProductById } from "@/lib/store";
 
 export const runtime = "nodejs";
 
-export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  const product = getProductById(id);
+  if (!product) {
+    return NextResponse.json({ error: "Product not found" }, { status: 404 });
+  }
+  return NextResponse.json(product);
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
-    await requireOwner(request);
     const { id } = await params;
-    await db().collection("products").doc(id).update({ published: false, updatedAt: new Date() });
+    const deleted = deleteProduct(id);
+    if (!deleted) {
+      return NextResponse.json({ error: "Product not found" }, { status: 404 });
+    }
     return NextResponse.json({ ok: true });
   } catch (error) {
     const message = error instanceof Error ? error.message : "BAD_REQUEST";
-    const status = message === "UNAUTHORIZED" ? 401 : message === "FORBIDDEN" || message === "APP_CHECK_REQUIRED" ? 403 : 400;
-    return NextResponse.json({ error: message }, { status });
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 }

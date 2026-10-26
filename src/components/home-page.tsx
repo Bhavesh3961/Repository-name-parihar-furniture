@@ -103,6 +103,7 @@ function DoodleArrow() {
 export function HomePage() {
   const [products, setProducts] = useState(seedProducts);
   const [activeCategory, setActiveCategory] = useState("All Collections");
+  const [dockOpen, setDockOpen] = useState(false);
 
   // Bottom Sheet Drawer State
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
@@ -810,34 +811,71 @@ Please confirm wood polish finish and home delivery timeline in Pune.
       )}
 
       {/* =================================================================
-          08. FLOATING MOBILE BOTTOM DOCK (CALL, REVIEWS, WHATSAPP, VISIT)
+          08. FLOATING MOBILE BOTTOM DOCK (APPEARS ON TAP WITH LIQUID ANIMATION)
           ================================================================= */}
-      <div className="liquid-floating-dock">
-        <a href={`tel:+${phoneNumber}`} className="dock-btn">
-          <Phone size={16} />
-          <span>Call</span>
-        </a>
-
-        <a href="#reviews" className="dock-btn">
-          <Star size={16} fill="var(--gold-light)" color="var(--gold-light)" />
-          <span>Reviews</span>
-        </a>
-
-        <a
-          href={waLink("Hello Parihar Furniture! I would like to get a furniture quote.")}
-          target="_blank"
-          rel="noreferrer"
-          className="dock-btn highlight-wa"
+      {!dockOpen && (
+        <button
+          type="button"
+          className="dock-trigger-bubble"
+          onClick={() => setDockOpen(true)}
+          aria-label="Tap to open quick actions menu"
         >
-          <MessageCircle size={18} />
-          <span>WhatsApp</span>
-        </a>
+          <Sparkles size={15} style={{ color: "var(--gold-light)" }} />
+          <span>Quick Actions</span>
+          <span className="dock-trigger-badge">Tap ✦</span>
+        </button>
+      )}
 
-        <a href="#location" className="dock-btn">
-          <MapPin size={16} />
-          <span>Visit</span>
-        </a>
-      </div>
+      {dockOpen && (
+        <div className="liquid-floating-dock">
+          <a
+            href={`tel:+${phoneNumber}`}
+            className="dock-btn"
+            onClick={() => setDockOpen(false)}
+          >
+            <Phone size={16} />
+            <span>Call</span>
+          </a>
+
+          <a
+            href="#reviews"
+            className="dock-btn"
+            onClick={() => setDockOpen(false)}
+          >
+            <Star size={16} fill="var(--gold-light)" color="var(--gold-light)" />
+            <span>Reviews</span>
+          </a>
+
+          <a
+            href={waLink("Hello Parihar Furniture! I would like to get a furniture quote.")}
+            target="_blank"
+            rel="noreferrer"
+            className="dock-btn highlight-wa"
+            onClick={() => setDockOpen(false)}
+          >
+            <MessageCircle size={18} />
+            <span>WhatsApp</span>
+          </a>
+
+          <a
+            href="#location"
+            className="dock-btn"
+            onClick={() => setDockOpen(false)}
+          >
+            <MapPin size={16} />
+            <span>Visit</span>
+          </a>
+
+          <button
+            type="button"
+            className="dock-close-btn"
+            onClick={() => setDockOpen(false)}
+            aria-label="Close Quick Actions Menu"
+          >
+            <X size={15} />
+          </button>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="site-footer-light">

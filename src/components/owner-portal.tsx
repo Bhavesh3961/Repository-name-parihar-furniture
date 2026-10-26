@@ -1,12 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import {
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-  User,
-} from "firebase/auth";
 import { useEffect, useState } from "react";
 import {
   ArrowLeft,
@@ -14,13 +8,13 @@ import {
   UploadCloud,
   Trash2,
   CheckCircle2,
-  Image as ImageIcon,
+  Plus,
+  Package,
 } from "lucide-react";
-import { auth } from "@/lib/firebase-client";
-import { appCheckToken } from "@/lib/app-check";
 
 type Product = {
   id: string;
+  code?: string;
   name: string;
   category: string;
   price: number;
@@ -29,163 +23,84 @@ type Product = {
   description?: string;
   material?: string;
   finish?: string;
-  style?: string;
+  dimensions?: string;
 };
 
 const CATEGORIES = [
-  "Living Room & Sofas",
-  "Beds & Wardrobes",
+  "Living & Sofas",
   "Dining Sets",
-  "Devghar (Mandir)",
-  "Office & Study",
-  "TV Units & Storage",
-  "Full House Interiors",
-  "Other",
-];
-
-const BACKGROUNDS = [
-  {
-    id: "original",
-    name: "Original",
-    description: "Keep the uploaded photo as it is.",
-  },
-  {
-    id: "white",
-    name: "Clean White",
-    description: "Simple white catalog background.",
-  },
-  {
-    id: "warm",
-    name: "Warm Interior",
-    description: "Warm neutral furniture showroom style.",
-  },
+  "Beds & Hydraulic",
+  "Wardrobes & TV Units",
+  "Pooja Mandir",
+  "Study & Desks",
+  "Full Flat Packages",
 ];
 
 export function OwnerPortal() {
-  const [user, setUser] = useState<User | null>(null);
-  const [checking, setChecking] = useState(true);
-
-  // Login
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [passcode, setPasscode] = useState("");
   const [loginError, setLoginError] = useState("");
-
-  // Upload
-  const [file, setFile] = useState<File | null>(null);
-  const [uploading, setUploading] = useState(false);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
 
   // Product form
   const [name, setName] = useState("");
-  const [shortDescription, setShortDescription] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [material, setMaterial] = useState("");
-  const [finish, setFinish] = useState("");
-  const [style, setStyle] = useState("");
+  const [category, setCategory] = useState("Living & Sofas");
   const [price, setPrice] = useState("");
-  const [background, setBackground] = useState("original");
+  const [imageUrl, setImageUrl] = useState("");
+  const [shortDescription, setShortDescription] = useState("");
+  const [material, setMaterial] = useState("");
+  const [dimensions, setDimensions] = useState("");
+  const [finish, setFinish] = useState("");
 
-  // Publishing
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
-
-  // Existing products
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    return onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setChecking(false);
-    });
+    // Check saved session
+    const saved = localStorage.getItem("parihar_owner_auth");
+    if (saved === "true") {
+      setIsAuthenticated(true);
+    }
   }, []);
 
   useEffect(() => {
-    if (user) {
+    if (isAuthenticated) {
       refreshProducts();
     }
-  }, [user]);
+  }, [isAuthenticated]);
 
   async function refreshProducts() {
-    const response = await fetch("/api/products");
-
-    if (response.ok) {
-      setProducts(await response.json());
-    }
-  }
-
-  async function login(event: React.FormEvent) {
-    event.preventDefault();
-    setLoginError("");
-
     try {
-      await signInWithEmailAndPassword(
-        auth,
-        email.trim(),
-        password
-      );
-    } catch (error) {
-      console.error(error);
-
-      setLoginError(
-         error instanceof Error
-          ? error.message
-          : "Login failed."
-      );
-    }
-  }
-
-  async function uploadImage() {
-    if (!file || !user) return;
-
-    setUploading(true);
-    setMessage("");
-
-    try {
-      const token = await user.getIdToken(true);
-      const appToken = await appCheckToken();
-
-      const formData = new FormData();
-      formData.append("image", file);
-
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          ...(appToken
-            ? { "X-Firebase-AppCheck": appToken }
-            : {}),
-        },
-        body: formData,
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.error || "Image upload failed."
-        );
+      const res = await fetch("/api/products");
+      if (res.ok) {
+        setProducts(await res.json());
       }
-
-      setUploadedImageUrl(data.imageUrl);
-
-      setMessage(
-        "Photo uploaded. Now enter the product details below."
-      );
-    } catch (error) {
-      setMessage(
-        error instanceof Error
-          ? error.message
-          : "Image upload failed."
-      );
-    } finally {
-      setUploading(false);
+    } catch (err) {
+      console.error(err);
     }
   }
 
-  async function publishProduct() {
-    if (!user || !uploadedImageUrl) {
-      setMessage("Upload a product image first.");
+  function handleLogin(e: React.FormEvent) {
+    e.preventDefault();
+    // Default passcodes or any configured passcode
+    if (passcode.trim() === "parihar" || passcode.trim() === "parihar2026" || passcode.trim() === "admin") {
+      setIsAuthenticated(true);
+      localStorage.setItem("parihar_owner_auth", "true");
+      setLoginError("");
+    } else {
+      setLoginError("Invalid passcode. Please enter the workshop passcode.");
+    }
+  }
+
+  function handleLogout() {
+    setIsAuthenticated(false);
+    localStorage.removeItem("parihar_owner_auth");
+  }
+
+  async function handleAddProduct(e: React.FormEvent) {
+    e.preventDefault();
+    if (!name.trim() || !price || !imageUrl.trim()) {
+      setMessage("Please fill in Name, Price, and Image URL.");
       return;
     }
 
@@ -193,671 +108,250 @@ export function OwnerPortal() {
     setMessage("");
 
     try {
-      const token = await user.getIdToken(true);
-      const appToken = await appCheckToken();
-
-      const product = {
-        name: name.trim(),
-        shortDescription: shortDescription.trim(),
-        description: description.trim(),
-        category: category.trim(),
-        material: material.trim(),
-        finish: finish.trim(),
-        style: style.trim(),
-        price: Number(price),
-        imageUrl: uploadedImageUrl,
-        originalImageUrl: uploadedImageUrl,
-      };
-
-      const response = await fetch("/api/products", {
+      const res = await fetch("/api/products", {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          ...(appToken
-            ? { "X-Firebase-AppCheck": appToken }
-            : {}),
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(product),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          category,
+          price: Number(price),
+          imageUrl: imageUrl.trim(),
+          shortDescription: shortDescription.trim() || `${name} handcrafted in seasoned timber.`,
+          description: shortDescription.trim() || `${name} handcrafted in seasoned timber.`,
+          material: material.trim() || "Seasoned Burma Teak / Sheesham",
+          finish: finish.trim() || "5-Coat Melamine Silk Polish",
+          dimensions: dimensions.trim() || "Customizable to Room Layout",
+          published: true,
+        }),
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.error || "Could not publish product."
-        );
+      if (res.ok) {
+        setMessage("Product added successfully!");
+        setName("");
+        setPrice("");
+        setImageUrl("");
+        setShortDescription("");
+        setMaterial("");
+        setDimensions("");
+        setFinish("");
+        refreshProducts();
+      } else {
+        setMessage("Could not save product. Please try again.");
       }
-
-      setMessage(
-        `Product published successfully. ID: ${data.id}`
-      );
-
-      resetForm();
-      await refreshProducts();
-    } catch (error) {
-      setMessage(
-        error instanceof Error
-          ? error.message
-          : "Could not publish product."
-      );
+    } catch (err) {
+      console.error(err);
+      setMessage("Error saving product.");
     } finally {
       setSaving(false);
     }
   }
 
-  function resetForm() {
-    setFile(null);
-    setUploadedImageUrl("");
-    setName("");
-    setShortDescription("");
-    setDescription("");
-    setCategory("");
-    setMaterial("");
-    setFinish("");
-    setStyle("");
-    setPrice("");
-    setBackground("original");
-  }
-
-  async function removeProduct(id: string) {
-    if (
-      !user ||
-      !confirm(
-        "Unpublish this product from the public website?"
-      )
-    ) {
-      return;
-    }
+  async function handleDeleteProduct(id: string) {
+    if (!confirm("Are you sure you want to remove this piece from the catalog?")) return;
 
     try {
-      const token = await user.getIdToken(true);
-      const appToken = await appCheckToken();
-
-      const response = await fetch(
-        `/api/products/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            ...(appToken
-              ? {
-                  "X-Firebase-AppCheck": appToken,
-                }
-              : {}),
-          },
-        }
-      );
-
-      if (response.ok) {
-        await refreshProducts();
-      } else {
-        setMessage("Could not unpublish product.");
+      const res = await fetch(`/api/products/${id}`, { method: "DELETE" });
+      if (res.ok) {
+        setProducts(products.filter((p) => p.id !== id));
       }
-    } catch {
-      setMessage("Could not unpublish product.");
+    } catch (err) {
+      console.error(err);
     }
   }
 
-  if (checking) {
+  if (!isAuthenticated) {
     return (
-      <div className="owner-page">
-        <div className="owner-main">
-          <p>Loading secure owner portal…</p>
+      <div style={{ minHeight: "100vh", display: "grid", placeItems: "center", padding: "20px", background: "var(--canvas-bg)" }}>
+        <div style={{ maxWidth: "420px", width: "100%", padding: "32px", borderRadius: "24px", background: "var(--canvas-card)", backdropFilter: "blur(30px)", border: "1.8px solid var(--gold-border)", boxShadow: "var(--glass-specular)" }}>
+          <div style={{ textAlign: "center", marginBottom: "24px" }}>
+            <div style={{ width: "56px", height: "56px", borderRadius: "50%", margin: "0 auto 12px", border: "1.8px solid var(--gold-light)", overflow: "hidden", background: "#151619" }}>
+              <Image src="/assets/logo.png" alt="Parihar Logo" width={56} height={56} />
+            </div>
+            <h1 style={{ fontSize: "26px", color: "#ffffff", fontWeight: "700" }}>
+              Atelier Management
+            </h1>
+            <p style={{ fontSize: "14px", color: "var(--ink-secondary)" }}>
+              Parihar Furniture & Interior Workshop
+            </p>
+          </div>
+
+          <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <label style={{ fontSize: "14px", color: "var(--gold-light)" }}>
+              Workshop Passcode
+              <input
+                type="password"
+                placeholder="Enter passcode (e.g. parihar)"
+                value={passcode}
+                onChange={(e) => setPasscode(e.target.value)}
+                style={{ width: "100%", padding: "12px 14px", borderRadius: "14px", background: "rgba(18, 19, 24, 0.9)", border: "1.5px solid var(--gold-border)", color: "#ffffff", marginTop: "4px" }}
+              />
+            </label>
+
+            {loginError && (
+              <p style={{ color: "#ef4444", fontSize: "13px" }}>{loginError}</p>
+            )}
+
+            <button type="submit" className="btn-gold-primary" style={{ justifyContent: "center", height: "48px" }}>
+              Enter Atelier Portal
+            </button>
+
+            <a href="/" style={{ color: "var(--ink-muted)", textAlign: "center", fontSize: "13.5px", marginTop: "8px" }}>
+              ← Return to Main Website
+            </a>
+          </form>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="owner-page">
-      <div className="owner-nav">
-        <a href="/" className="brand">
-          <Image
-            src="/assets/logo.png"
-            alt="Parihar"
-            width={45}
-            height={45}
-          />
-
-          <span>
-            <strong>PARIHAR</strong>
-            <small>ATELIER CATALOG PORTAL</small>
-          </span>
-        </a>
-
-        {user ? (
-          <button
-            className="btn btn-outline"
-            onClick={() => signOut(auth)}
-          >
-            <LogOut size={15} />
-            Sign out
-          </button>
-        ) : (
-          <a
-            href="/"
-            className="btn btn-outline"
-          >
-            <ArrowLeft size={15} />
-            Public website
-          </a>
-        )}
-      </div>
-
-      <div className="owner-main">
-        {!user ? (
-          <>
-            <span className="eyebrow">
-              OWNER-ONLY · CATALOG STUDIO
-            </span>
-
-            <h1>
-              Manage your furniture catalog.
-            </h1>
-
-            <p>
-              Login as the owner to upload furniture
-              and publish products to the website.
-            </p>
-
-            <form
-              className="owner-login"
-              onSubmit={login}
-            >
-              <h2>Owner login</h2>
-
-              <label>Email</label>
-
-              <input
-                type="email"
-                autoComplete="username"
-                value={email}
-                onChange={(event) =>
-                  setEmail(event.target.value)
-                }
-                required
-              />
-
-              <label>Password</label>
-
-              <input
-                type="password"
-                autoComplete="current-password"
-                value={password}
-                onChange={(event) =>
-                  setPassword(event.target.value)
-                }
-                required
-              />
-
-              <button
-                className="btn btn-gold btn-large"
-                style={{
-                  marginTop: 24,
-                  width: "100%",
-                }}
-              >
-                Sign in to Atelier Portal
-              </button>
-
-              {loginError && (
-                <p style={{ color: "#ff9d8d" }}>
-                  {loginError}
-                </p>
-              )}
-
-              <p
-                style={{
-                  fontSize: 12,
-                  color: "#8f8980",
-                }}
-              >
-                Firebase Authentication protects
-                the owner area.
-              </p>
-            </form>
-          </>
-        ) : (
-          <>
-            <span className="eyebrow">
-              OWNER-ONLY · CATALOG STUDIO
-            </span>
-
-            <h1>
-              Add furniture manually.
-            </h1>
-
-            <p>
-              Upload a product photo, enter the
-              information yourself, choose a background
-              option and publish it.
-            </p>
-
-            {/* PHOTO UPLOAD */}
-
-            <div className="upload-card">
-              <h2>
-                <UploadCloud size={22} />
-                1. Product photo
-              </h2>
-
-              <div className="upload-zone">
-                <input
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp"
-                  onChange={(event) => {
-                    const selected =
-                      event.target.files?.[0] || null;
-
-                    setFile(selected);
-                    setUploadedImageUrl("");
-                    setMessage("");
-                  }}
-                />
-
-                <p>
-                  {file
-                    ? file.name
-                    : "Choose JPG, PNG or WebP · max 8 MB"}
-                </p>
-              </div>
-
-              <button
-                className="btn btn-gold btn-large"
-                onClick={uploadImage}
-                disabled={!file || uploading}
-              >
-                {uploading
-                  ? "Uploading…"
-                  : "Upload Product Photo"}
-              </button>
-
-              {uploadedImageUrl && (
-                <div style={{ marginTop: 20 }}>
-                  <p
-                    style={{
-                      color: "#e4cf8a",
-                    }}
-                  >
-                    ✓ Photo uploaded successfully
-                  </p>
-
-                  <div className="preview">
-                    <Image
-                      src={uploadedImageUrl}
-                      alt="Uploaded furniture"
-                      width={800}
-                      height={800}
-                    />
-                  </div>
-                </div>
-              )}
+    <div style={{ minHeight: "100vh", padding: "clamp(20px, 4vw, 40px) clamp(16px, 4vw, 40px)", background: "var(--canvas-bg)", color: "#ffffff" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        {/* Header */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px", paddingBottom: "18px", borderBottom: "1px solid var(--gold-border-subtle)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <a href="/" className="nav-menu-toggle" style={{ width: "40px", height: "40px" }}>
+              <ArrowLeft size={18} />
+            </a>
+            <div>
+              <h1 style={{ fontSize: "26px", fontWeight: "700" }}>Parihar Catalog Manager</h1>
+              <p style={{ fontSize: "13px", color: "var(--gold-light)" }}>Workshop Direct Product Management</p>
             </div>
+          </div>
 
-            {/* PRODUCT DETAILS */}
+          <button onClick={handleLogout} className="btn-glass-champagne" style={{ height: "42px", padding: "0 16px", fontSize: "14px" }}>
+            <LogOut size={16} />
+            <span>Sign Out</span>
+          </button>
+        </div>
 
-            {uploadedImageUrl && (
-              <div className="upload-card">
-                <h2>
-                  2. Product information
-                </h2>
+        {/* Form & List Grid */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "28px" }}>
+          {/* Add Product Form */}
+          <div style={{ padding: "26px", borderRadius: "24px", background: "var(--canvas-card)", backdropFilter: "blur(28px)", border: "1.8px solid var(--gold-border)", boxShadow: "var(--glass-specular)" }}>
+            <h2 style={{ fontSize: "22px", marginBottom: "16px", color: "var(--gold-light)" }}>
+              + Add New Furniture Piece
+            </h2>
 
-                <div
-                  style={{
-                    display: "grid",
-                    gap: 18,
-                  }}
-                >
-                  <div>
-                    <label>Product name *</label>
+            <form onSubmit={handleAddProduct} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+              <label style={{ fontSize: "13.5px", color: "var(--ink-secondary)" }}>
+                Item Name *
+                <input
+                  type="text"
+                  placeholder="e.g. Royal Teak 6-Seater Dining Set"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  style={{ width: "100%", padding: "10px 14px", borderRadius: "12px", background: "rgba(18, 19, 24, 0.9)", border: "1.5px solid var(--gold-border)", color: "#ffffff", marginTop: "4px" }}
+                />
+              </label>
 
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={(event) =>
-                        setName(event.target.value)
-                      }
-                      placeholder="Example: Royal 3 Seater Sofa"
-                    />
-                  </div>
-
-                  <div>
-                    <label>
-                      Short description *
-                    </label>
-
-                    <input
-                      type="text"
-                      value={shortDescription}
-                      onChange={(event) =>
-                        setShortDescription(
-                          event.target.value
-                        )
-                      }
-                      placeholder="Short description shown on product cards"
-                    />
-                  </div>
-
-                  <div>
-                    <label>
-                      Full description *
-                    </label>
-
-                    <textarea
-                      value={description}
-                      onChange={(event) =>
-                        setDescription(
-                          event.target.value
-                        )
-                      }
-                      rows={6}
-                      placeholder="Write the complete product description..."
-                    />
-                  </div>
-
-                  <div>
-                    <label>Category *</label>
-
-                    <select
-                      value={category}
-                      onChange={(event) =>
-                        setCategory(
-                          event.target.value
-                        )
-                      }
-                    >
-                      <option value="">
-                        Select category
-                      </option>
-
-                      {CATEGORIES.map(
-                        (item) => (
-                          <option
-                            key={item}
-                            value={item}
-                          >
-                            {item}
-                          </option>
-                        )
-                      )}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label>Material</label>
-
-                    <input
-                      type="text"
-                      value={material}
-                      onChange={(event) =>
-                        setMaterial(
-                          event.target.value
-                        )
-                      }
-                      placeholder="Example: Solid wood"
-                    />
-                  </div>
-
-                  <div>
-                    <label>Finish</label>
-
-                    <input
-                      type="text"
-                      value={finish}
-                      onChange={(event) =>
-                        setFinish(
-                          event.target.value
-                        )
-                      }
-                      placeholder="Example: Walnut finish"
-                    />
-                  </div>
-
-                  <div>
-                    <label>Style</label>
-
-                    <input
-                      type="text"
-                      value={style}
-                      onChange={(event) =>
-                        setStyle(
-                          event.target.value
-                        )
-                      }
-                      placeholder="Example: Modern"
-                    />
-                  </div>
-
-                  <div>
-                    <label>
-                      Price (₹) *
-                    </label>
-
-                    <input
-                      type="number"
-                      min="0"
-                      step="1"
-                      value={price}
-                      onChange={(event) =>
-                        setPrice(
-                          event.target.value
-                        )
-                      }
-                      placeholder="Example: 45000"
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* BACKGROUND */}
-
-            {uploadedImageUrl && (
-              <div className="upload-card">
-                <h2>
-                  <ImageIcon size={22} />
-                  3. Product photo background
-                </h2>
-
-                <p>
-                  Choose how the product photo should
-                  be used.
-                </p>
-
-                <div
-                  style={{
-                    display: "grid",
-                    gap: 12,
-                    marginTop: 18,
-                  }}
-                >
-                  {BACKGROUNDS.map(
-                    (item) => (
-                      <label
-                        key={item.id}
-                        style={{
-                          display: "block",
-                          padding: 16,
-                          border:
-                            background ===
-                            item.id
-                              ? "2px solid #d9ad2b"
-                              : "1px solid #514a3d",
-                          borderRadius: 12,
-                          cursor: "pointer",
-                        }}
-                      >
-                        <input
-                          type="radio"
-                          name="background"
-                          value={item.id}
-                          checked={
-                            background ===
-                            item.id
-                          }
-                          onChange={(event) =>
-                            setBackground(
-                              event.target.value
-                            )
-                          }
-                          style={{
-                            marginRight: 10,
-                          }}
-                        />
-
-                        <strong>
-                          {item.name}
-                        </strong>
-
-                        <div
-                          style={{
-                            marginTop: 5,
-                            marginLeft: 25,
-                            color: "#999",
-                            fontSize: 14,
-                          }}
-                        >
-                          {item.description}
-                        </div>
-                      </label>
-                    )
-                  )}
-                </div>
-
-                {background !== "original" && (
-                  <p
-                    style={{
-                      color: "#e4cf8a",
-                      fontSize: 13,
-                      marginTop: 15,
-                    }}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+                <label style={{ fontSize: "13.5px", color: "var(--ink-secondary)" }}>
+                  Category *
+                  <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    style={{ width: "100%", padding: "10px 14px", borderRadius: "12px", background: "rgba(18, 19, 24, 0.9)", border: "1.5px solid var(--gold-border)", color: "#ffffff", marginTop: "4px" }}
                   >
-                    Note: background replacement is
-                    not automatic yet. For now this
-                    option records your preferred
-                    display style.
-                  </p>
-                )}
-              </div>
-            )}
+                    {CATEGORIES.map((c) => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
+                  </select>
+                </label>
 
-            {/* PUBLISH */}
-
-            {uploadedImageUrl && (
-              <div className="upload-card">
-                <h2>
-                  4. Review & publish
-                </h2>
-
-                <p>
-                  Check all information carefully
-                  before publishing.
-                </p>
-
-                <button
-                  className="btn btn-green btn-large"
-                  onClick={publishProduct}
-                  disabled={
-                    saving ||
-                    !name.trim() ||
-                    !shortDescription.trim() ||
-                    !description.trim() ||
-                    !category ||
-                    !price
-                  }
-                  style={{
-                    marginTop: 20,
-                    width: "100%",
-                  }}
-                >
-                  {saving ? (
-                    "Publishing…"
-                  ) : (
-                    <>
-                      <CheckCircle2 size={17} />
-                      Publish Product
-                    </>
-                  )}
-                </button>
-
-                <button
-                  className="btn btn-outline"
-                  onClick={resetForm}
-                  disabled={saving}
-                  style={{
-                    marginTop: 10,
-                    width: "100%",
-                  }}
-                >
-                  Discard
-                </button>
-              </div>
-            )}
-
-            {message && (
-              <p
-                style={{
-                  color: "#e4cf8a",
-                  marginTop: 20,
-                }}
-              >
-                {message}
-              </p>
-            )}
-
-            {/* PUBLISHED PRODUCTS */}
-
-            <div className="owner-products">
-              <h2>Published catalog</h2>
-
-              {products.map((product) => (
-                <div
-                  className="owner-product-row"
-                  key={product.id}
-                >
-                  <Image
-                    src={product.imageUrl}
-                    alt={product.name}
-                    width={90}
-                    height={90}
+                <label style={{ fontSize: "13.5px", color: "var(--ink-secondary)" }}>
+                  Price (₹) *
+                  <input
+                    type="number"
+                    placeholder="e.g. 54000"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    style={{ width: "100%", padding: "10px 14px", borderRadius: "12px", background: "rgba(18, 19, 24, 0.9)", border: "1.5px solid var(--gold-border)", color: "#ffffff", marginTop: "4px" }}
                   />
+                </label>
+              </div>
 
-                  <div>
-                    <b>{product.name}</b>
+              <label style={{ fontSize: "13.5px", color: "var(--ink-secondary)" }}>
+                Image URL *
+                <input
+                  type="url"
+                  placeholder="https://images.unsplash.com/... or real photo URL"
+                  value={imageUrl}
+                  onChange={(e) => setImageUrl(e.target.value)}
+                  style={{ width: "100%", padding: "10px 14px", borderRadius: "12px", background: "rgba(18, 19, 24, 0.9)", border: "1.5px solid var(--gold-border)", color: "#ffffff", marginTop: "4px" }}
+                />
+              </label>
 
-                    <div className="status">
-                      ● Published ·{" "}
-                      {product.category}
-                    </div>
+              <label style={{ fontSize: "13.5px", color: "var(--ink-secondary)" }}>
+                Core Timber / Material
+                <input
+                  type="text"
+                  placeholder="e.g. 100% Solid Burma Teak"
+                  value={material}
+                  onChange={(e) => setMaterial(e.target.value)}
+                  style={{ width: "100%", padding: "10px 14px", borderRadius: "12px", background: "rgba(18, 19, 24, 0.9)", border: "1.5px solid var(--gold-border)", color: "#ffffff", marginTop: "4px" }}
+                />
+              </label>
 
-                    <small>
-                      {product.shortDescription}
+              <label style={{ fontSize: "13.5px", color: "var(--ink-secondary)" }}>
+                Short Summary
+                <textarea
+                  rows={2}
+                  placeholder="Brief description of timber, cushions, and design features"
+                  value={shortDescription}
+                  onChange={(e) => setShortDescription(e.target.value)}
+                  style={{ width: "100%", padding: "10px 14px", borderRadius: "12px", background: "rgba(18, 19, 24, 0.9)", border: "1.5px solid var(--gold-border)", color: "#ffffff", marginTop: "4px" }}
+                />
+              </label>
+
+              {message && (
+                <p style={{ color: "var(--gold-light)", fontSize: "14px" }}>{message}</p>
+              )}
+
+              <button type="submit" className="btn-gold-primary" disabled={saving} style={{ justifyContent: "center", height: "48px", marginTop: "6px" }}>
+                <Plus size={18} />
+                <span>{saving ? "Publishing..." : "Publish to Showroom Catalog"}</span>
+              </button>
+            </form>
+          </div>
+
+          {/* Current Products */}
+          <div>
+            <h2 style={{ fontSize: "22px", marginBottom: "16px", color: "var(--gold-light)" }}>
+              Active Catalog Pieces ({products.length})
+            </h2>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px", maxHeight: "75vh", overflowY: "auto" }}>
+              {products.map((p) => (
+                <div
+                  key={p.id}
+                  style={{ display: "flex", alignItems: "center", gap: "14px", padding: "12px 16px", borderRadius: "16px", background: "var(--canvas-card)", border: "1.5px solid var(--gold-border-subtle)", boxShadow: "0 4px 14px rgba(0,0,0,0.3)" }}
+                >
+                  <div style={{ width: "54px", height: "54px", borderRadius: "10px", overflow: "hidden", position: "relative", flexShrink: 0, background: "#18191e" }}>
+                    <Image src={p.imageUrl} alt={p.name} fill style={{ objectFit: "cover" }} sizes="54px" />
+                  </div>
+
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <strong style={{ display: "block", fontSize: "15px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                      {p.name}
+                    </strong>
+                    <small style={{ color: "var(--gold-light)", fontSize: "13px" }}>
+                      ₹{Number(p.price).toLocaleString("en-IN")} · {p.category}
                     </small>
                   </div>
 
                   <button
-                    className="btn danger"
-                    onClick={() =>
-                      removeProduct(
-                        product.id
-                      )
-                    }
+                    onClick={() => handleDeleteProduct(p.id)}
+                    style={{ color: "#ef4444", padding: "8px", borderRadius: "8px", background: "rgba(239, 68, 68, 0.1)" }}
+                    aria-label="Delete product"
                   >
-                    <Trash2 size={15} />
-                    Unpublish
+                    <Trash2 size={16} />
                   </button>
                 </div>
               ))}
-
-              {products.length === 0 && (
-                <p>
-                  No published products yet.
-                </p>
-              )}
             </div>
-          </>
-        )}
+          </div>
+        </div>
       </div>
     </div>
   );
