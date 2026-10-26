@@ -5,13 +5,13 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#0d0c0a",
+  themeColor: "#1a1d2e",
 };
 
 export const metadata: Metadata = {
   title: "PARIHAR — Architectural Furniture & Bespoke Interiors | Pune",
   description:
-    "Bespoke solid Burma teak & Sheesham furniture, architectural L-shape sectionals, sacred wooden Devghar sanctuaries, and turnkey 1BHK, 2BHK & 3BHK interior millwork in Vishrantwadi, Pune.",
+    "Handcrafted solid Burma teak & Sheesham furniture, architectural L-shape sectionals, sacred wooden Devghar sanctuaries, and turnkey 1BHK, 2BHK & 3BHK interior millwork in Vishrantwadi, Pune.",
   icons: {
     icon: "/assets/logo.png",
   },
@@ -30,7 +30,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
           rel="stylesheet"
         />
       </head>

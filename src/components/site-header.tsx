@@ -7,9 +7,8 @@ import {
   Phone,
   MessageCircle,
   X,
-  Compass,
-  MapPin,
   ChevronRight,
+  Sparkles,
 } from "lucide-react";
 
 const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919175379886";
@@ -23,13 +22,13 @@ export function SiteHeader() {
 
   const navLinks = [
     { label: "Furniture Catalog", href: "#catalog", num: "01" },
-    { label: "Pooja Mandir", href: "#devghar", num: "02" },
-    { label: "Customer Reviews", href: "#reviews", num: "03" },
+    { label: "Sacred Devghar", href: "#devghar", num: "02" },
+    { label: "Client Testimonials", href: "#reviews", num: "03" },
     { label: "Workshop Location", href: "#location", num: "04" },
   ];
 
   return (
-    <>
+    <div className="liquid-navbar-wrapper">
       {/* 01. Liquid Glass Top Notification Ticker */}
       <div className="liquid-ticker-bar">
         <div className="ticker-track">
@@ -37,10 +36,10 @@ export function SiteHeader() {
             ✦ <b>PARIHAR FURNITURE & INTERIOR</b> · VISHRANTWADI WORKSHOP
           </span>
           <span className="ticker-item">
-            ★ <b>100% SEASONED BURMA TEAK & SHEESHAM</b>
+            ★ <b>100% SEASONED BURMA TEAK & SHEESHAM WOOD</b>
           </span>
           <span className="ticker-item">
-            ✦ <b>DIRECT WORKSHOP PRICES · 0% MIDDLEMAN MARKUP</b>
+            ✦ <b>HONEST WORKSHOP PRICES · 0% MIDDLEMAN COMMISSIONS</b>
           </span>
           <span className="ticker-item">
             ★ <b>FREE PUNE HOME MEASUREMENT & ESTIMATE</b>
@@ -53,10 +52,10 @@ export function SiteHeader() {
             ✦ <b>PARIHAR FURNITURE & INTERIOR</b> · VISHRANTWADI WORKSHOP
           </span>
           <span className="ticker-item">
-            ★ <b>100% SEASONED BURMA TEAK & SHEESHAM</b>
+            ★ <b>100% SEASONED BURMA TEAK & SHEESHAM WOOD</b>
           </span>
           <span className="ticker-item">
-            ✦ <b>DIRECT WORKSHOP PRICES · 0% MIDDLEMAN MARKUP</b>
+            ✦ <b>HONEST WORKSHOP PRICES · 0% MIDDLEMAN COMMISSIONS</b>
           </span>
           <span className="ticker-item">
             ★ <b>FREE PUNE HOME MEASUREMENT & ESTIMATE</b>
@@ -67,7 +66,7 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {/* 02. Apple-Style Liquid Glass Navbar */}
+      {/* 02. Apple Control Center Smoked Liquid Glass Navbar (Sticky to Top) */}
       <header className="liquid-navbar">
         <div className="navbar-inner">
           {/* Official Brand Logo */}
@@ -83,7 +82,7 @@ export function SiteHeader() {
             </div>
             <div className="brand-titles">
               <span className="brand-main-title">Parihar</span>
-              <span className="brand-sub-title">Furniture & Interior</span>
+              <span className="brand-sub-title">Furniture & Interior · Vishrantwadi</span>
             </div>
           </a>
 
@@ -96,7 +95,7 @@ export function SiteHeader() {
             ))}
           </nav>
 
-          {/* Clean Mobile Actions (2 clean buttons) */}
+          {/* Clean Mobile Actions (2 clean Control Center buttons) */}
           <div className="mobile-nav-actions">
             <a
               href={waLink("Hello Parihar Furniture! I would like to inquire about furniture.")}
@@ -168,10 +167,10 @@ export function SiteHeader() {
               href="/owner"
               className="drawer-link-item"
               onClick={() => setDrawerOpen(false)}
-              style={{ fontSize: "16px", marginTop: "12px", opacity: 0.65 }}
+              style={{ fontSize: "18px", marginTop: "12px", opacity: 0.7 }}
             >
               <span>05</span>
-              Owner Portal
+              Atelier Portal
               <ChevronRight size={16} />
             </a>
           </nav>
@@ -183,7 +182,7 @@ export function SiteHeader() {
               rel="noreferrer"
               className="nav-wa-pill"
               onClick={() => setDrawerOpen(false)}
-              style={{ height: "48px", justifyContent: "center", fontSize: "12px" }}
+              style={{ height: "48px", justifyContent: "center", fontSize: "14px" }}
             >
               <MessageCircle size={17} />
               <span>Direct WhatsApp Catalog</span>
@@ -191,7 +190,7 @@ export function SiteHeader() {
 
             <a
               href={`tel:+${phoneNumber}`}
-              className="btn-liquid-gold"
+              className="btn-control-white"
               onClick={() => setDrawerOpen(false)}
               style={{ width: "100%", justifyContent: "center" }}
             >
@@ -201,6 +200,6 @@ export function SiteHeader() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
