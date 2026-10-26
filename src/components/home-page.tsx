@@ -314,18 +314,20 @@ Please confirm wood polish finish and home delivery timeline in Pune.
             </div>
           </div>
 
-          {/* Useful Category Filter Bar */}
-          <div className="category-filter-bar">
-            {usefulCategories.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                className={`category-pill ${activeCategory === cat ? "active" : ""}`}
-                onClick={() => setActiveCategory(cat)}
-              >
-                {cat}
-              </button>
-            ))}
+          {/* Useful Category Filter Bar (Sticky on Top during Scroll) */}
+          <div className="sticky-category-wrapper">
+            <div className="category-filter-bar">
+              {usefulCategories.map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  className={`category-pill ${activeCategory === cat ? "active" : ""}`}
+                  onClick={() => setActiveCategory(cat)}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Liquid Glass Product Cards Grid */}

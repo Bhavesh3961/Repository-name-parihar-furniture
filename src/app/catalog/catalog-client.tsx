@@ -166,18 +166,20 @@ Please confirm delivery schedule in Pune.
             </p>
           </div>
 
-          {/* Category Filter Pills */}
-          <div className="category-filter-bar" style={{ marginBottom: "28px" }}>
-            {usefulCategories.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                className={`category-pill ${activeCategory === cat ? "active" : ""}`}
-                onClick={() => setActiveCategory(cat)}
-              >
-                {cat}
-              </button>
-            ))}
+          {/* Category Filter Pills (Sticky on Top during Scroll) */}
+          <div className="sticky-category-wrapper">
+            <div className="category-filter-bar">
+              {usefulCategories.map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  className={`category-pill ${activeCategory === cat ? "active" : ""}`}
+                  onClick={() => setActiveCategory(cat)}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Product Cards Grid */}

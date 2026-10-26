@@ -286,6 +286,15 @@ textarea {
   width: 100%;
 }
 
+@media (max-width: 1023px) {
+  /* On mobile: Top navbar is not sticky so categories can stick to top without stealing screen space */
+  .liquid-navbar-wrapper {
+    position: relative;
+    top: auto;
+    z-index: 50;
+  }
+}
+
 .liquid-navbar {
   width: 100%;
   background: rgba(22, 23, 29, 0.86);
@@ -792,14 +801,48 @@ textarea {
   line-height: 1.6;
 }
 
-/* Hand-Drawn Category Filter Bar */
+/* Hand-Drawn Category Filter Bar & Sticky Container */
+.sticky-category-wrapper {
+  position: sticky;
+  z-index: 85;
+  transition: all 0.25s var(--ease-apple);
+}
+
+@media (max-width: 1023px) {
+  /* Mobile: Category bar sticks to the very top (top: 0) */
+  .sticky-category-wrapper {
+    top: 0;
+    background: rgba(18, 19, 24, 0.95);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1.5px solid var(--gold-border-subtle);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
+    padding: 10px 0 10px 16px;
+    margin: 0 calc(-1 * clamp(16px, 4vw, 40px)) 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Desktop: Category bar sticks right below desktop navbar at top: 66px */
+  .sticky-category-wrapper {
+    top: 66px;
+    background: rgba(18, 19, 24, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--gold-border-subtle);
+    padding: 12px 0;
+    margin-bottom: 24px;
+  }
+}
+
 .category-filter-bar {
   display: flex;
   gap: 10px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  padding-bottom: 22px;
+  padding-right: 20px;
+  padding-bottom: 2px;
   max-width: 1400px;
   margin: 0 auto;
 }
