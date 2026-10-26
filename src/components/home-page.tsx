@@ -582,20 +582,44 @@ Please confirm wood polish finish and home delivery timeline in Pune.
               </div>
             </div>
 
-            <div style={{ position: "relative", minHeight: "340px", borderRadius: "26px 12px 26px 12px / 12px 26px 12px 26px", overflow: "hidden", border: "1.8px solid var(--gold-border)", boxShadow: "var(--glass-specular)" }}>
+            <div
+              style={{
+                position: "relative",
+                minHeight: "420px",
+                borderRadius: "26px 12px 26px 12px / 12px 26px 12px 26px",
+                overflow: "hidden",
+                border: "1.8px solid var(--gold-border)",
+                boxShadow: "var(--glass-specular)",
+              }}
+            >
               <Image
-                src="https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&w=1000&q=80"
-                alt="Parihar Real Furniture Workshop"
+                src="/assets/parihar-workshop-real.jpg"
+                alt="Parihar Real Furniture Workshop and Storefront"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                style={{ objectFit: "cover" }}
+                style={{ objectFit: "cover", objectPosition: "center top" }}
+                priority
               />
-              <div style={{ position: "absolute", bottom: "16px", left: "16px", right: "16px", padding: "14px 18px", borderRadius: "18px", background: "rgba(22, 23, 29, 0.9)", backdropFilter: "blur(24px)", border: "1.5px solid var(--gold-border)", boxShadow: "0 8px 24px rgba(0,0,0,0.5)" }}>
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "16px",
+                  left: "16px",
+                  right: "16px",
+                  padding: "14px 18px",
+                  borderRadius: "18px",
+                  background: "rgba(22, 23, 29, 0.92)",
+                  backdropFilter: "blur(24px)",
+                  WebkitBackdropFilter: "blur(24px)",
+                  border: "1.5px solid var(--gold-border)",
+                  boxShadow: "0 8px 24px rgba(0,0,0,0.6)",
+                }}
+              >
                 <strong style={{ display: "block", color: "#ffffff", fontSize: "17.5px" }}>
-                  Parihar Furniture & Interior
+                  श्री परिहार फर्निचर · Vishrantwadi, Pune
                 </strong>
                 <small style={{ color: "var(--gold-light)", fontSize: "13.5px", fontWeight: "700" }}>
-                  Open Today till 10:00 PM · Walk-ins Welcome
+                  Direct Workshop & Storefront · Walk-ins Welcome (8 AM – 10 PM)
                 </small>
               </div>
             </div>

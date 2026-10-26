@@ -321,10 +321,10 @@ export function LocationClient() {
               }}
             >
               <Image
-                src="https://images.unsplash.com/photo-1581539250439-c96689b516dd?auto=format&fit=crop&w=1200&q=80"
-                alt="Parihar Master Woodworking Workshop Pune"
+                src="/assets/parihar-workshop-real.jpg"
+                alt="Parihar Master Woodworking Workshop & Storefront Pune"
                 fill
-                style={{ objectFit: "cover" }}
+                style={{ objectFit: "cover", objectPosition: "center top" }}
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
               />
