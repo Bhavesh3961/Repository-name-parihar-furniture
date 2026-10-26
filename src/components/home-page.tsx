@@ -810,12 +810,17 @@ Please confirm wood polish finish and home delivery timeline in Pune.
       )}
 
       {/* =================================================================
-          08. FLOATING MOBILE BOTTOM DOCK (STICKY MOBILE CONVERSION)
+          08. FLOATING MOBILE BOTTOM DOCK (CALL, REVIEWS, WHATSAPP, VISIT)
           ================================================================= */}
       <div className="liquid-floating-dock">
         <a href={`tel:+${phoneNumber}`} className="dock-btn">
-          <Phone size={18} />
-          <span>Call Shop</span>
+          <Phone size={16} />
+          <span>Call</span>
+        </a>
+
+        <a href="#reviews" className="dock-btn">
+          <Star size={16} fill="var(--gold-light)" color="var(--gold-light)" />
+          <span>Reviews</span>
         </a>
 
         <a
@@ -828,14 +833,9 @@ Please confirm wood polish finish and home delivery timeline in Pune.
           <span>WhatsApp</span>
         </a>
 
-        <a
-          href="https://maps.google.com/?q=Parihar+Furniture+Vishrantwadi+Pune"
-          target="_blank"
-          rel="noreferrer"
-          className="dock-btn"
-        >
-          <MapPin size={18} />
-          <span>Visit Shop</span>
+        <a href="#location" className="dock-btn">
+          <MapPin size={16} />
+          <span>Visit</span>
         </a>
       </div>
 

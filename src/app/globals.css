@@ -1,32 +1,33 @@
 /* ==========================================================================
    PARIHAR FURNITURE & INTERIOR — BRAND LOGO AESTHETIC & HAND-DRAWN CRAFT
    Palette: Architectural Charcoal Marble & Brushed Champagne Gold (Logo Match)
-   Pattern: Subtle Architectural Drafting Grid with Warm Cove Ambient Glow
-   Typography: Universal 'Kalam' Hand-Drawn Aesthetic
-   100% Genuine Real Furniture Photography (No AI, Clean High-Res Images)
+   Background: Dynamic Alternating Light & Dark Zones (Chiaroscuro Rhythm)
+   Subtle Architectural Drafting Millimeter Pattern
+   Universal 'Kalam' Hand-Drawn Typography
+   100% Genuine Real Furniture Photography (No AI)
    Mobile-First Android & iPhone UX (Sticky Top Nav, Bottom Floating Dock)
    ========================================================================== */
 
 :root {
   /* Brand Logo Color Harmony (No dark brown, No blue/purple, No yellow) */
-  --canvas-bg: #151619;
+  --canvas-bg: #141519;
   --canvas-surface: #1d1e23;
-  --canvas-card: rgba(26, 27, 33, 0.74);
-  --canvas-card-hover: rgba(34, 35, 44, 0.88);
-  --canvas-elevated: rgba(30, 31, 39, 0.92);
+  --canvas-card: rgba(26, 27, 34, 0.76);
+  --canvas-card-hover: rgba(36, 37, 46, 0.90);
+  --canvas-elevated: rgba(32, 33, 42, 0.94);
 
   /* Brushed Champagne Gold Accents (Matched to "PARIHAR" Logo Letters) */
   --gold-primary: #d4af37;
   --gold-light: #e2bf65;
   --gold-cove: #ffd88a;
   --gold-dark: #b8933b;
-  --gold-glow: rgba(226, 191, 101, 0.22);
-  --gold-border: rgba(226, 191, 101, 0.3);
-  --gold-border-subtle: rgba(226, 191, 101, 0.14);
+  --gold-glow: rgba(226, 191, 101, 0.24);
+  --gold-border: rgba(226, 191, 101, 0.32);
+  --gold-border-subtle: rgba(226, 191, 101, 0.16);
 
   /* Travertine Stone Greige (Matched to Logo Wall Background) */
   --stone-wall: #dcd5cb;
-  --stone-card: #25262d;
+  --stone-card: #282a35;
 
   /* Typography Colors (Warm Ivory & Travertine on Deep Charcoal) */
   --ink-primary: #faf8f5;
@@ -35,15 +36,15 @@
   --ink-faint: #68645c;
 
   /* Apple Liquid Glass with Champagne Specular Reflections */
-  --glass-border: rgba(226, 191, 101, 0.24);
-  --glass-border-hover: rgba(226, 191, 101, 0.45);
+  --glass-border: rgba(226, 191, 101, 0.26);
+  --glass-border-hover: rgba(226, 191, 101, 0.48);
   --glass-specular: 
-    inset 0 1.5px 1.5px 0 rgba(255, 238, 195, 0.35),
-    inset 0 -1px 1px 0 rgba(226, 191, 101, 0.1),
+    inset 0 1.5px 1.5px 0 rgba(255, 238, 195, 0.38),
+    inset 0 -1px 1px 0 rgba(226, 191, 101, 0.12),
     0 16px 40px -10px rgba(0, 0, 0, 0.65);
   --glass-specular-hover: 
-    inset 0 2px 2px 0 rgba(255, 240, 205, 0.5),
-    inset 0 -1px 1px 0 rgba(226, 191, 101, 0.18),
+    inset 0 2px 2px 0 rgba(255, 240, 205, 0.55),
+    inset 0 -1px 1px 0 rgba(226, 191, 101, 0.20),
     0 24px 50px -10px rgba(0, 0, 0, 0.75);
   --glass-blur: blur(36px) saturate(200%);
 
@@ -81,6 +82,7 @@ html {
   overflow-x: hidden;
 }
 
+/* Dynamic Alternating Light & Dark Background Canvas */
 body {
   background-color: var(--canvas-bg);
   color: var(--ink-primary);
@@ -90,17 +92,21 @@ body {
   overflow-x: hidden;
   position: relative;
   width: 100%;
-  /* Architectural Blueprint Drafting Grid & Warm Cove LED Ambient Glow (Matching Logo) */
+  /* Architectural Blueprint Drafting Grid & Dynamic Light/Dark Contrast Mesh */
   background-image: 
-    /* Warm cove backlight glows (like the LED strip in the logo) */
-    radial-gradient(circle at 14% 10%, rgba(226, 191, 101, 0.14) 0%, transparent 45%),
-    radial-gradient(circle at 86% 20%, rgba(212, 175, 55, 0.10) 0%, transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(255, 223, 148, 0.07) 0%, transparent 50%),
-    radial-gradient(circle at 18% 85%, rgba(226, 191, 101, 0.11) 0%, transparent 45%),
-    radial-gradient(circle at 82% 90%, rgba(212, 175, 55, 0.08) 0%, transparent 45%),
-    /* Architectural millimeter drafting grid pattern (tasteful, non-cringe) */
-    linear-gradient(to right, rgba(226, 191, 101, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(226, 191, 101, 0.04) 1px, transparent 1px);
+    /* Luminous warm cove light pool (Light Zone 1) */
+    radial-gradient(circle at 15% 8%, rgba(226, 191, 101, 0.24) 0%, transparent 45%),
+    /* Luminous travertine highlight pool (Light Zone 2) */
+    radial-gradient(circle at 88% 18%, rgba(220, 213, 203, 0.18) 0%, transparent 45%),
+    /* Deep charcoal contrast shadow (Dark Zone) */
+    radial-gradient(circle at 50% 42%, rgba(18, 19, 24, 0.95) 0%, transparent 55%),
+    /* Luminous warm amber pool (Light Zone 3) */
+    radial-gradient(circle at 85% 68%, rgba(226, 191, 101, 0.20) 0%, transparent 45%),
+    /* Warm stone glow pool (Light Zone 4) */
+    radial-gradient(circle at 14% 88%, rgba(212, 175, 55, 0.16) 0%, transparent 45%),
+    /* Architectural millimeter drafting grid pattern */
+    linear-gradient(to right, rgba(226, 191, 101, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(226, 191, 101, 0.045) 1px, transparent 1px);
   background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 30px 30px, 30px 30px;
   background-attachment: fixed;
 }
@@ -153,7 +159,7 @@ textarea {
   padding: 5px 14px;
   border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
   border: 1.6px solid var(--gold-border);
-  background: rgba(28, 29, 36, 0.85);
+  background: rgba(30, 31, 39, 0.88);
   backdrop-filter: blur(16px);
   color: var(--gold-light);
   font-size: 14px;
@@ -176,7 +182,7 @@ textarea {
   padding: 4px 12px;
   border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
   background: var(--gold-light);
-  color: #151619;
+  color: #141519;
   font-size: 12.5px;
   font-weight: 700;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
@@ -205,7 +211,7 @@ textarea {
 .hand-drawn-callout {
   padding: 16px 20px;
   border-radius: 20px 8px 22px 10px / 10px 22px 8px 20px;
-  background: rgba(32, 33, 42, 0.85);
+  background: rgba(36, 38, 48, 0.85);
   backdrop-filter: blur(24px);
   border: 1.8px dashed var(--gold-border);
   box-shadow: var(--glass-specular);
@@ -233,7 +239,7 @@ textarea {
    01. ANIMATED ARCHITECTURAL TICKER BAR
    ========================================================================== */
 .liquid-ticker-bar {
-  background: rgba(20, 21, 26, 0.92);
+  background: rgba(20, 21, 26, 0.94);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--gold-border-subtle);
@@ -282,7 +288,7 @@ textarea {
 
 .liquid-navbar {
   width: 100%;
-  background: rgba(22, 23, 29, 0.82);
+  background: rgba(22, 23, 29, 0.86);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border-bottom: 1px solid var(--glass-border);
@@ -391,7 +397,7 @@ textarea {
   gap: 10px;
 }
 
-/* WhatsApp pill in top navbar: STRICTLY HIDDEN ON MOBILE to avoid duplication with bottom dock */
+/* WhatsApp pill in top navbar: STRICTLY HIDDEN ON MOBILE */
 .nav-wa-pill {
   display: none;
 }
@@ -509,7 +515,7 @@ textarea {
 }
 
 /* ==========================================================================
-   03. ARCHITECTURAL HERO SECTION (CHAMPAGNE GLASS & HAND-DRAWN CRAFT)
+   03. ARCHITECTURAL HERO SECTION (ZONE 1: DRAMATIC CHARCOAL WITH COVE BEAM)
    ========================================================================== */
 .liquid-hero {
   position: relative;
@@ -542,10 +548,10 @@ textarea {
   z-index: 2;
   background: linear-gradient(
     180deg,
-    rgba(21, 22, 25, 0.4) 0%,
-    rgba(21, 22, 25, 0.65) 40%,
-    rgba(21, 22, 25, 0.90) 75%,
-    rgba(21, 22, 25, 0.98) 100%
+    rgba(20, 21, 25, 0.38) 0%,
+    rgba(20, 21, 25, 0.65) 40%,
+    rgba(20, 21, 25, 0.90) 75%,
+    rgba(20, 21, 25, 0.98) 100%
   );
   pointer-events: none;
 }
@@ -596,7 +602,7 @@ textarea {
   padding: 0 24px;
   border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
   background: var(--gold-light);
-  color: #151619;
+  color: #141519;
   font-size: 17px;
   font-weight: 700;
   display: inline-flex;
@@ -655,14 +661,16 @@ textarea {
 }
 
 /* ==========================================================================
-   04. INSTAGRAM-STYLE LIQUID GLASS STORY HIGHLIGHTS
+   04. STORY HIGHLIGHTS (ZONE 2: LIGHTER TRAVERTINE MINERAL BAND)
    ========================================================================== */
 .liquid-story-bar {
   padding: 22px 0 16px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  background: rgba(20, 21, 26, 0.6);
+  /* Lighter Travertine Mineral Band for Visual Contrast */
+  background: linear-gradient(180deg, rgba(38, 40, 50, 0.75) 0%, rgba(28, 30, 38, 0.85) 100%);
+  border-top: 1px solid var(--gold-border-subtle);
   border-bottom: 1px solid var(--gold-border-subtle);
 }
 
@@ -719,7 +727,7 @@ textarea {
   overflow: hidden;
   position: relative;
   background: #18191e;
-  border: 2px solid #151619;
+  border: 2px solid #141519;
 }
 
 .story-circle-inner img {
@@ -742,10 +750,12 @@ textarea {
 }
 
 /* ==========================================================================
-   05. SHOWCASE CATALOG & USEFUL CATEGORIES
+   05. SHOWCASE CATALOG (ZONE 3: CONTRASTING DEEP SLATE WITH LIGHTED CARDS)
    ========================================================================== */
 .section-showcase {
   padding: clamp(36px, 6vw, 72px) clamp(16px, 4vw, 40px);
+  position: relative;
+  background: radial-gradient(circle at 80% 20%, rgba(226, 191, 101, 0.12) 0%, transparent 45%);
 }
 
 .section-head-wrap {
@@ -759,7 +769,7 @@ textarea {
   gap: 6px;
   padding: 5px 14px;
   border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-  background: rgba(226, 191, 101, 0.12);
+  background: rgba(226, 191, 101, 0.14);
   border: 1.5px solid var(--gold-border);
   color: var(--gold-light);
   font-size: 13.5px;
@@ -803,7 +813,7 @@ textarea {
   min-height: 44px;
   padding: 0 20px;
   border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-  background: rgba(30, 31, 38, 0.72);
+  background: rgba(32, 33, 42, 0.78);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1.5px solid var(--gold-border-subtle);
@@ -816,14 +826,14 @@ textarea {
 }
 
 .category-pill:hover {
-  background: rgba(38, 39, 48, 0.85);
+  background: rgba(40, 42, 54, 0.9);
   border-color: var(--gold-border);
   color: #ffffff;
 }
 
 .category-pill.active {
   background: var(--gold-light);
-  color: #151619;
+  color: #141519;
   border-color: #ffffff;
   font-weight: 700;
   box-shadow: 
@@ -916,7 +926,7 @@ textarea {
   left: 12px;
   padding: 4px 10px;
   border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-  background: rgba(21, 22, 27, 0.88);
+  background: rgba(20, 21, 26, 0.9);
   backdrop-filter: blur(14px);
   border: 1px solid var(--gold-border);
   font-family: var(--font-mono);
@@ -934,7 +944,7 @@ textarea {
   padding: 4px 12px;
   border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
   background: var(--gold-light);
-  color: #151619;
+  color: #141519;
   font-size: 12.5px;
   font-weight: 700;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
@@ -991,7 +1001,7 @@ textarea {
   margin-top: 12px;
   height: 44px;
   border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-  background: rgba(226, 191, 101, 0.12);
+  background: rgba(226, 191, 101, 0.14);
   border: 1.5px solid var(--gold-border);
   color: var(--gold-light);
   font-size: 15.5px;
@@ -1006,16 +1016,20 @@ textarea {
 
 .liquid-product-card:hover .btn-card-inspect {
   background: var(--gold-light);
-  color: #151619;
+  color: #141519;
   border-color: #ffffff;
   box-shadow: 0 4px 18px rgba(226, 191, 101, 0.4);
 }
 
 /* ==========================================================================
-   07. SACRED DEVGHAR HALO (WARM COVE BRASS & REAL PHOTOGRAPHY)
+   07. SACRED DEVGHAR HALO (ZONE 4: WARM AMBER SANCTUARY HALO)
    ========================================================================== */
 .section-devghar-halo {
   padding: clamp(36px, 6vw, 72px) clamp(16px, 4vw, 40px);
+  /* Lighter Warm Sanctuary Halo Gradient */
+  background: linear-gradient(180deg, rgba(34, 36, 46, 0.75) 0%, rgba(42, 40, 36, 0.85) 50%, rgba(24, 25, 32, 0.95) 100%);
+  border-top: 1px solid var(--gold-border-subtle);
+  border-bottom: 1px solid var(--gold-border-subtle);
 }
 
 .devghar-glow-card {
@@ -1110,10 +1124,15 @@ textarea {
 }
 
 /* ==========================================================================
-   08. REVIEWS SECTION
+   08. REVIEWS SECTION (ZONE 5: LIGHTER TRAVERTINE STONE BACKDROP)
    ========================================================================== */
 .section-reviews {
   padding: clamp(36px, 6vw, 72px) clamp(16px, 4vw, 40px);
+  /* Distinct Lighter Warm Stone Band */
+  background: linear-gradient(180deg, rgba(40, 42, 54, 0.85) 0%, rgba(30, 32, 42, 0.95) 100%);
+  border-top: 1.5px solid var(--gold-border-subtle);
+  border-bottom: 1.5px solid var(--gold-border-subtle);
+  position: relative;
 }
 
 .reviews-scroll-grid {
@@ -1139,7 +1158,7 @@ textarea {
 .review-item-card {
   padding: 24px;
   border-radius: 22px 10px 24px 10px / 10px 24px 10px 22px;
-  background: var(--canvas-card);
+  background: rgba(24, 25, 33, 0.88);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border: 1.6px solid var(--gold-border);
@@ -1320,27 +1339,29 @@ textarea {
 }
 
 /* ==========================================================================
-   10. FLOATING MOBILE BOTTOM DOCK (STICKY MOBILE CONVERSION)
+   10. FLOATING MOBILE BOTTOM DOCK (NOW WITH REVIEWS + NO OVERLAP)
    ========================================================================== */
 .liquid-floating-dock {
   position: fixed;
   bottom: 14px;
-  left: 14px;
-  right: 14px;
-  z-index: 900;
-  background: rgba(24, 25, 33, 0.88);
+  left: 10px;
+  right: 10px;
+  z-index: 999;
+  background: rgba(24, 25, 33, 0.92);
   backdrop-filter: blur(36px) saturate(200%);
   -webkit-backdrop-filter: blur(36px) saturate(200%);
   border: 1.6px solid var(--gold-border);
   box-shadow: 
     inset 0 1.5px 1.5px 0 rgba(255, 238, 195, 0.35),
-    0 16px 40px rgba(0, 0, 0, 0.65);
+    0 16px 40px rgba(0, 0, 0, 0.7);
   border-radius: 9999px;
-  padding: 6px 12px;
+  padding: 5px 6px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  gap: 6px;
+  justify-content: space-between;
+  gap: 4px;
+  max-width: 480px;
+  margin: 0 auto;
 }
 
 @media (min-width: 1024px) {
@@ -1354,18 +1375,23 @@ textarea {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  padding: 6px 10px;
+  gap: 2px;
+  padding: 5px 6px;
   border-radius: 9999px;
   color: var(--ink-secondary);
-  font-size: 13px;
+  font-size: 11.5px;
   flex: 1;
-  min-height: 46px;
+  min-height: 44px;
   transition: all 0.15s ease;
+  white-space: nowrap;
 }
 
 .dock-btn:active {
   transform: scale(0.92);
+}
+
+.dock-btn:hover {
+  color: var(--gold-light);
 }
 
 .dock-btn.highlight-wa {
@@ -1373,12 +1399,14 @@ textarea {
   color: #ffffff;
   font-weight: 700;
   box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+  flex: 1.35;
+  padding: 6px 10px;
 }
 
 /* Footer */
 .site-footer-light {
   padding: 36px clamp(14px, 4vw, 36px);
-  background: rgba(18, 19, 24, 0.9);
+  background: rgba(18, 19, 24, 0.94);
   backdrop-filter: blur(20px);
   border-top: 1px solid var(--gold-border-subtle);
   font-size: 14.5px;
