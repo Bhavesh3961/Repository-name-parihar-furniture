@@ -59,23 +59,23 @@ function DoodleUnderline({ color = "#e2bf65" }: { color?: string }) {
 const workshopPerks = [
   {
     icon: <TreePine size={22} color="var(--gold-light)" />,
-    title: "Inspect Seasoned Raw Timber",
-    desc: "Inspect 100% genuine kiln-seasoned Burma teak and Sheesham logs in the raw state before finishing and polishing.",
+    title: "Asli Sagwan Lakdi Ki Live Parakh",
+    desc: "Khokhla particle board ya MDF nahi. Workshop mein aakar asli seasoned Burma Teak aur Sheesham lakdi ko polish se pehle khud check karein.",
   },
   {
     icon: <Layers size={22} color="var(--gold-light)" />,
-    title: "500+ Luxury Fabric Swatches",
-    desc: "Touch stain-resistant Turkish velvets, heavy chenille, genuine nappa leatherettes, and high-GSM linen weaves.",
+    title: "500+ Fabrics & Real Polish Swatches",
+    desc: "Stain-resistant velvet, washable fabrics aur walnut-natural teak polish ke live sample pieces touch karke pasand karein.",
   },
   {
     icon: <Compass size={22} color="var(--gold-light)" />,
-    title: "Custom 3D Spatial Layout",
-    desc: "Bring your floor plan or apartment keys. We design custom dimensions to fit your exact room proportions down to the millimeter.",
+    title: "Flat Ke Hisab Se Custom Size",
+    desc: "Apne ghar ka naap ya layout le aaiye. Master carpenter aapke room ke exact size ke hisab se furniture design karenge.",
   },
   {
     icon: <ShieldCheck size={22} color="var(--gold-light)" />,
-    title: "Direct Master Carpenter Pricing",
-    desc: "Zero showroom markup, zero retail middleman commissions. Pay honest workshop rates with transparent invoices.",
+    title: "Seedha Karkhana Rate (0% Commission)",
+    desc: "Bina kisi middleman ya showroom commission ke honest workshop direct pricing aur 10-saal ki warranty paiye.",
   },
 ];
 
@@ -133,8 +133,8 @@ export function LocationClient() {
                 lineHeight: "1.65",
               }}
             >
-              Experience authentic woodworking craftsmanship firsthand. Touch hand-planed teak grains,
-              test 40-density sofa cushions, and consult directly with our master artisans.
+              Vishrantwadi workshop mein aakar hamare master artisans se live milein. Asli teak wood ki
+              lakdi touch karein, sofa cushion density test karein aur apne flat ke liye seedha karkhana rate par custom furniture banwayein.
             </p>
           </div>
 

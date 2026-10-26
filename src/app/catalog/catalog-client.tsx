@@ -161,9 +161,18 @@ Please confirm delivery schedule in Pune.
             <DoodleUnderline color="#e2bf65" />
 
             <p style={{ fontSize: "16px", color: "var(--ink-secondary)", maxWidth: "700px", lineHeight: "1.6" }}>
-              Every item is manufactured with genuine seasoned timber inside our Vishrantwadi atelier.
-              Tap any piece for specifications, custom dimensions, and direct carpenter pricing.
+              Vishrantwadi karkhane mein asli seasoned Burma Teak (Sagwan) aur Sheesham lakdi se bani pieces. Kisi bhi piece par tap karke pura detail, measurement aur seedha karkhana rate check karein.
             </p>
+
+            {/* Hand-Drawn Craftsman Note */}
+            <div className="hand-drawn-callout" style={{ marginTop: "18px", maxWidth: "660px" }}>
+              <span style={{ color: "var(--gold-light)", fontWeight: "700" }}>
+                ✎ Mistri Ji Ka Bharosa (Craftsman Note):
+              </span>{" "}
+              <span style={{ color: "var(--ink-secondary)" }}>
+                Hum khokhla particle board ya sasta MDF nahi bechte. Har piece 100% seasoned solid lakdi aur waterproof ply se banta hai. Ghar aakar free naap (measurement) aur custom size banwana bilkul aasan hai!
+              </span>
+            </div>
           </div>
 
           {/* Category Filter Pills (Sticky on Top during Scroll) */}
@@ -286,7 +295,7 @@ Please confirm delivery schedule in Pune.
                     <div style={{ fontSize: "27px", color: "var(--gold-light)", fontWeight: "700", marginTop: "4px" }}>
                       ₹{Number(selectedProduct.price).toLocaleString("en-IN")}{" "}
                       <span style={{ fontSize: "14.5px", color: "var(--ink-secondary)", fontWeight: "normal" }}>
-                        (Direct Carpenter Price · 0% Markup)
+                        (Seedha Karkhana Rate · Zero Showroom Commission)
                       </span>
                     </div>
                   </div>
@@ -297,23 +306,23 @@ Please confirm delivery schedule in Pune.
 
                   <div className="drawer-specs-grid">
                     <div className="drawer-spec-pill">
-                      <small>Core Wood</small>
+                      <small>Asli Lakdi (Core Wood)</small>
                       <strong>{selectedProduct.material || "Seasoned Burma Teak / Sheesham"}</strong>
                     </div>
 
                     <div className="drawer-spec-pill">
-                      <small>Surface Finish</small>
+                      <small>Polish & Finish</small>
                       <strong>{selectedProduct.finish || "5-Coat Melamine Silk Polish"}</strong>
                     </div>
 
                     <div className="drawer-spec-pill">
-                      <small>Dimensions</small>
+                      <small>Size & Measurement</small>
                       <strong>{selectedProduct.dimensions || "Customizable to Room Layout"}</strong>
                     </div>
 
                     <div className="drawer-spec-pill">
                       <small>Delivery & Fitment</small>
-                      <strong>{selectedProduct.leadTime || "10–14 Days · Pune Fitting"}</strong>
+                      <strong>{selectedProduct.leadTime || "Pune Me Free Measurement & Fitting"}</strong>
                     </div>
                   </div>
                 </>
@@ -332,7 +341,7 @@ Please confirm delivery schedule in Pune.
 
                   <div style={{ padding: "16px", borderRadius: "18px", background: "rgba(226,191,101,0.08)", border: "1.5px solid var(--gold-border)" }}>
                     <small style={{ color: "var(--gold-light)", fontSize: "13px", fontWeight: "700" }}>
-                      DIRECT WORKSHOP INQUIRY
+                      DIRECT WORKSHOP INQUIRY · KARKHANA RATE
                     </small>
                     <strong style={{ display: "block", color: "#ffffff", fontSize: "21px", marginTop: "2px" }}>
                       {selectedProduct.name}
@@ -343,10 +352,10 @@ Please confirm delivery schedule in Pune.
                   </div>
 
                   <label style={{ fontSize: "14px", color: "var(--ink-secondary)" }}>
-                    Full Name *
+                    Aapka Naam (Full Name) *
                     <input
                       type="text"
-                      placeholder="e.g. Bhavesh Bhati"
+                      placeholder="jaise Bhavesh Bhati"
                       value={orderForm.customerName}
                       onChange={(e) => setOrderForm({ ...orderForm, customerName: e.target.value })}
                       style={{ width: "100%", padding: "12px 14px", borderRadius: "14px", background: "rgba(18, 19, 24, 0.9)", border: "1.5px solid var(--gold-border)", color: "#ffffff", marginTop: "4px" }}
@@ -354,10 +363,10 @@ Please confirm delivery schedule in Pune.
                   </label>
 
                   <label style={{ fontSize: "14px", color: "var(--ink-secondary)" }}>
-                    Mobile Number *
+                    WhatsApp / Phone Number *
                     <input
                       type="tel"
-                      placeholder="e.g. 9175379886"
+                      placeholder="jaise 9175379886"
                       value={orderForm.phone}
                       onChange={(e) => setOrderForm({ ...orderForm, phone: e.target.value })}
                       style={{ width: "100%", padding: "12px 14px", borderRadius: "14px", background: "rgba(18, 19, 24, 0.9)", border: "1.5px solid var(--gold-border)", color: "#ffffff", marginTop: "4px" }}
@@ -365,10 +374,10 @@ Please confirm delivery schedule in Pune.
                   </label>
 
                   <label style={{ fontSize: "14px", color: "var(--ink-secondary)" }}>
-                    Delivery Address in Pune *
+                    Pune Delivery Address (Ghar Ka Pata) *
                     <textarea
                       rows={2}
-                      placeholder="Apartment name, Street, Area"
+                      placeholder="Society / Flat No., Area (e.g. Viman Nagar, Kharadi, Kothrud)"
                       value={orderForm.address}
                       onChange={(e) => setOrderForm({ ...orderForm, address: e.target.value })}
                       style={{ width: "100%", padding: "12px 14px", borderRadius: "14px", background: "rgba(18, 19, 24, 0.9)", border: "1.5px solid var(--gold-border)", color: "#ffffff", marginTop: "4px" }}
@@ -383,7 +392,7 @@ Please confirm delivery schedule in Pune.
                     style={{ height: "50px", justifyContent: "center", fontSize: "16px", marginTop: "6px", flexDirection: "row", gap: "8px" }}
                   >
                     <MessageCircle size={18} />
-                    <span>{orderLoading ? "Connecting..." : "Confirm & Send to Workshop WhatsApp"}</span>
+                    <span>{orderLoading ? "Jod rahe hain..." : "WhatsApp Par Order Bhejein"}</span>
                   </button>
                 </div>
               )}
@@ -414,7 +423,7 @@ Please confirm delivery schedule in Pune.
               <div className="drawer-footer-sticky">
                 <a
                   href={waLink(
-                    `Hello Parihar Furniture! I am interested in ${selectedProduct.name} (Price: ₹${Number(selectedProduct.price).toLocaleString("en-IN")}). Please send custom sizing details and wood polish samples.`
+                    `Namaste Parihar Furniture! Mujhe "${selectedProduct.name}" (Code: ${selectedProduct.code}) ke baare me jankari aur photos chahiye.`
                   )}
                   target="_blank"
                   rel="noreferrer"
@@ -422,7 +431,7 @@ Please confirm delivery schedule in Pune.
                   style={{ flex: 1, height: "48px", justifyContent: "center", fontSize: "15px", flexDirection: "row", gap: "8px" }}
                 >
                   <MessageCircle size={18} />
-                  <span>WhatsApp Inquiry</span>
+                  <span>WhatsApp Par Baat Karein</span>
                 </a>
 
                 <button
@@ -431,7 +440,7 @@ Please confirm delivery schedule in Pune.
                   onClick={() => setShowOrderModal(true)}
                   style={{ flex: 1, height: "48px", justifyContent: "center" }}
                 >
-                  <span>Order Now</span>
+                  <span>Order Karein (Ghar Pe Naap)</span>
                   <ArrowRight size={16} />
                 </button>
               </div>

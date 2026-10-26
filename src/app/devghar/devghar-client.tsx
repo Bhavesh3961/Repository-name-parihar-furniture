@@ -91,10 +91,9 @@ export function DevgharClient() {
             <DoodleUnderline color="#e2bf65" />
 
             <p style={{ fontSize: "16.5px", color: "var(--ink-secondary)", maxWidth: "720px", lineHeight: "1.65" }}>
-              Handcrafted in seasoned solid Burma teak timber. Features a precision laser Om and
-              lotus jali backdrop illuminated by concealed warm 2700K ambient backlighting, smooth sliding
-              brass aarti tray, and twin soft-close pooja accessories drawers finished in heat- and
-              diya-oil resistant melamine polish.
+              100% Asli Seasoned Burma Teak (Sagwan) lakdi se bana pavitra mandir. Isme warm ambient
+              LED light ke sath precision laser Om & lotus jali hai. Aarti thali ke liye brass tray aur
+              pooja samagri ke liye smooth drawers hain jo diya-oil aur dhoop resistant hain.
             </p>
           </div>
 
@@ -112,48 +111,49 @@ export function DevgharClient() {
 
             <div className="devghar-content-side">
               <span className="section-tag-gold">
-                <span>100% Solid Burma Teak</span>
+                <span>100% Asli Seasoned Burma Teak (Sagwan)</span>
               </span>
 
               <h2>
                 Sanctuary Specifications
-                <span>सुंदर आणि पवित्र देवघर · Vastu-Aligned Dimensions</span>
+                <span>सुंदर आणि पवित्र देवघर · Vastu-Compliant Architecture</span>
               </h2>
 
               <p style={{ color: "var(--ink-secondary)", fontSize: "16px", lineHeight: "1.65" }}>
-                Every home has a dedicated sacred space. We manufacture custom wall-hung and floor-standing
-                teakwood temples tailored to your prayer room&apos;s exact height and width requirements.
+                Ghar ka mandir sabse shubh hota hai. Hum aapke flat ya bunglow ke space ke hisaab se
+                wall-hung ya floor-standing mandir banate hain. Diya ke tel ya dhoop-agarbatti se
+                lakdi aur polish bilkul kharab nahi hogi.
               </p>
 
               <div className="devghar-spec-chips">
                 <div className="devghar-spec-item">
-                  <strong>✨ Concealed 2700K Halo</strong>
-                  <small>Warm diffused ambient backlight behind laser jali.</small>
+                  <strong>✨ Warm Ambient LED Light</strong>
+                  <small>Laser-cut Om aur lotus jali ke peeche sundar warm backlight.</small>
                 </div>
                 <div className="devghar-spec-item">
                   <strong>✓ Diya Oil & Heat Resistant</strong>
-                  <small>Melamine barrier protective against oil and incense.</small>
+                  <small>Diya ke tel aur agarbatti ke dhuyein se safe special melamine coat.</small>
                 </div>
                 <div className="devghar-spec-item">
-                  <strong>🛕 Dual Aarti Trays</strong>
-                  <small>Smooth pull-out brass-fitted extension trays.</small>
+                  <strong>🛕 Pull-Out Brass Aarti Tray</strong>
+                  <small>Aarti ki thali aur diya rakhne ke liye brass tray extension.</small>
                 </div>
                 <div className="devghar-spec-item">
-                  <strong>📐 Custom Apartment Sizing</strong>
-                  <small>Wall-hung or floor-standing configurations.</small>
+                  <strong>📐 Flat Ke Hisab Se Custom Size</strong>
+                  <small>Deewar par lagane (wall-mount) ya floor par rakhne ke options.</small>
                 </div>
               </div>
 
               <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginTop: "12px" }}>
                 <a
-                  href={waLink("Hello Parihar Furniture! Please share photos, sizes and prices for Wooden Devghar Mandirs.")}
+                  href={waLink("Namaste Parihar Furniture! Mujhe Wooden Devghar Mandir ke designs, custom size aur rates chahiye.")}
                   target="_blank"
                   rel="noreferrer"
                   className="btn-gold-primary"
                   style={{ flex: 1, minWidth: "220px", justifyContent: "center" }}
                 >
                   <MessageCircle size={18} />
-                  <span>Get Devghar Catalog on WhatsApp</span>
+                  <span>WhatsApp Par Devghar Designs & Price Dekhein</span>
                 </a>
 
                 <a
