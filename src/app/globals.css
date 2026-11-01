@@ -9,46 +9,44 @@
    ========================================================================== */
 
 :root {
-  /* Brand Logo Color Harmony (No dark brown, No blue/purple, No yellow) */
-  --canvas-bg: #141519;
-  --canvas-surface: #1d1e23;
-  --canvas-card: rgba(26, 27, 34, 0.76);
-  --canvas-card-hover: rgba(36, 37, 46, 0.90);
-  --canvas-elevated: rgba(32, 33, 42, 0.94);
+  /* Brand Logo Color Harmony (Balanced Architectural Slate, Not Too Dark, No muddy brown/yellow) */
+  --canvas-bg: #1f222d;
+  --canvas-surface: #262937;
+  --canvas-card: rgba(36, 40, 54, 0.92);
+  --canvas-card-hover: rgba(44, 48, 64, 0.98);
+  --canvas-elevated: rgba(40, 44, 58, 0.96);
 
   /* Brushed Champagne Gold Accents (Matched to "PARIHAR" Logo Letters) */
-  --gold-primary: #d4af37;
-  --gold-light: #e2bf65;
-  --gold-cove: #ffd88a;
+  --gold-primary: #e0b842;
+  --gold-light: #ffd768;
+  --gold-cove: #ffe08e;
   --gold-dark: #b8933b;
-  --gold-glow: rgba(226, 191, 101, 0.24);
-  --gold-border: rgba(226, 191, 101, 0.32);
-  --gold-border-subtle: rgba(226, 191, 101, 0.16);
+  --gold-glow: rgba(224, 184, 66, 0.28);
+  --gold-border: rgba(224, 184, 66, 0.40);
+  --gold-border-subtle: rgba(224, 184, 66, 0.22);
 
   /* Travertine Stone Greige (Matched to Logo Wall Background) */
-  --stone-wall: #dcd5cb;
-  --stone-card: #282a35;
+  --stone-wall: #e8e3db;
+  --stone-card: #303342;
 
-  /* Typography Colors (Warm Ivory & Travertine on Deep Charcoal) */
-  --ink-primary: #faf8f5;
-  --ink-secondary: #dcd5cb;
-  --ink-muted: #9e978c;
-  --ink-faint: #68645c;
+  /* Typography Colors (High Contrast Warm White & Travertine on Rich Slate) */
+  --ink-primary: #ffffff;
+  --ink-secondary: #f0eee8;
+  --ink-muted: #c8c5bc;
+  --ink-faint: #98948c;
 
   /* Apple Liquid Glass with Champagne Specular Reflections */
-  --glass-border: rgba(226, 191, 101, 0.26);
-  --glass-border-hover: rgba(226, 191, 101, 0.48);
+  --glass-border: rgba(224, 184, 66, 0.32);
+  --glass-border-hover: rgba(224, 184, 66, 0.55);
   --glass-specular: 
-    inset 0 1.5px 1.5px 0 rgba(255, 238, 195, 0.38),
-    inset 0 -1px 1px 0 rgba(226, 191, 101, 0.12),
-    0 16px 40px -10px rgba(0, 0, 0, 0.65);
+    inset 0 1px 1px 0 rgba(255, 238, 195, 0.35),
+    0 8px 24px -6px rgba(0, 0, 0, 0.4);
   --glass-specular-hover: 
-    inset 0 2px 2px 0 rgba(255, 240, 205, 0.55),
-    inset 0 -1px 1px 0 rgba(226, 191, 101, 0.20),
-    0 24px 50px -10px rgba(0, 0, 0, 0.75);
-  --glass-blur: blur(36px) saturate(200%);
+    inset 0 1.5px 1.5px 0 rgba(255, 240, 205, 0.5),
+    0 14px 32px -6px rgba(0, 0, 0, 0.5);
+  --glass-blur: blur(12px);
 
-  /* WhatsApp Conversion (Bottom Dock & Drawer only) */
+  /* WhatsApp Conversion */
   --wa-green: #25d366;
   --wa-glow: rgba(37, 211, 102, 0.35);
 
@@ -57,7 +55,7 @@
   --font-mono: "JetBrains Mono", monospace;
 
   /* Mobile Ergonomics */
-  --bottom-dock-height: 72px;
+  --bottom-dock-height: 60px;
   --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -79,35 +77,20 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
-/* Dynamic Alternating Light & Dark Background Canvas */
+/* Dynamic Architectural Slate Canvas with Zero Scroll Lag */
 body {
   background-color: var(--canvas-bg);
   color: var(--ink-primary);
   font-family: var(--font-kalam), cursive;
   font-size: 16px;
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: clip;
   position: relative;
   width: 100%;
-  /* Architectural Blueprint Drafting Grid & Dynamic Light/Dark Contrast Mesh */
-  background-image: 
-    /* Luminous warm cove light pool (Light Zone 1) */
-    radial-gradient(circle at 15% 8%, rgba(226, 191, 101, 0.24) 0%, transparent 45%),
-    /* Luminous travertine highlight pool (Light Zone 2) */
-    radial-gradient(circle at 88% 18%, rgba(220, 213, 203, 0.18) 0%, transparent 45%),
-    /* Deep charcoal contrast shadow (Dark Zone) */
-    radial-gradient(circle at 50% 42%, rgba(18, 19, 24, 0.95) 0%, transparent 55%),
-    /* Luminous warm amber pool (Light Zone 3) */
-    radial-gradient(circle at 85% 68%, rgba(226, 191, 101, 0.20) 0%, transparent 45%),
-    /* Warm stone glow pool (Light Zone 4) */
-    radial-gradient(circle at 14% 88%, rgba(212, 175, 55, 0.16) 0%, transparent 45%),
-    /* Architectural millimeter drafting grid pattern */
-    linear-gradient(to right, rgba(226, 191, 101, 0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(226, 191, 101, 0.045) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+  background-image: linear-gradient(180deg, #242735 0%, #1e202a 50%, #232633 100%);
   background-attachment: fixed;
 }
 
@@ -211,10 +194,9 @@ textarea {
 .hand-drawn-callout {
   padding: 16px 20px;
   border-radius: 20px 8px 22px 10px / 10px 22px 8px 20px;
-  background: rgba(36, 38, 48, 0.85);
-  backdrop-filter: blur(24px);
+  background: rgba(40, 44, 58, 0.92);
   border: 1.8px dashed var(--gold-border);
-  box-shadow: var(--glass-specular);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
   position: relative;
 }
 
@@ -225,8 +207,8 @@ textarea {
   flex-direction: column;
   position: relative;
   width: 100%;
-  overflow-x: hidden;
-  padding-bottom: calc(var(--bottom-dock-height) + env(safe-area-inset-bottom, 20px) + 24px);
+  overflow-x: clip;
+  padding-bottom: calc(58px + env(safe-area-inset-bottom, 20px) + 18px);
 }
 
 @media (min-width: 1024px) {
@@ -533,7 +515,7 @@ textarea {
   align-items: flex-end;
   padding: clamp(28px, 6vw, 64px) clamp(16px, 4vw, 40px);
   overflow: hidden;
-  background: #141518;
+  background: #1f222d;
 }
 
 .hero-media-cover {
@@ -547,20 +529,19 @@ textarea {
   height: 100%;
   object-fit: cover;
   object-position: center 35%;
-  filter: contrast(1.08) brightness(0.62);
+  filter: contrast(1.02) brightness(0.85);
 }
 
-/* Smoked Vignette Scrim */
+/* Clearer, warmer scrim that keeps hero image bright and visible */
 .hero-gradient-scrim {
   position: absolute;
   inset: 0;
   z-index: 2;
   background: linear-gradient(
     180deg,
-    rgba(20, 21, 25, 0.38) 0%,
-    rgba(20, 21, 25, 0.65) 40%,
-    rgba(20, 21, 25, 0.90) 75%,
-    rgba(20, 21, 25, 0.98) 100%
+    rgba(25, 28, 38, 0.22) 0%,
+    rgba(25, 28, 38, 0.52) 45%,
+    rgba(25, 28, 38, 0.90) 100%
   );
   pointer-events: none;
 }
@@ -580,6 +561,7 @@ textarea {
   color: #ffffff;
   max-width: 900px;
   margin-bottom: 16px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .hero-main-heading em {
@@ -590,11 +572,13 @@ textarea {
 }
 
 .hero-sub-description {
-  font-size: clamp(15px, 2.8vw, 18px);
-  color: var(--ink-secondary);
-  line-height: 1.65;
+  font-size: clamp(16px, 2.9vw, 19px);
+  color: #f7f6f2;
+  font-weight: 600;
+  line-height: 1.6;
   max-width: 680px;
   margin-bottom: 28px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 .hero-cta-grid {
@@ -669,94 +653,7 @@ textarea {
   color: var(--ink-secondary);
 }
 
-/* ==========================================================================
-   04. STORY HIGHLIGHTS (ZONE 2: LIGHTER TRAVERTINE MINERAL BAND)
-   ========================================================================== */
-.liquid-story-bar {
-  padding: 22px 0 16px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  /* Lighter Travertine Mineral Band for Visual Contrast */
-  background: linear-gradient(180deg, rgba(38, 40, 50, 0.75) 0%, rgba(28, 30, 38, 0.85) 100%);
-  border-top: 1px solid var(--gold-border-subtle);
-  border-bottom: 1px solid var(--gold-border-subtle);
-}
 
-.liquid-story-bar::-webkit-scrollbar {
-  display: none;
-}
-
-.story-track {
-  display: flex;
-  gap: 16px;
-  padding: 0 clamp(16px, 4vw, 40px);
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.story-card-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: transform 0.2s ease;
-}
-
-.story-card-item:hover {
-  transform: translateY(-2px);
-}
-
-.story-card-item:active {
-  transform: scale(0.93);
-}
-
-/* Brushed Gold Story Ring */
-.story-circle-ring {
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
-  padding: 2.5px;
-  background: linear-gradient(135deg, var(--gold-light), rgba(226, 191, 101, 0.3));
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
-  transition: all 0.25s ease;
-}
-
-.story-card-item.active .story-circle-ring {
-  background: var(--gold-light);
-  box-shadow: 0 0 18px rgba(226, 191, 101, 0.6);
-}
-
-.story-circle-inner {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  position: relative;
-  background: #18191e;
-  border: 2px solid #141519;
-}
-
-.story-circle-inner img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.story-label {
-  font-size: 14px;
-  color: var(--ink-secondary);
-  font-weight: 600;
-  text-align: center;
-  white-space: nowrap;
-}
-
-.story-card-item.active .story-label {
-  color: var(--gold-light);
-  font-weight: 700;
-}
 
 /* ==========================================================================
    05. SHOWCASE CATALOG (ZONE 3: CONTRASTING DEEP SLATE WITH LIGHTED CARDS)
@@ -801,24 +698,23 @@ textarea {
   line-height: 1.6;
 }
 
-/* Hand-Drawn Category Filter Bar & Sticky Container */
+/* Hand-Drawn Category Filter Bar & Sticky Container (Screenshot 2) */
 .sticky-category-wrapper {
   position: sticky;
-  z-index: 85;
-  transition: all 0.25s var(--ease-apple);
+  z-index: 95;
+  transition: all 0.2s var(--ease-apple);
+  will-change: transform;
 }
 
 @media (max-width: 1023px) {
-  /* Mobile: Category bar sticks to the very top (top: 0) */
+  /* Mobile: Category bar sticks to the very top (top: 0) during furniture scrolling */
   .sticky-category-wrapper {
     top: 0;
-    background: rgba(18, 19, 24, 0.95);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border-bottom: 1.5px solid var(--gold-border-subtle);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
-    padding: 10px 0 10px 16px;
-    margin: 0 calc(-1 * clamp(16px, 4vw, 40px)) 20px;
+    background: rgba(28, 31, 42, 0.97);
+    border-bottom: 1.5px solid rgba(224, 184, 66, 0.28);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    padding: 10px 0 8px;
+    margin: 0 calc(-1 * clamp(16px, 4vw, 40px)) 24px;
   }
 }
 
@@ -826,63 +722,88 @@ textarea {
   /* Desktop: Category bar sticks right below desktop navbar at top: 66px */
   .sticky-category-wrapper {
     top: 66px;
-    background: rgba(18, 19, 24, 0.88);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--gold-border-subtle);
-    padding: 12px 0;
-    margin-bottom: 24px;
+    background: rgba(28, 31, 42, 0.94);
+    border-bottom: 1.5px solid rgba(224, 184, 66, 0.24);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    padding: 12px 0 10px;
+    margin-bottom: 28px;
   }
 }
 
-.category-filter-bar {
+.story-categories-track {
   display: flex;
-  gap: 10px;
+  gap: 16px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  padding-right: 20px;
-  padding-bottom: 2px;
+  padding: 0 16px 2px;
   max-width: 1400px;
   margin: 0 auto;
 }
 
-.category-filter-bar::-webkit-scrollbar {
+.story-categories-track::-webkit-scrollbar {
   display: none;
 }
 
-.category-pill {
-  flex-shrink: 0;
-  min-height: 44px;
-  padding: 0 20px;
-  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-  background: rgba(32, 33, 42, 0.78);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1.5px solid var(--gold-border-subtle);
-  box-shadow: inset 0 1px 1px rgba(255, 238, 195, 0.25), 0 4px 14px rgba(0, 0, 0, 0.3);
-  font-size: 15.5px;
-  color: var(--ink-secondary);
-  display: inline-flex;
+.story-circle-item {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  transition: all 0.25s var(--ease-apple);
+  gap: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: transform 0.2s ease;
 }
 
-.category-pill:hover {
-  background: rgba(40, 42, 54, 0.9);
-  border-color: var(--gold-border);
-  color: #ffffff;
+.story-circle-item:active {
+  transform: scale(0.94);
 }
 
-.category-pill.active {
-  background: var(--gold-light);
-  color: #141519;
-  border-color: #ffffff;
+.story-circle-ring {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  padding: 2.5px;
+  border: 2px solid rgba(224, 184, 66, 0.35);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.story-circle-item.active .story-circle-ring {
+  border-color: var(--gold-light);
+  box-shadow: 0 0 0 2px var(--gold-light), 0 0 16px rgba(224, 184, 66, 0.55);
+  transform: scale(1.05);
+}
+
+.story-circle-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  background: #1e212b;
+}
+
+.story-circle-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.story-label {
+  font-size: 13.5px;
+  color: var(--ink-secondary);
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.story-circle-item.active .story-label {
+  color: var(--gold-light);
   font-weight: 700;
-  box-shadow: 
-    0 4px 18px rgba(226, 191, 101, 0.4),
-    0 8px 24px rgba(0, 0, 0, 0.5);
-  transform: rotate(-0.5deg);
 }
 
 /* Cards Grid */
@@ -913,20 +834,17 @@ textarea {
 }
 
 /* ==========================================================================
-   06. HAND-DRAWN SKETCH PRODUCT CARD (CHAMPAGNE GLASS + REAL PHOTO)
+   06. PRODUCT CARD (FAST 60FPS GPU OPTIMIZED)
    ========================================================================== */
 .liquid-product-card {
   background: var(--canvas-card);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1.8px solid var(--glass-border);
-  box-shadow: var(--glass-specular);
-  /* Organic Hand-Drawn Sketch Corners */
-  border-radius: 26px 12px 28px 14px / 14px 28px 12px 26px;
+  border: 1.5px solid var(--gold-border-subtle);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+  border-radius: 20px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: all 0.35s var(--ease-apple);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   position: relative;
   cursor: pointer;
 }
@@ -934,8 +852,8 @@ textarea {
 .liquid-product-card:hover {
   background: var(--canvas-card-hover);
   border-color: var(--gold-light);
-  box-shadow: var(--glass-specular-hover);
-  transform: translateY(-5px) rotate(0.4deg);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  transform: translateY(-4px);
 }
 
 .liquid-product-card:active {
@@ -1382,118 +1300,75 @@ textarea {
 }
 
 /* ==========================================================================
-   10. FLOATING MOBILE BOTTOM DOCK (APPEARS ON TAP WITH LIQUID ANIMATION)
+   10. FAST FIXED MOBILE BOTTOM APP BAR (DOCK)
    ========================================================================== */
-.dock-trigger-bubble {
+.mobile-dock-bar {
   position: fixed;
-  bottom: 16px;
-  left: 50%;
-  transform: translate3d(-50%, 0, 0);
-  z-index: 890;
-  background: rgba(22, 23, 30, 0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1.6px solid var(--gold-border);
-  box-shadow: 
-    inset 0 1.5px 1.5px 0 rgba(255, 238, 195, 0.35),
-    0 12px 32px rgba(0, 0, 0, 0.7);
-  border-radius: 9999px;
-  padding: 8px 18px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(58px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: rgba(26, 29, 39, 0.98);
+  border-top: 1.5px solid rgba(224, 184, 66, 0.28);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
-  gap: 8px;
-  color: #ffffff;
-  font-size: 13.5px;
-  font-weight: 700;
-  cursor: pointer;
-  animation: bouncePill 3s infinite ease-in-out;
-  transition: transform 0.2s var(--ease-apple), box-shadow 0.2s ease;
+  justify-content: space-around;
+  z-index: 990;
   will-change: transform;
 }
 
-@keyframes bouncePill {
-  0%, 100% { transform: translate3d(-50%, 0, 0); }
-  50% { transform: translate3d(-50%, -4px, 0); }
-}
-
-.dock-trigger-bubble:active {
-  transform: translate3d(-50%, 0, 0) scale(0.95);
-}
-
-.dock-trigger-badge {
-  background: var(--gold-light);
-  color: #141519;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 1px 7px;
-  border-radius: 9999px;
-}
-
 @media (min-width: 1024px) {
-  .dock-trigger-bubble {
+  .mobile-dock-bar {
     display: none;
   }
 }
 
-.liquid-floating-dock {
-  position: fixed;
-  bottom: 14px;
-  left: 10px;
-  right: 10px;
-  z-index: 999;
-  background: rgba(24, 25, 33, 0.95);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1.6px solid var(--gold-border);
-  box-shadow: 
-    inset 0 1.5px 1.5px 0 rgba(255, 238, 195, 0.35),
-    0 16px 45px rgba(0, 0, 0, 0.75);
-  border-radius: 9999px;
-  padding: 6px 10px;
+.mobile-dock-item {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 4px;
-  max-width: 480px;
-  margin: 0 auto;
-  animation: slideDockUp 0.28s var(--ease-apple);
-  transform: translate3d(0, 0, 0);
-  will-change: transform;
+  justify-content: center;
+  gap: 3px;
+  color: var(--ink-muted);
+  text-decoration: none;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 6px 10px;
+  transition: color 0.15s ease;
+  flex: 1;
 }
 
-@keyframes slideDockUp {
-  from {
-    transform: translate3d(0, 100%, 0);
-    opacity: 0;
-  }
-  to {
-    transform: translate3d(0, 0, 0);
-    opacity: 1;
-  }
+.mobile-dock-item:hover,
+.mobile-dock-item.active {
+  color: var(--gold-light);
 }
 
-.dock-close-btn {
+.mobile-dock-wa {
+  color: #25d366;
+}
+
+.mobile-dock-wa-bubble {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid var(--gold-border-subtle);
-  color: var(--ink-secondary);
+  background: #25d366;
+  color: #121318;
   display: grid;
   place-items: center;
-  flex-shrink: 0;
-  transition: all 0.2s ease;
+  box-shadow: 0 2px 10px rgba(37, 211, 102, 0.4);
+  transition: transform 0.15s ease;
 }
 
-.dock-close-btn:active {
-  transform: scale(0.9);
-  background: rgba(255, 255, 255, 0.16);
+.mobile-dock-wa:hover .mobile-dock-wa-bubble,
+.mobile-dock-wa:active .mobile-dock-wa-bubble {
+  transform: scale(1.08);
 }
 
-@media (min-width: 1024px) {
-  .liquid-floating-dock {
-    display: none;
-  }
+.mobile-dock-wa:hover,
+.mobile-dock-wa.active {
+  color: #25d366;
 }
 
 .dock-btn {

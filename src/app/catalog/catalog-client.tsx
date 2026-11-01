@@ -16,6 +16,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
+import { MobileBottomBar } from "@/components/mobile-bottom-bar";
 import { seedProducts } from "@/data/seed";
 
 const phoneNumber = "919175379886";
@@ -24,15 +25,15 @@ const formattedPhone = "+91 9175379886";
 const waLink = (msg: string) =>
   `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
 
-const usefulCategories = [
-  "All Collections",
-  "Living & Sofas",
-  "Dining Sets",
-  "Beds & Hydraulic",
-  "Wardrobes & TV Units",
-  "Pooja Mandir",
-  "Study & Desks",
-  "Full Flat Packages",
+const storyHighlights = [
+  { id: "All Collections", label: "All Pieces", image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=400&q=80" },
+  { id: "Living & Sofas", label: "Sofas & Living", image: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=400&q=80" },
+  { id: "Dining Sets", label: "Dining Suites", image: "https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&w=400&q=80" },
+  { id: "Beds & Hydraulic", label: "Beds & Storage", image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=400&q=80" },
+  { id: "Pooja Mandir", label: "Pooja Mandir", image: "/assets/devghar-source.png" },
+  { id: "Wardrobes & TV Units", label: "Wardrobes & TV", image: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=400&q=80" },
+  { id: "Study & Desks", label: "Study Desks", image: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&w=400&q=80" },
+  { id: "Full Flat Packages", label: "Full Flat 2BHK", image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=400&q=80" },
 ];
 
 /* Hand-Drawn Wavy Underline SVG */
@@ -69,7 +70,7 @@ export function CatalogClient() {
   const [showOrderModal, setShowOrderModal] = useState(false);
   const [orderLoading, setOrderLoading] = useState(false);
   const [orderSuccessId, setOrderSuccessId] = useState<string | null>(null);
-  const [dockOpen, setDockOpen] = useState(false);
+
 
   const [orderForm, setOrderForm] = useState({
     customerName: "",
@@ -175,17 +176,28 @@ Please confirm delivery schedule in Pune.
             </div>
           </div>
 
-          {/* Category Filter Pills (Sticky on Top during Scroll) */}
+          {/* Category Story Circles Bar (Sticky on Top during Scroll - Screenshot 2) */}
           <div className="sticky-category-wrapper">
-            <div className="category-filter-bar">
-              {usefulCategories.map((cat) => (
+            <div className="story-categories-track">
+              {storyHighlights.map((story) => (
                 <button
-                  key={cat}
+                  key={story.id}
                   type="button"
-                  className={`category-pill ${activeCategory === cat ? "active" : ""}`}
-                  onClick={() => setActiveCategory(cat)}
+                  className={`story-circle-item ${activeCategory === story.id ? "active" : ""}`}
+                  onClick={() => setActiveCategory(story.id)}
+                  aria-label={`Filter by ${story.label}`}
                 >
-                  {cat}
+                  <div className="story-circle-ring">
+                    <div className="story-circle-inner">
+                      <Image
+                        src={story.image}
+                        alt={story.label}
+                        fill
+                        sizes="62px"
+                      />
+                    </div>
+                  </div>
+                  <span className="story-label">{story.label}</span>
                 </button>
               ))}
             </div>
@@ -448,71 +460,8 @@ Please confirm delivery schedule in Pune.
           </div>
         </div>
       )}
-
-      {/* Floating Tap-to-Appear Mobile Bottom Dock */}
-      {!dockOpen && (
-        <button
-          type="button"
-          className="dock-trigger-bubble"
-          onClick={() => setDockOpen(true)}
-          aria-label="Tap to open quick actions menu"
-        >
-          <Sparkles size={15} style={{ color: "var(--gold-light)" }} />
-          <span>Quick Actions</span>
-          <span className="dock-trigger-badge">Tap ✦</span>
-        </button>
-      )}
-
-      {dockOpen && (
-        <div className="liquid-floating-dock">
-          <a
-            href={`tel:+${phoneNumber}`}
-            className="dock-btn"
-            onClick={() => setDockOpen(false)}
-          >
-            <Phone size={16} />
-            <span>Call</span>
-          </a>
-
-          <Link
-            href="/reviews"
-            className="dock-btn"
-            onClick={() => setDockOpen(false)}
-          >
-            <Star size={16} fill="var(--gold-light)" color="var(--gold-light)" />
-            <span>Reviews</span>
-          </Link>
-
-          <a
-            href={waLink("Hello Parihar Furniture! I would like to get a furniture quote.")}
-            target="_blank"
-            rel="noreferrer"
-            className="dock-btn highlight-wa"
-            onClick={() => setDockOpen(false)}
-          >
-            <MessageCircle size={18} />
-            <span>WhatsApp</span>
-          </a>
-
-          <Link
-            href="/location"
-            className="dock-btn"
-            onClick={() => setDockOpen(false)}
-          >
-            <MapPin size={16} />
-            <span>Visit</span>
-          </Link>
-
-          <button
-            type="button"
-            className="dock-close-btn"
-            onClick={() => setDockOpen(false)}
-            aria-label="Close Quick Actions Menu"
-          >
-            <X size={15} />
-          </button>
-        </div>
-      )}
+      {/* Fixed Mobile Bottom App Bar (Replaces old floating bubble) */}
+      <MobileBottomBar phoneNumber={phoneNumber} />
 
       {/* Footer */}
       <footer className="site-footer-light">

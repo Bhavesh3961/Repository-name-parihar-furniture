@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { SiteHeader } from "./site-header";
+import { MobileBottomBar } from "./mobile-bottom-bar";
 import { seedProducts, seedReviews } from "@/data/seed";
 
 const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919175379886";
@@ -28,17 +29,6 @@ const phoneNumber = process.env.NEXT_PUBLIC_PHONE_NUMBER || whatsappNumber;
 
 const waLink = (text: string) =>
   `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
-
-const usefulCategories = [
-  "All Collections",
-  "Living & Sofas",
-  "Dining Sets",
-  "Beds & Hydraulic",
-  "Wardrobes & TV Units",
-  "Pooja Mandir",
-  "Study & Desks",
-  "Full Flat Packages",
-];
 
 const storyHighlights = [
   { id: "All Collections", label: "All Pieces", image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=400&q=80" },
@@ -104,7 +94,6 @@ function DoodleArrow() {
 export function HomePage() {
   const [products, setProducts] = useState(seedProducts);
   const [activeCategory, setActiveCategory] = useState("All Collections");
-  const [dockOpen, setDockOpen] = useState(false);
 
   // Bottom Sheet Drawer State
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
@@ -257,38 +246,7 @@ Please confirm wood polish finish and home delivery timeline in Pune.
         </section>
 
         {/* =================================================================
-            02. INSTAGRAM-STYLE LIQUID GLASS STORY HIGHLIGHTS
-            ================================================================= */}
-        <section className="liquid-story-bar">
-          <div className="story-track">
-            {storyHighlights.map((story) => (
-              <div
-                key={story.id}
-                className={`story-card-item ${activeCategory === story.id ? "active" : ""}`}
-                onClick={() => {
-                  setActiveCategory(story.id);
-                  const el = document.getElementById("catalog");
-                  if (el) el.scrollIntoView({ behavior: "smooth" });
-                }}
-              >
-                <div className="story-circle-ring">
-                  <div className="story-circle-inner">
-                    <Image
-                      src={story.image}
-                      alt={story.label}
-                      fill
-                      sizes="68px"
-                    />
-                  </div>
-                </div>
-                <span className="story-label">{story.label}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* =================================================================
-            03. HAND-DRAWN SHOWCASE CATALOG (16 REAL FURNITURE PIECES)
+            02. HAND-DRAWN SHOWCASE CATALOG (16 REAL FURNITURE PIECES)
             ================================================================= */}
         <section id="catalog" className="section-showcase">
           <div className="section-head-wrap">
@@ -314,17 +272,28 @@ Please confirm wood polish finish and home delivery timeline in Pune.
             </div>
           </div>
 
-          {/* Useful Category Filter Bar (Sticky on Top during Scroll) */}
+          {/* Category Story Circles Bar (Sticky on Top during Scroll - Screenshot 2) */}
           <div className="sticky-category-wrapper">
-            <div className="category-filter-bar">
-              {usefulCategories.map((cat) => (
+            <div className="story-categories-track">
+              {storyHighlights.map((story) => (
                 <button
-                  key={cat}
+                  key={story.id}
                   type="button"
-                  className={`category-pill ${activeCategory === cat ? "active" : ""}`}
-                  onClick={() => setActiveCategory(cat)}
+                  className={`story-circle-item ${activeCategory === story.id ? "active" : ""}`}
+                  onClick={() => setActiveCategory(story.id)}
+                  aria-label={`Filter by ${story.label}`}
                 >
-                  {cat}
+                  <div className="story-circle-ring">
+                    <div className="story-circle-inner">
+                      <Image
+                        src={story.image}
+                        alt={story.label}
+                        fill
+                        sizes="62px"
+                      />
+                    </div>
+                  </div>
+                  <span className="story-label">{story.label}</span>
                 </button>
               ))}
             </div>
@@ -829,72 +798,8 @@ Please confirm wood polish finish and home delivery timeline in Pune.
         </div>
       )}
 
-      {/* =================================================================
-          08. FLOATING MOBILE BOTTOM DOCK (APPEARS ON TAP WITH LIQUID ANIMATION)
-          ================================================================= */}
-      {!dockOpen && (
-        <button
-          type="button"
-          className="dock-trigger-bubble"
-          onClick={() => setDockOpen(true)}
-          aria-label="Tap to open quick actions menu"
-        >
-          <Sparkles size={15} style={{ color: "var(--gold-light)" }} />
-          <span>Quick Actions</span>
-          <span className="dock-trigger-badge">Tap ✦</span>
-        </button>
-      )}
-
-      {dockOpen && (
-        <div className="liquid-floating-dock">
-          <a
-            href={`tel:+${phoneNumber}`}
-            className="dock-btn"
-            onClick={() => setDockOpen(false)}
-          >
-            <Phone size={16} />
-            <span>Call</span>
-          </a>
-
-          <Link
-            href="/reviews"
-            className="dock-btn"
-            onClick={() => setDockOpen(false)}
-          >
-            <Star size={16} fill="var(--gold-light)" color="var(--gold-light)" />
-            <span>Reviews</span>
-          </Link>
-
-          <a
-            href={waLink("Hello Parihar Furniture! I would like to get a furniture quote.")}
-            target="_blank"
-            rel="noreferrer"
-            className="dock-btn highlight-wa"
-            onClick={() => setDockOpen(false)}
-          >
-            <MessageCircle size={18} />
-            <span>WhatsApp</span>
-          </a>
-
-          <Link
-            href="/location"
-            className="dock-btn"
-            onClick={() => setDockOpen(false)}
-          >
-            <MapPin size={16} />
-            <span>Visit</span>
-          </Link>
-
-          <button
-            type="button"
-            className="dock-close-btn"
-            onClick={() => setDockOpen(false)}
-            aria-label="Close Quick Actions Menu"
-          >
-            <X size={15} />
-          </button>
-        </div>
-      )}
+      {/* Fixed Mobile Bottom App Bar (Replaces old floating bubble) */}
+      <MobileBottomBar phoneNumber={phoneNumber} whatsappNumber={whatsappNumber} />
 
       {/* Footer */}
       <footer className="site-footer-light">

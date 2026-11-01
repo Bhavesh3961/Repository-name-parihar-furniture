@@ -21,6 +21,7 @@ import {
   Layers,
 } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
+import { MobileBottomBar } from "@/components/mobile-bottom-bar";
 
 const phoneNumber = "919175379886";
 const formattedPhone = "+91 9175379886";
@@ -80,7 +81,7 @@ const workshopPerks = [
 ];
 
 export function LocationClient() {
-  const [dockOpen, setDockOpen] = useState(false);
+
 
   return (
     <div className="site-shell">
@@ -465,71 +466,8 @@ export function LocationClient() {
           </div>
         </div>
       </main>
-
-      {/* Floating Bottom Dock (Mobile Tap-to-Appear) */}
-      {!dockOpen && (
-        <button
-          type="button"
-          className="dock-trigger-bubble"
-          onClick={() => setDockOpen(true)}
-          aria-label="Tap to open quick actions menu"
-        >
-          <Sparkles size={15} style={{ color: "var(--gold-light)" }} />
-          <span>Quick Actions</span>
-          <span className="dock-trigger-badge">Tap ✦</span>
-        </button>
-      )}
-
-      {dockOpen && (
-        <div className="liquid-floating-dock">
-          <a
-            href={`tel:+${phoneNumber}`}
-            className="dock-btn"
-            onClick={() => setDockOpen(false)}
-          >
-            <Phone size={16} />
-            <span>Call</span>
-          </a>
-
-          <Link
-            href="/reviews"
-            className="dock-btn"
-            onClick={() => setDockOpen(false)}
-          >
-            <Sparkles size={16} color="var(--gold-light)" />
-            <span>Reviews</span>
-          </Link>
-
-          <a
-            href={waLink("Hello Parihar Furniture! Please send me the workshop location pin.")}
-            target="_blank"
-            rel="noreferrer"
-            className="dock-btn highlight-wa"
-            onClick={() => setDockOpen(false)}
-          >
-            <MessageCircle size={18} />
-            <span>WhatsApp</span>
-          </a>
-
-          <Link
-            href="/catalog"
-            className="dock-btn"
-            onClick={() => setDockOpen(false)}
-          >
-            <Layers size={16} />
-            <span>Catalog</span>
-          </Link>
-
-          <button
-            type="button"
-            className="dock-close-btn"
-            onClick={() => setDockOpen(false)}
-            aria-label="Close Quick Actions Menu"
-          >
-            <X size={15} />
-          </button>
-        </div>
-      )}
+      {/* Fixed Mobile Bottom App Bar (Replaces old floating bubble) */}
+      <MobileBottomBar phoneNumber={phoneNumber} />
 
       {/* Footer */}
       <footer className="site-footer-light">
