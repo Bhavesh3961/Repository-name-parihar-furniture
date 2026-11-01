@@ -94,7 +94,7 @@ export function ReviewsClient() {
 
             <p style={{ fontSize: "16.5px", color: "var(--ink-secondary)", maxWidth: "680px", lineHeight: "1.65" }}>
               Authentic stories from homeowners across Pune who commissioned custom Burma teak sofas,
-              hydraulic storage beds, and sacred Devghar sanctuaries directly from our Vishrantwadi atelier.
+              hydraulic storage beds, and handcrafted dining sets directly from our Vishrantwadi atelier.
             </p>
           </div>
 
@@ -262,7 +262,6 @@ export function ReviewsClient() {
         <div style={{ display: "flex", justifyContent: "center", gap: "18px", marginTop: "6px" }}>
           <Link href="/">Home</Link>
           <Link href="/catalog">Catalog</Link>
-          <Link href="/devghar">Devghar</Link>
           <Link href="/reviews">Reviews</Link>
           <Link href="/location">Location</Link>
         </div>

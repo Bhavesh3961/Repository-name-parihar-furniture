@@ -183,7 +183,6 @@ export function DevgharClient() {
         <div style={{ display: "flex", justifyContent: "center", gap: "18px", marginTop: "6px" }}>
           <Link href="/">Home</Link>
           <Link href="/catalog">Catalog</Link>
-          <Link href="/devghar">Devghar</Link>
           <Link href="/reviews">Reviews</Link>
           <Link href="/location">Location</Link>
         </div>

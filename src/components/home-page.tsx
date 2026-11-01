@@ -208,7 +208,7 @@ Please confirm wood polish finish and home delivery timeline in Pune.
             <DoodleUnderline color="#e2bf65" />
 
             <p className="hero-sub-description">
-              Hand-carved seasoned Burma teak & Sheesham sofas, sacred wooden Devghar temples,
+              Hand-carved seasoned Burma teak & Sheesham sofas, solid wood dining suites,
               German hydraulic storage beds, and complete turnkey flat interiors made directly by
               our craftsmen with zero showroom markup.
             </p>
@@ -770,28 +770,26 @@ Please confirm wood polish finish and home delivery timeline in Pune.
             {/* Bottom Actions */}
             {!showOrderModal && !orderSuccessId && (
               <div className="drawer-footer-sticky">
+                <button
+                  type="button"
+                  className="btn-gold-primary drawer-action-btn"
+                  onClick={() => setShowOrderModal(true)}
+                >
+                  <span>Book Free Home Naap (Measurement)</span>
+                  <ArrowRight size={16} />
+                </button>
+
                 <a
                   href={waLink(
                     `Namaste Parihar Furniture! Mujhe "${selectedProduct.name}" (Code: ${selectedProduct.code}) ke baare me jankari aur photos chahiye.`
                   )}
                   target="_blank"
                   rel="noreferrer"
-                  className="dock-btn highlight-wa"
-                  style={{ flex: 1, height: "48px", justifyContent: "center", fontSize: "15px", flexDirection: "row", gap: "8px" }}
+                  className="dock-btn highlight-wa drawer-action-btn"
                 >
                   <MessageCircle size={18} />
-                  <span>WhatsApp Par Baat Karein</span>
+                  <span>WhatsApp Inquiry (+91 9175379886)</span>
                 </a>
-
-                <button
-                  type="button"
-                  className="btn-gold-primary"
-                  onClick={() => setShowOrderModal(true)}
-                  style={{ flex: 1, height: "48px", justifyContent: "center" }}
-                >
-                  <span>Order Karein (Ghar Pe Naap)</span>
-                  <ArrowRight size={16} />
-                </button>
               </div>
             )}
           </div>
@@ -812,7 +810,6 @@ Please confirm wood polish finish and home delivery timeline in Pune.
         <div style={{ display: "flex", justifyContent: "center", gap: "18px", marginTop: "6px", flexWrap: "wrap" }}>
           <Link href="/">Home</Link>
           <Link href="/catalog">Catalog</Link>
-          <Link href="/devghar">Devghar</Link>
           <Link href="/reviews">Reviews</Link>
           <Link href="/location">Location</Link>
         </div>

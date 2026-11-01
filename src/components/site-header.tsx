@@ -22,13 +22,12 @@ export function SiteHeader() {
 
   const navLinks = [
     { label: "Furniture Catalog", href: "/catalog", num: "01" },
-    { label: "Sacred Devghar", href: "/devghar", num: "02" },
-    { label: "Client Testimonials", href: "/reviews", num: "03" },
-    { label: "Workshop Location", href: "/location", num: "04" },
+    { label: "Client Testimonials", href: "/reviews", num: "02" },
+    { label: "Workshop Location", href: "/location", num: "03" },
   ];
 
   return (
-    <div className="liquid-navbar-wrapper">
+    <div className={`liquid-navbar-wrapper ${drawerOpen ? "drawer-is-open" : ""}`}>
       {/* 01. Liquid Glass Top Notification Ticker */}
       <div className="liquid-ticker-bar">
         <div className="ticker-track">
