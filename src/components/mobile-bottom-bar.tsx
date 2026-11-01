@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Phone, MessageCircle, Star, Compass, LayoutGrid } from "lucide-react";
+import { Phone, MessageCircle, Star, LayoutGrid } from "lucide-react";
 
 interface MobileBottomBarProps {
   phoneNumber?: string;
@@ -25,16 +25,8 @@ export function MobileBottomBar({
         href="/catalog"
         className={`mobile-dock-item ${pathname === "/catalog" ? "active" : ""}`}
       >
-        <LayoutGrid size={19} />
+        <LayoutGrid size={20} />
         <span>Catalog</span>
-      </Link>
-
-      <Link
-        href="/devghar"
-        className={`mobile-dock-item ${pathname === "/devghar" ? "active" : ""}`}
-      >
-        <Compass size={19} />
-        <span>Devghar</span>
       </Link>
 
       <a
@@ -55,7 +47,7 @@ export function MobileBottomBar({
         className="mobile-dock-item"
         aria-label="Call Parihar Furniture"
       >
-        <Phone size={19} />
+        <Phone size={20} />
         <span>Call</span>
       </a>
 
@@ -63,7 +55,7 @@ export function MobileBottomBar({
         href="/reviews"
         className={`mobile-dock-item ${pathname === "/reviews" ? "active" : ""}`}
       >
-        <Star size={19} fill={pathname === "/reviews" ? "var(--gold-light)" : "none"} />
+        <Star size={20} fill={pathname === "/reviews" ? "var(--gold-light)" : "none"} />
         <span>Reviews</span>
       </Link>
     </nav>
